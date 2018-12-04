@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F11%2F29%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>hello</category>
+        <category>word</category>
+      </categories>
+      <tags>
+        <tag>hello</tag>
+        <tag>word</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql安装]]></title>
+    <url>%2F2018%2F11%2F29%2Fmysql%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[一、软件部署1、MySQL安装123456789101112131415161718192021222324252627282930313233343536373839## 安装软件依赖shell&gt; yum install libaio -y## 创建用户和组shell&gt; groupadd mysqlshell&gt; useradd -r -g mysql -s /bin/false mysql## 解压软件包并创建软连接shell&gt; tar xzvf mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz -C /usr/local/shell&gt; cd /usr/local/shell&gt; ln -s mysql-5.7.22-linux-glibc2.12-x86_64 mysql## 修改软件目录权限为mysql用户shell&gt; cd /usr/local/mysqlshell&gt; chown -R mysql:mysql .## 创建数据目录权限并修改权限为mysql用户shell&gt; mkdir -p /data/mysql/&#123;data,tmp&#125;shell&gt; chown -R mysql:mysql /data/mysql/## 拷贝启动脚本至系统启动目录shell&gt; cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld## 执行数据库初始化操作shell&gt; cd /usr/local/mysqlshell&gt; bin/mysqld --initialize --user=mysql## 启动MySQLshell&gt; systemctl enable mysqldshell&gt; systemctl start mysqldshell&gt; systemctl status mysqldshell&gt; systemctl disable mysqldshell&gt; cat /data/mysql/data/mysql-error.log |grep passshell&gt; /usr/local/mysql/bin/mysql -S /data/mysql/data/mysql_3306.sock -p ## 输入查看到的随机密码## 登录数据库后需先修改密码mysql&gt; set password='emhlbnhpbmcxMDA0';mysql&gt; exit; 2、配置环境变量12345shell&gt; vim ~/.bash_profile MYSQL_HOME=/usr/local/mysql PATH=$PATH:$HOME/bin:$MYSQL_HOME/binshell&gt; source ~/.bash_profileshell&gt; mysql -V 从库的搭建方式为在从库所在服务器重复步骤一和步骤二全部操作 二、复制配置1、复制用户创建12## 主库创建复制用户mysql&gt; grant replication slave on *.* to 'repl'@'%' identified by 'cmVwbGRiYQ=='; 2、配置复制同步123456789101112## 从库配置复制同步mysql&gt; change master to master_host='172.16.109.144',master_user='repl',master_password='cmVwbGRiYQ==',master_port=3306,master_auto_position=1;## 从库启动复制mysql&gt; start slave;mysql&gt; show slave status\G;mysql&gt; show processlist; 三、备份配置1、部署xtrabackup主从都需要部署，文件上传操作：略1234567891011## 解压percona-xtrabackupcd /opt/for_gongbao_mysql/tar xzvf percona-xtrabackup-2.4.9-Linux-x86_64.tar.gz## 拷贝命令至系统可执行目录cp percona-xtrabackup-2.4.9-Linux-x86_64/bin/* /usr/local/bin/rm percona-xtrabackup-2.4.9-Linux-x86_64 -rf## 拷贝qpress解压缩命令至系统可执行目录cd /opt/for_gongbao_mysql/cp qpress /usr/local/bin/ 2、配置自动化备份脚本脚本模板已上传，暂未配置 四、慢查询配置1、日志轮换脚本配置脚本模板已上传，暂未配置 2、日志格式化脚本配置脚本模板已上传，暂未配置]]></content>
+      <categories>
+        <category>DB</category>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>centos</tag>
+      </tags>
+  </entry>
+</search>

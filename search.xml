@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F11%2F29%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[阿里云ECS漏洞修复]]></title>
+    <url>%2F2018%2F12%2F05%2F%E9%98%BF%E9%87%8C%E4%BA%91ECSrepair%2F</url>
+    <content type="text"><![CDATA[一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。rpm包可从此处下载，选择稳定版本即可。 3、升级脚本将下载、安装过程脚本话12345678910111213141516171819#!/bin/sh#Francis#切换到下载目录cd /data/backup# update glibc to 2.22 for CentOS 7wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-common-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-headers-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-devel-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/nscd-2.22.90-21.el7.x86_64.rpmrpm -Uvh glibc-2.22.90-21.el7.x86_64.rpm \ glibc-common-2.22.90-21.el7.x86_64.rpm \ glibc-devel-2.22.90-21.el7.x86_64.rpm \ glibc-headers-2.22.90-21.el7.x86_64.rpm \ nscd-2.22.90-21.el7.x86_64.rpm \ --force --nodeps 二、关于curl的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为curl的版本太低，具有以下上图所示五个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到curl版本7.12到7.58都有漏洞，所以我们选择安装7.60以后的版本123456wget https://curl.haxx.se/download/curl-7.62.0.tar.gztar -zxvf curl-7.62.0.tar.gz cd curl-7.62.0./configure --prefix=/usrmakemake install 查看curl版本1234567# curl --versioncurl 7.62.0 (x86_64-pc-linux-gnu) libcurl/7.47.1 NSS/3.21.3 Basic ECC zlib/1.2.7 libidn/1.28 libssh2/1.4.3Release-Date: 2018-10-31Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz UnixSockets # curl-config --versionlibcurl 7.62.0]]></content>
       <categories>
-        <category>hello</category>
-        <category>word</category>
+        <category>OS</category>
       </categories>
       <tags>
-        <tag>hello</tag>
-        <tag>word</tag>
+        <tag>阿里云</tag>
+        <tag>软件漏洞修复</tag>
+        <tag>glibc</tag>
+        <tag>curl</tag>
+        <tag>nss-pem</tag>
       </tags>
   </entry>
   <entry>

@@ -108,31 +108,24 @@
 
 
 
-  <meta name="description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
-<meta name="keywords" content="阿里云,软件漏洞修复,glibc,curl,nss-pem">
-<meta property="og:type" content="article">
-<meta property="og:title" content="阿里云ECS漏洞修复">
-<meta property="og:url" content="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/index.html">
+  <meta name="description" content="云在青天水在瓶">
+<meta name="keywords" content="运维,监控,自动化,脚本,系统,数据库">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Francis&#39;Blog">
+<meta property="og:url" content="http://www.cnops.com/categories/code/python/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
+<meta property="og:description" content="云在青天水在瓶">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144351.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154508.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144447.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154512.png">
-<meta property="og:updated_time" content="2018-12-07T02:06:33.893Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿里云ECS漏洞修复">
-<meta name="twitter:description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png">
+<meta name="twitter:title" content="Francis&#39;Blog">
+<meta name="twitter:description" content="云在青天水在瓶">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/">
+  <link rel="canonical" href="http://www.cnops.com/categories/code/python/">
 
 
 
@@ -142,7 +135,7 @@
   };
 </script>
 
-  <title>阿里云ECS漏洞修复 | Francis'Blog</title>
+  <title>分类: python | Francis'Blog</title>
   
 
 
@@ -191,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
     
     <a href="https://github.com/francisxys" class="github-corner" aria-label="View source on GitHub"><svg width="93" height="93" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
@@ -251,7 +244,7 @@
         
         
           
-          <li class="menu-item menu-item-categories">
+          <li class="menu-item menu-item-categories menu-item-active">
 
     
     
@@ -332,6 +325,28 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -377,289 +392,57 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>python<small>分类</small>
+        </h1>
+      </div>
 
-  
-  
-  
-
-  
+      
+        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Francis">
-      <meta itemprop="description" content="云在青天水在瓶">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Francis'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2018/12/07/shopping/" itemprop="url">
+              
+                <span itemprop="name">python购物车程序</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">阿里云ECS漏洞修复
-              
-            
-          </h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-05 15:24:19" itemprop="dateCreated datePublished" datetime="2018-12-05T15:24:19+08:00">2018-12-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-07 10:06:33" itemprop="dateModified" datetime="2018-12-07T10:06:33+08:00">2018-12-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="一、关于glibc的报警"><a href="#一、关于glibc的报警" class="headerlink" title="一、关于glibc的报警"></a>一、关于glibc的报警</h2><h3 id="1、问题确认"><a href="#1、问题确认" class="headerlink" title="1、问题确认"></a>1、问题确认</h3><p>关于glibc的报警，具体如下所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png" alt="Alt text" title="漏洞报警"><br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144351.png" alt="Alt text" title="漏洞报警"><br>此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。<br>阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154508.png" alt="Alt text" title="漏洞报警"></p>
-<h3 id="2、解决方案"><a href="#2、解决方案" class="headerlink" title="2、解决方案"></a>2、解决方案</h3><p>上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。<br>rpm包可从<a href="http://cbs.centos.org/kojifiles/packages/" target="_blank" rel="noopener">此处</a>下载，选择稳定版本即可。</p>
-<h3 id="3、升级脚本"><a href="#3、升级脚本" class="headerlink" title="3、升级脚本"></a>3、升级脚本</h3><p>将下载、安装过程脚本话<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">#Francis</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#切换到下载目录</span></span><br><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># update glibc to 2.22 for CentOS 7</span></span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-common-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-headers-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-devel-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/nscd-2.22.90-21.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -Uvh glibc-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-common-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-devel-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-headers-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">		 nscd-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         --force --nodeps</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、关于curl的报警"><a href="#二、关于curl的报警" class="headerlink" title="二、关于curl的报警"></a>二、关于curl的报警</h2><h3 id="1、问题确认-1"><a href="#1、问题确认-1" class="headerlink" title="1、问题确认"></a>1、问题确认</h3><p>关于glibc的报警，具体如下所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144447.png" alt="Alt text" title="漏洞报警"><br>此处报警我们可以根据漏洞编号进行查询，可以看到是因为curl的版本太低，具有以下上图所示四个漏洞。<br>阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154512.png" alt="Alt text" title="漏洞报警"></p>
-<h3 id="2、解决方案-1"><a href="#2、解决方案-1" class="headerlink" title="2、解决方案"></a>2、解决方案</h3><p>上图可以看到curl版本7.12到7.58都有漏洞，所以我们选择安装7.60以后的版本</p>
-<h4 id="1、编译安装"><a href="#1、编译安装" class="headerlink" title="1、编译安装"></a>1、编译安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://curl.haxx.se/download/curl-7.62.0.tar.gz</span><br><span class="line">tar -zxvf curl-7.62.0.tar.gz </span><br><span class="line"><span class="built_in">cd</span> curl-7.62.0</span><br><span class="line">./configure --prefix=/usr</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>查看curl版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl --version</span></span><br><span class="line">curl 7.62.0 (x86_64-pc-linux-gnu) libcurl/7.47.1 NSS/3.21.3 Basic ECC zlib/1.2.7 libidn/1.28 libssh2/1.4.3</span><br><span class="line">Release-Date: 2018-10-31</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz UnixSockets </span><br><span class="line"><span class="comment"># curl-config --version</span></span><br><span class="line">libcurl 7.62.0</span><br></pre></td></tr></table></figure></p>
-<h4 id="2、yum安装"><a href="#2、yum安装" class="headerlink" title="2、yum安装"></a>2、yum安装</h4><p>查看已安装版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl --version</span></span><br><span class="line">curl 7.29.0 (x86_64-redhat-linux-gnu) libcurl/7.29.0 NSS/3.34 zlib/1.2.7 libidn/1.28 libssh2/1.4.3</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS GSS-Negotiate IDN IPv6 Largefile NTLM NTLM_WB SSL libz unix-sockets</span><br></pre></td></tr></table></figure></p>
-<p>安装repo<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh  http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/city-fan.org-release-2-1.rhel6.noarch.rpm</span><br></pre></td></tr></table></figure></p>
-<p>查看该 repo 包含的 curl 版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"</span></span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * city-fan.org: cityfan.mirror.digitalpacific.com.au</span><br><span class="line"> * city-fan.org-debuginfo: cityfan.mirror.digitalpacific.com.au</span><br><span class="line"> * city-fan.org-source: cityfan.mirror.digitalpacific.com.au</span><br><span class="line">Installed Packages</span><br><span class="line">curl.x86_64                                                                          7.29.0-51.el7                                                                                 @base       </span><br><span class="line">Available Packages</span><br><span class="line">curl.x86_64                                                                          7.62.0-1.7.cf.rhel7                                                                           city-fan.org</span><br></pre></td></tr></table></figure></p>
-<p>修改该repo的enable为1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/yum.repos.d/city-fan.org.repo</span><br><span class="line"></span><br><span class="line">[city-fan.org]</span><br><span class="line"></span><br><span class="line">name=city-fan.org repository <span class="keyword">for</span> Red Hat Enterprise Linux (and clones) <span class="variable">$releasever</span> (<span class="variable">$basearch</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#baseurl=http://mirror.city-fan.org/ftp/contrib/yum-repo/rhel$releasever/$basearch</span></span><br><span class="line"></span><br><span class="line">mirrorlist=http://mirror.city-fan.org/ftp/contrib/yum-repo/mirrorlist-rhel<span class="variable">$releasever</span></span><br><span class="line"></span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">gpgcheck=1</span><br><span class="line"></span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-city-fan.org</span><br></pre></td></tr></table></figure></p>
-<p>升级最新的curl<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum upgrade curl -y</span><br></pre></td></tr></table></figure></p>
-<p>查看版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -V</span></span><br><span class="line">curl 7.62.0 (x86_64-redhat-linux-gnu) libcurl/7.62.0 NSS/3.36 zlib/1.2.7 libpsl/0.7.0 (+libicu/50.1.2) libssh2/1.8.0 nghttp2/1.31.1</span><br><span class="line">Release-Date: 2018-10-31</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy PSL Metalink</span><br></pre></td></tr></table></figure></p>
-<p>升级完成</p>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-        
-<div class="my_post_copyright">
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-  
-  <!-- JS库 sweetalert 可修改路径 -->
-  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/12/05/阿里云ECS漏洞修复/">阿里云ECS漏洞修复</a></p>
-  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/2018/12/05/阿里云ECS漏洞修复/" title="阿里云ECS漏洞修复">http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/" aria-label="复制成功！"></i></span>
-  </p>
-  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
-</div>
-<script> 
-    var clipboard = new Clipboard('.fa-clipboard');
-      $(".fa-clipboard").click(function(){
-      clipboard.on('success', function(){
-        swal({   
-          title: "",   
-          text: '复制成功',
-          icon: "success", 
-          showConfirmButton: true
-          });
-        });
-    });  
-</script>
-
-      
-    </div>
-
-    
-
-    
-       
-    
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Francis 微信支付">
-        <p>微信支付</p>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-12-07T17:09:41+08:00" content="2018-12-07">
+          12-07
+        </time>
       </div>
-    
 
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Francis 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/阿里云/" rel="tag"># 阿里云</a>
-          
-            <a href="/tags/软件漏洞修复/" rel="tag"># 软件漏洞修复</a>
-          
-            <a href="/tags/glibc/" rel="tag"># glibc</a>
-          
-            <a href="/tags/curl/" rel="tag"># curl</a>
-          
-            <a href="/tags/nss-pem/" rel="tag"># nss-pem</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/11/29/mysql安装/" rel="next" title="mysql安装">
-                <i class="fa fa-chevron-left"></i> mysql安装
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/06/zabbix监控redis/" rel="prev" title="zabbix监控redis">
-                zabbix监控redis <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
+      
+    </div>
+
   </div>
-
-
-          </div>
-          
+  
+  
+  
 
   
 
 
+
+          </div>
+          
 
         </div>
         
@@ -680,17 +463,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -846,22 +620,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、关于glibc的报警"><span class="nav-text">一、关于glibc的报警</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、问题确认"><span class="nav-text">1、问题确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、解决方案"><span class="nav-text">2、解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、升级脚本"><span class="nav-text">3、升级脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、关于curl的报警"><span class="nav-text">二、关于curl的报警</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、问题确认-1"><span class="nav-text">1、问题确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、解决方案-1"><span class="nav-text">2、解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、编译安装"><span class="nav-text">1、编译安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、yum安装"><span class="nav-text">2、yum安装</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -989,10 +747,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
-
-
 
   
 

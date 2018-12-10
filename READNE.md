@@ -39,3 +39,9 @@ hexo d -g
 添加链接格式
 前面为文字，后面位文字所附带的链接
 [阿里云产品优惠](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=taqd2wlp)
+
+表格模板
+| 名称                          | 描述                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| RABBITMQ_BASE                 | 此基础目录包含了RabbitMQ   server的数据库，日志文件的子目录. 另外，也可以独立设置RABBITMQ_MNESIA_BASE 和 RABBITMQ_LOG_BASE 目录. |
+| RABBITMQ_CONFIG_FILE          | 用于配置文件的路径，无.config扩展名. 如果 **configuration file** 存在，服务器将使用它来配置RabbitMQ组件. 参考 **Configuration   guide** 来了解更多信息. |

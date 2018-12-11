@@ -112,31 +112,29 @@
 
 
 
-  <meta name="description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
-<meta name="keywords" content="阿里云,软件漏洞修复,glibc,curl,nss-pem">
+  <meta name="description" content="一、环境配置关闭selinux12vim /etc/sysconfig/selinuxSELINUX=disabled 二、Nginx安装Nginx在生产环境推荐使用编译方式安装 1、安装编译环境、gcc12yum -y install gcc gcc-c++ automake autoconf libtool makeyum install gcc gcc-c++ 一般我们都需要先装pcre,">
+<meta name="keywords" content="运维,监控,自动化,脚本,系统,数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里云ECS漏洞修复">
-<meta property="og:url" content="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/index.html">
+<meta property="og:title" content="zabbix安装">
+<meta property="og:url" content="http://www.cnops.com/2018/12/11/zabbix安装/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
+<meta property="og:description" content="一、环境配置关闭selinux12vim /etc/sysconfig/selinuxSELINUX=disabled 二、Nginx安装Nginx在生产环境推荐使用编译方式安装 1、安装编译环境、gcc12yum -y install gcc gcc-c++ automake autoconf libtool makeyum install gcc gcc-c++ 一般我们都需要先装pcre,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144351.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154508.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144447.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154512.png">
-<meta property="og:updated_time" content="2018-12-10T03:10:58.269Z">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181211001.png">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181211002.png">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181211003.png">
+<meta property="og:updated_time" content="2018-12-11T09:30:21.792Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿里云ECS漏洞修复">
-<meta name="twitter:description" content="一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png">
+<meta name="twitter:title" content="zabbix安装">
+<meta name="twitter:description" content="一、环境配置关闭selinux12vim /etc/sysconfig/selinuxSELINUX=disabled 二、Nginx安装Nginx在生产环境推荐使用编译方式安装 1、安装编译环境、gcc12yum -y install gcc gcc-c++ automake autoconf libtool makeyum install gcc gcc-c++ 一般我们都需要先装pcre,">
+<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181211001.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/">
+  <link rel="canonical" href="http://www.cnops.com/2018/12/11/zabbix安装/">
 
 
 
@@ -146,7 +144,7 @@
   };
 </script>
 
-  <title>阿里云ECS漏洞修复 | Francis'Blog</title>
+  <title>zabbix安装 | Francis'Blog</title>
   
 
 
@@ -395,7 +393,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/11/zabbix安装/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Francis">
@@ -412,7 +410,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">阿里云ECS漏洞修复
+          <h1 class="post-title" itemprop="name headline">zabbix安装
               
             
           </h1>
@@ -437,46 +435,16 @@
                 
               
 
-              <time title="创建时间：2018-12-05 15:24:19" itemprop="dateCreated datePublished" datetime="2018-12-05T15:24:19+08:00">2018-12-05</time>
+              <time title="创建时间：2018-12-11 16:45:55 / 修改时间：17:30:21" itemprop="dateCreated datePublished" datetime="2018-12-11T16:45:55+08:00">2018-12-11</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-10 11:10:58" itemprop="dateModified" datetime="2018-12-10T11:10:58+08:00">2018-12-10</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -505,20 +473,48 @@
       
 
       
-        <h2 id="一、关于glibc的报警"><a href="#一、关于glibc的报警" class="headerlink" title="一、关于glibc的报警"></a>一、关于glibc的报警</h2><h3 id="1、问题确认"><a href="#1、问题确认" class="headerlink" title="1、问题确认"></a>1、问题确认</h3><p>关于glibc的报警，具体如下所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144338.png" alt="Alt text" title="漏洞报警"><br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144351.png" alt="Alt text" title="漏洞报警"><br>此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。<br>阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154508.png" alt="Alt text" title="漏洞报警"></p>
-<h3 id="2、解决方案"><a href="#2、解决方案" class="headerlink" title="2、解决方案"></a>2、解决方案</h3><p>上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。<br>rpm包可从<a href="http://cbs.centos.org/kojifiles/packages/" target="_blank" rel="noopener">此处</a>下载，选择稳定版本即可。</p>
-<h3 id="3、升级脚本"><a href="#3、升级脚本" class="headerlink" title="3、升级脚本"></a>3、升级脚本</h3><p>将下载、安装过程脚本话<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">#Francis</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#切换到下载目录</span></span><br><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># update glibc to 2.22 for CentOS 7</span></span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-common-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-headers-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-devel-2.22.90-21.el7.x86_64.rpm</span><br><span class="line">wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/nscd-2.22.90-21.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -Uvh glibc-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-common-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-devel-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         glibc-headers-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">		 nscd-2.22.90-21.el7.x86_64.rpm \</span><br><span class="line">         --force --nodeps</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、关于curl的报警"><a href="#二、关于curl的报警" class="headerlink" title="二、关于curl的报警"></a>二、关于curl的报警</h2><h3 id="1、问题确认-1"><a href="#1、问题确认-1" class="headerlink" title="1、问题确认"></a>1、问题确认</h3><p>关于glibc的报警，具体如下所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205144447.png" alt="Alt text" title="漏洞报警"><br>此处报警我们可以根据漏洞编号进行查询，可以看到是因为curl的版本太低，具有以下上图所示四个漏洞。<br>阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示：<br><img src="http://pjakaipln.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181205154512.png" alt="Alt text" title="漏洞报警"></p>
-<h3 id="2、解决方案-1"><a href="#2、解决方案-1" class="headerlink" title="2、解决方案"></a>2、解决方案</h3><p>上图可以看到curl版本7.12到7.58都有漏洞，所以我们选择安装7.60以后的版本</p>
-<h4 id="1、编译安装"><a href="#1、编译安装" class="headerlink" title="1、编译安装"></a>1、编译安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://curl.haxx.se/download/curl-7.62.0.tar.gz</span><br><span class="line">tar -zxvf curl-7.62.0.tar.gz </span><br><span class="line"><span class="built_in">cd</span> curl-7.62.0</span><br><span class="line">./configure --prefix=/usr</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>查看curl版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl --version</span></span><br><span class="line">curl 7.62.0 (x86_64-pc-linux-gnu) libcurl/7.47.1 NSS/3.21.3 Basic ECC zlib/1.2.7 libidn/1.28 libssh2/1.4.3</span><br><span class="line">Release-Date: 2018-10-31</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz UnixSockets </span><br><span class="line"><span class="comment"># curl-config --version</span></span><br><span class="line">libcurl 7.62.0</span><br></pre></td></tr></table></figure></p>
-<h4 id="2、yum安装"><a href="#2、yum安装" class="headerlink" title="2、yum安装"></a>2、yum安装</h4><p>查看已安装版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl --version</span></span><br><span class="line">curl 7.29.0 (x86_64-redhat-linux-gnu) libcurl/7.29.0 NSS/3.34 zlib/1.2.7 libidn/1.28 libssh2/1.4.3</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS GSS-Negotiate IDN IPv6 Largefile NTLM NTLM_WB SSL libz unix-sockets</span><br></pre></td></tr></table></figure></p>
-<p>安装repo<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh  http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/city-fan.org-release-2-1.rhel6.noarch.rpm</span><br></pre></td></tr></table></figure></p>
-<p>查看该 repo 包含的 curl 版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"</span></span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * city-fan.org: cityfan.mirror.digitalpacific.com.au</span><br><span class="line"> * city-fan.org-debuginfo: cityfan.mirror.digitalpacific.com.au</span><br><span class="line"> * city-fan.org-source: cityfan.mirror.digitalpacific.com.au</span><br><span class="line">Installed Packages</span><br><span class="line">curl.x86_64                                                                          7.29.0-51.el7                                                                                 @base       </span><br><span class="line">Available Packages</span><br><span class="line">curl.x86_64                                                                          7.62.0-1.7.cf.rhel7                                                                           city-fan.org</span><br></pre></td></tr></table></figure></p>
-<p>修改该repo的enable为1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/yum.repos.d/city-fan.org.repo</span><br><span class="line"></span><br><span class="line">[city-fan.org]</span><br><span class="line"></span><br><span class="line">name=city-fan.org repository <span class="keyword">for</span> Red Hat Enterprise Linux (and clones) <span class="variable">$releasever</span> (<span class="variable">$basearch</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#baseurl=http://mirror.city-fan.org/ftp/contrib/yum-repo/rhel$releasever/$basearch</span></span><br><span class="line"></span><br><span class="line">mirrorlist=http://mirror.city-fan.org/ftp/contrib/yum-repo/mirrorlist-rhel<span class="variable">$releasever</span></span><br><span class="line"></span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">gpgcheck=1</span><br><span class="line"></span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-city-fan.org</span><br></pre></td></tr></table></figure></p>
-<p>升级最新的curl<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum upgrade curl -y</span><br></pre></td></tr></table></figure></p>
-<p>查看版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -V</span></span><br><span class="line">curl 7.62.0 (x86_64-redhat-linux-gnu) libcurl/7.62.0 NSS/3.36 zlib/1.2.7 libpsl/0.7.0 (+libicu/50.1.2) libssh2/1.8.0 nghttp2/1.31.1</span><br><span class="line">Release-Date: 2018-10-31</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp </span><br><span class="line">Features: AsynchDNS IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy PSL Metalink</span><br></pre></td></tr></table></figure></p>
-<p>升级完成</p>
+        <h2 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h2><p>关闭selinux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure></p>
+<h2 id="二、Nginx安装"><a href="#二、Nginx安装" class="headerlink" title="二、Nginx安装"></a>二、Nginx安装</h2><p>Nginx在生产环境推荐使用编译方式安装</p>
+<h3 id="1、安装编译环境、gcc"><a href="#1、安装编译环境、gcc" class="headerlink" title="1、安装编译环境、gcc"></a>1、安装编译环境、gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc gcc-c++ automake autoconf libtool make</span><br><span class="line">yum install gcc gcc-c++</span><br></pre></td></tr></table></figure>
+<p>一般我们都需要先装pcre, zlib，前者为了重写rewrite，后者为了gzip压缩。从<a href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/" target="_blank" rel="noopener">ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/</a> 下载最新的 PCRE 源码包，使用下面命令下载编译和安装 PCRE 包：</p>
+<h3 id="2、安装pcre"><a href="#2、安装pcre" class="headerlink" title="2、安装pcre"></a>2、安装pcre</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.42.tar.gz</span><br><span class="line">tar -zxvf pcre-8.42.tar.gz</span><br><span class="line"><span class="built_in">cd</span> pcre-8.42</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h3 id="3、安装zlib"><a href="#3、安装zlib" class="headerlink" title="3、安装zlib"></a>3、安装zlib</h3><p>从<a href="http://zlib.net下载最新的" target="_blank" rel="noopener">http://zlib.net下载最新的</a> zlib 源码包，使用下面命令下载编译和安装 zlib包：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://zlib.net/zlib-1.2.11.tar.gz </span><br><span class="line">tar -zxvf zlib-1.2.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zlib-1.2.11</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
+<h3 id="4、安装openssl"><a href="#4、安装openssl" class="headerlink" title="4、安装openssl"></a>4、安装openssl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget https://www.openssl.org/<span class="built_in">source</span>/openssl-1.1.0h.tar.gz</span><br><span class="line">tar -zxvf openssl-1.1.0h.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="5、安装Nginx"><a href="#5、安装Nginx" class="headerlink" title="5、安装Nginx"></a>5、安装Nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://nginx.org/download/nginx-1.14.0.tar.gz</span><br><span class="line">tar -zxvf nginx-1.14.0.tar.gz </span><br><span class="line"><span class="built_in">cd</span> nginx-1.14.0</span><br><span class="line">./configure --prefix=/data/nginx/ --with-http_v2_module --with-http_ssl_module --with-http_flv_module --with-http_mp4_module --with-http_sub_module --with-http_stub_status_module --with-http_gzip_static_module --without-http-cache --with-http_realip_module --with-pcre=/data/backup/pcre-8.42 --with-zlib=/data/backup/zlib-1.2.11 --with-openssl=/data/backup/openssl-1.1.0h</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>创建Nginx软连接到环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /data/nginx/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br></pre></td></tr></table></figure></p>
+<h2 id="三、php安装"><a href="#三、php安装" class="headerlink" title="三、php安装"></a>三、php安装</h2><p>Zabbix界面需要支持的PHP组件可以从官网查看，如下图：<br><img src="http://pjakaipln.bkt.clouddn.com/20181211001.png" alt="Alt text"></p>
+<h3 id="1、安装插件"><a href="#1、安装插件" class="headerlink" title="1、安装插件"></a>1、安装插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y  libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel   libicu-devel</span><br></pre></td></tr></table></figure>
+<h3 id="2、编译安装PHP"><a href="#2、编译安装PHP" class="headerlink" title="2、编译安装PHP"></a>2、编译安装PHP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://cn2.php.net/distributions/php-7.2.8.tar.gz</span><br><span class="line">tar -zxvf php-7.2.8.tar.gz </span><br><span class="line"><span class="built_in">cd</span> php-7.2.8/</span><br><span class="line">./configure --prefix=/data/php --with-curl --with-freetype-dir --with-gd --with-gettext --with-iconv-dir --with-kerberos --with-libdir=lib64 --with-libxml-dir --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-pdo-sqlite --with-pear --with-png-dir --with-jpeg-dir --with-xmlrpc --with-xsl --with-zlib --with-bz2 --with-mhash --<span class="built_in">enable</span>-fpm --<span class="built_in">enable</span>-bcmath --<span class="built_in">enable</span>-libxml --<span class="built_in">enable</span>-inline-optimization --<span class="built_in">enable</span>-mbregex --<span class="built_in">enable</span>-mbstring --<span class="built_in">enable</span>-opcache --<span class="built_in">enable</span>-pcntl --<span class="built_in">enable</span>-shmop --<span class="built_in">enable</span>-soap --<span class="built_in">enable</span>-sockets --<span class="built_in">enable</span>-sysvsem --<span class="built_in">enable</span>-sysvshm --<span class="built_in">enable</span>-xml --<span class="built_in">enable</span>-zip</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>复制配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp php.ini-development /data/php/lib/php.ini</span><br><span class="line">cp /data/php/etc/php-fpm.conf.default /data/php/etc/php-fpm.conf</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/data/php/sbin/php-fpm</span><br></pre></td></tr></table></figure></p>
+<h2 id="三、Mysql安装"><a href="#三、Mysql安装" class="headerlink" title="三、Mysql安装"></a>三、Mysql安装</h2><h3 id="1、yum安装"><a href="#1、yum安装" class="headerlink" title="1、yum安装"></a>1、yum安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install libaio</span><br><span class="line">wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum localinstall mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>验证下是否添加成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum repolist enabled | grep <span class="string">"mysql.*-community.*"</span></span><br><span class="line">yum install mysql-devel</span><br><span class="line">yum install mysql-community-server</span><br><span class="line">systemctl start  mysqld</span><br></pre></td></tr></table></figure></p>
+<p>更改数据存放目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/data</span><br><span class="line">mysqladmin -u root -p shutdown</span><br><span class="line">mv /var/lib/mysql /home/data</span><br></pre></td></tr></table></figure></p>
+<p>修改 /etc/my.cnf 文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">datadir=/data/mysqldata/mysql</span><br><span class="line">socket=/data/mysqldata/mysql/mysql.sock</span><br><span class="line">[mysql]</span><br><span class="line">socket=/data/mysqldata/mysql/mysql.sock</span><br></pre></td></tr></table></figure></p>
+<p>授权<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R mysql:mysql /data/mysqldata/mysql</span><br></pre></td></tr></table></figure></p>
+<p>重启mysql服务<br>配置开机自起<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl is-enabled mysql.service;echo $?</span></span><br><span class="line">enabled</span><br><span class="line">0</span><br></pre></td></tr></table></figure></p>
+<p>如果是 enabled 则说明是开机自动，如果不是，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --levels 235 mysqld on</span><br></pre></td></tr></table></figure></p>
+<p>修改 /etc/my.cnf 文件，添加字符集的设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]  </span><br><span class="line">character_set_server = utf8</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set = utf8</span><br></pre></td></tr></table></figure></p>
+<p>创建数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database zabbix default charset utf8;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、源码包安装"><a href="#2、源码包安装" class="headerlink" title="2、源码包安装"></a>2、源码包安装</h3><p>参考链接：<a href="http://www.cnops.top/2018/11/29/mysql%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener">mysql安装</a></p>
+<h2 id="四、Zabbix-Server端安装"><a href="#四、Zabbix-Server端安装" class="headerlink" title="四、Zabbix Server端安装"></a>四、Zabbix Server端安装</h2><p>创建用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -g zabbix zabbix</span><br></pre></td></tr></table></figure></p>
+<p>安装zabbix server<br>从官网查找最新稳定版本，当前为3.0.*，下载后解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/zabbix</span><br><span class="line">./configure --prefix=/data/zabbix/ --<span class="built_in">enable</span>-server --<span class="built_in">enable</span>-agent --with-mysql --<span class="built_in">enable</span>-ipv6 --with-net-snmp --with-libcurl --with-libxml2 --<span class="built_in">enable</span>-java</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
+<p>启动server进程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/data/zabbix/sbin/zabbix_server -c /data/zabbix/etc/zabbix_server.conf</span><br></pre></td></tr></table></figure></p>
+<p>启动agent进程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/data/zabbix/sbin/zabbix_agentd -c /data/zabbix/etc/zabbix_agentd.conf</span><br></pre></td></tr></table></figure></p>
+<p>可能出现的报错：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">checking <span class="keyword">for</span> mysql_config... no</span><br><span class="line">configure: error: MySQL library not found</span><br><span class="line"><span class="comment">#解决方法</span></span><br><span class="line">yum -y install mysql-devel</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">configure: error: Invalid Net-SNMP directory - unable to find net-snmp-config</span><br><span class="line"><span class="comment">#解决方法</span></span><br><span class="line">yum -y install net-snmp net-snmp-devel</span><br></pre></td></tr></table></figure>
+<h2 id="五、Zabbix-Web安装"><a href="#五、Zabbix-Web安装" class="headerlink" title="五、Zabbix Web安装"></a>五、Zabbix Web安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup/zabbix-3.0.8/frontends/php</span><br><span class="line">cp -a . /data/watch01.sa.mtiancity.com/zabbix/</span><br></pre></td></tr></table></figure>
+<p>配置nginx可以访问，略过<br>修改php.ini<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">post_max_size = 16M</span><br><span class="line">max_execution_time = 300</span><br><span class="line">date.timezone =Asia/Shanghai</span><br><span class="line">always_populate_raw_post_data = -1</span><br><span class="line">max_input_time = 300</span><br></pre></td></tr></table></figure></p>
+<p>导入数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup/zabbix-3.0.8/database/mysql/</span><br><span class="line">mysql -u root zabbix&lt;schema.sql</span><br><span class="line">mysql -u root zabbix&lt;images.sql</span><br><span class="line">mysql -u root zabbix&lt;data.sql</span><br></pre></td></tr></table></figure></p>
+<p>打开nginx配置的url访问，如下图：<br><img src="http://pjakaipln.bkt.clouddn.com/20181211002.png" alt="Alt text"><br>也可能出现报错<br><img src="http://pjakaipln.bkt.clouddn.com/20181211003.png" alt="Alt text"><br>此时按照提示，将配置文件放入相应目录即可<br>初始化完成后，登陆zabbix web，默认用户名：Admin，密码：zabbix</p>
+<h2 id="六、Zabbix-Agnet端安装"><a href="#六、Zabbix-Agnet端安装" class="headerlink" title="六、Zabbix Agnet端安装"></a>六、Zabbix Agnet端安装</h2><p>安装方法二选一即可，推荐rpm安装</p>
+<h3 id="1、编译安装"><a href="#1、编译安装" class="headerlink" title="1、编译安装"></a>1、编译安装</h3><p>创建用户组和用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -g zabbix zabbix</span><br></pre></td></tr></table></figure></p>
+<p>yum安装组件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql-devel libxml2-devel unixODBC-devel OpenIPMI-devel curl-devel net-snmp-devel</span><br></pre></td></tr></table></figure></p>
+<p>安装zabbix agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zabbix-3.0.8.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zabbix-3.0.8/</span><br><span class="line">./configure --prefix=/data/zabbix/ --<span class="built_in">enable</span>-server --<span class="built_in">enable</span>-agent --with-mysql --<span class="built_in">enable</span>-ipv6 --with-net-snmp --with-libcurl --with-libxml2</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<p>复制配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /data/backup/zabbix_agentd.conf /data/zabbix/etc/</span><br></pre></td></tr></table></figure></p>
+<p>启动agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/data/zabbix/sbin/zabbix_agentd -c /data/zabbix/etc/zabbix_agentd.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、rpm包安装"><a href="#2、rpm包安装" class="headerlink" title="2、rpm包安装"></a>2、rpm包安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum -y install unixODBC</span><br><span class="line"><span class="comment">#centos6</span></span><br><span class="line">rpm -ivh http://repo.zabbix.com/zabbix/3.0/rhel/6/x86_64/zabbix-agent-3.0.1-1.el6.x86_64.rpm</span><br><span class="line"><span class="comment">#centos7</span></span><br><span class="line">rpm -ivh http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-agent-3.0.9-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<p>配置文件位置/etc/zabbix/zabbix_agentd.conf，可以根据实际场景修改<br>启动客户端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zabbix_agentd</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -538,10 +534,10 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/12/05/阿里云ECS漏洞修复/">阿里云ECS漏洞修复</a></p>
+  <p><span>本文标题:</span><a href="/2018/12/11/zabbix安装/">zabbix安装</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/2018/12/05/阿里云ECS漏洞修复/" title="阿里云ECS漏洞修复">http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/05/阿里云ECS漏洞修复/" aria-label="复制成功！"></i></span>
+  <p><span>原始链接:</span><a href="/2018/12/11/zabbix安装/" title="zabbix安装">http://www.cnops.com/2018/12/11/zabbix安装/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/11/zabbix安装/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -602,20 +598,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/阿里云/" rel="tag"><i class="fa fa-tag"></i> 阿里云</a>
-          
-            <a href="/tags/软件漏洞修复/" rel="tag"><i class="fa fa-tag"></i> 软件漏洞修复</a>
-          
-            <a href="/tags/glibc/" rel="tag"><i class="fa fa-tag"></i> glibc</a>
-          
-            <a href="/tags/curl/" rel="tag"><i class="fa fa-tag"></i> curl</a>
-          
-            <a href="/tags/nss-pem/" rel="tag"><i class="fa fa-tag"></i> nss-pem</a>
-          
-        </div>
-      
 
       
       
@@ -625,8 +607,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/29/mysql安装/" rel="next" title="mysql安装">
-                <i class="fa fa-chevron-left"></i> mysql安装
+              <a href="/2018/12/11/centos系统巡检/" rel="next" title="centos系统巡检">
+                <i class="fa fa-chevron-left"></i> centos系统巡检
               </a>
             
           </div>
@@ -634,10 +616,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/06/zabbix监控redis/" rel="prev" title="zabbix监控redis">
-                zabbix监控redis <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -895,7 +873,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、关于glibc的报警"><span class="nav-text">一、关于glibc的报警</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、问题确认"><span class="nav-text">1、问题确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、解决方案"><span class="nav-text">2、解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、升级脚本"><span class="nav-text">3、升级脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、关于curl的报警"><span class="nav-text">二、关于curl的报警</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、问题确认-1"><span class="nav-text">1、问题确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、解决方案-1"><span class="nav-text">2、解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、编译安装"><span class="nav-text">1、编译安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、yum安装"><span class="nav-text">2、yum安装</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、环境配置"><span class="nav-text">一、环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Nginx安装"><span class="nav-text">二、Nginx安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装编译环境、gcc"><span class="nav-text">1、安装编译环境、gcc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装pcre"><span class="nav-text">2、安装pcre</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、安装zlib"><span class="nav-text">3、安装zlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、安装openssl"><span class="nav-text">4、安装openssl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、安装Nginx"><span class="nav-text">5、安装Nginx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、php安装"><span class="nav-text">三、php安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装插件"><span class="nav-text">1、安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、编译安装PHP"><span class="nav-text">2、编译安装PHP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Mysql安装"><span class="nav-text">三、Mysql安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、yum安装"><span class="nav-text">1、yum安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、源码包安装"><span class="nav-text">2、源码包安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Zabbix-Server端安装"><span class="nav-text">四、Zabbix Server端安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Zabbix-Web安装"><span class="nav-text">五、Zabbix Web安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、Zabbix-Agnet端安装"><span class="nav-text">六、Zabbix Agnet端安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、编译安装"><span class="nav-text">1、编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、rpm包安装"><span class="nav-text">2、rpm包安装</span></a></li></ol></li></ol></div>
             
 
           </div>

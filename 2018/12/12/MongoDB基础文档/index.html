@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="_1iFxvEkIImQlyvWe4Y4gLh85rLCe9HPYV56NcoolIE">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="RZoFTJvjGp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、    MongoDB简介1、MongoDB历史MongoDB最初于2007年开发，当时公司正在建立一个类似于窗口天蓝(window azure)的服务平台。“Window azure是由Microsoft创建的云计算平台和基础设施，通过全球网络构建，部署和管理应用程序和服务。”MongoDB由位于纽约的一个名为10gen的组织开发，现在被称为MongoDB Inc.，它最初被开发为PAAS(">
+<meta name="keywords" content="MongoDB,集群,主从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB基础文档">
+<meta property="og:url" content="http://www.cnops.com/2018/12/12/MongoDB基础文档/index.html">
+<meta property="og:site_name" content="Francis&#39;Blog">
+<meta property="og:description" content="一、    MongoDB简介1、MongoDB历史MongoDB最初于2007年开发，当时公司正在建立一个类似于窗口天蓝(window azure)的服务平台。“Window azure是由Microsoft创建的云计算平台和基础设施，通过全球网络构建，部署和管理应用程序和服务。”MongoDB由位于纽约的一个名为10gen的组织开发，现在被称为MongoDB Inc.，它最初被开发为PAAS(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181212001.png">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181212002.png">
+<meta property="og:updated_time" content="2018-12-12T06:23:51.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB基础文档">
+<meta name="twitter:description" content="一、    MongoDB简介1、MongoDB历史MongoDB最初于2007年开发，当时公司正在建立一个类似于窗口天蓝(window azure)的服务平台。“Window azure是由Microsoft创建的云计算平台和基础设施，通过全球网络构建，部署和管理应用程序和服务。”MongoDB由位于纽约的一个名为10gen的组织开发，现在被称为MongoDB Inc.，它最初被开发为PAAS(">
+<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181212001.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.cnops.com/2018/12/12/MongoDB基础文档/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MongoDB基础文档 | Francis'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Francis'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Francis'Blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/12/MongoDB基础文档/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB基础文档
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-12 13:47:24 / 修改时间：14:23:51" itemprop="dateCreated datePublished" datetime="2018-12-12T13:47:24+08:00">2018-12-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/DB/" itemprop="url" rel="index"><span itemprop="name">DB</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/DB/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、-MongoDB简介"><a href="#一、-MongoDB简介" class="headerlink" title="一、    MongoDB简介"></a>一、    MongoDB简介</h2><h3 id="1、MongoDB历史"><a href="#1、MongoDB历史" class="headerlink" title="1、MongoDB历史"></a>1、MongoDB历史</h3><p>MongoDB最初于2007年开发，当时公司正在建立一个类似于窗口天蓝(window azure)的服务平台。<br>“Window azure是由Microsoft创建的云计算平台和基础设施，通过全球网络构建，部署和管理应用程序和服务。”<br>MongoDB由位于纽约的一个名为10gen的组织开发，现在被称为MongoDB Inc.，它最初被开发为PAAS(平台即服务)。 2009年晚些时候，它被作为一个由MongoDB公司维护和支持的开源数据库服务器在市场上引入。<br>MongoDB的第一个真正产品是从2010年3月发布的MongoDB 1.4版本开始的。2014年1月10日发布的最新版本：MongoDB2.4.9。<br>首先应该知道什么是面向文档的数据库？<br>面向文档的数据库示例<br>MongoDB是面向文档的数据库。这是MongoDB的一个主要功能。它提供面向文档的存储。这很简单，可以很容易地编程。<br>MongoDB将数据存储为文档，因此被称为面向文档的数据库。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FirstName = <span class="string">"Max"</span>, </span><br><span class="line">Address = <span class="string">"Haikou City"</span>, </span><br><span class="line">Spouse = [&#123;Name: <span class="string">"Maxsu"</span>&#125;]. </span><br><span class="line">FirstName =<span class="string">"Kobe"</span>,   </span><br><span class="line">Address = <span class="string">"LAC"</span></span><br></pre></td></tr></table></figure></p>
+<p>有两个不同的文件(用“.”分隔开)。以这种方式存储数据称为面向文档的数据库。  Mongodb属于一类名为面向文档数据库(Document Oriented Databases)。它属于一个叫作“NoSQL数据库”的数据库类别称。</p>
+<h3 id="2、MongoDB特点"><a href="#2、MongoDB特点" class="headerlink" title="2、MongoDB特点"></a>2、MongoDB特点</h3><p>MongoDB的一些重要功能特性：  </p>
+<ul>
+<li>支持特别查询<br>在MongoDB中，可以通过字段，范围查询进行搜索，并且还支持正则表达式搜索。 </li>
+<li>索引<br>可以索引文档中的任何字段。 </li>
+<li>复制<br>MongoDB支持主从复制。主机可以执行读写操作，从机从主机复制数据，只能用于读取或备份(不写入) </li>
+<li>复制数据<br>MongoDB可以在多台服务器上运行。 复制数据以保持系统正常运行，并在硬件故障的情况下保持其运行状态。 </li>
+<li>负载均衡<br>由于数据放在碎片中，因此具有自动负载平衡配置。 </li>
+<li>支持映射缩减和聚合工具  </li>
+<li>使用JavaScript而不是Procedure  </li>
+<li>它是一个用C++编写的无模式数据库  </li>
+<li>提供高性能  </li>
+<li>轻松存储任何大小的文件，而不会使您的堆栈复杂化  </li>
+<li>在故障的情况下易于管理  </li>
+<li>具有动态模式的JSON数据模型 </li>
+<li>自动分片用于水平可扩展性 </li>
+<li>内置复制高可用性<br>现在，许多公司使用 MongoDB 来创建新类型的应用程序，以提高性能和可用性。</li>
+</ul>
+<h3 id="3、MongoDB数据库的优点"><a href="#3、MongoDB数据库的优点" class="headerlink" title="3、MongoDB数据库的优点"></a>3、MongoDB数据库的优点</h3><p>到目前为止，MongoDB是一个新的和普遍使用的数据库。它是一个基于文档的非关系数据库提供程序。<br>虽然它比传统的数据库快100倍，但早期说它将广泛地取代传统的RDBMS。但是，不可否认的是：在性能和可扩展性方面 MongoDB 有着明显的优势。<br>关系数据库具有典型的架构设计，可以显示表的数量以及这些表之间的关系，而在MongoDB中则没有关系的概念。<br>（1）MongoDB优点</p>
+<pre><code>* MongoDB 的架构较少。它是一个文档数据库，它的一个集合持有不同的文档。 
+* 从一个到另一个的文档的数量，内容和大小可能有差异。 
+* MongoDB 中单个对象的结构很清淅。 
+* MongoDB 中没有复杂的连接。 
+* MongoDB 提供深度查询的功能，因为它支持对文档的强大的动态查询。 
+* MongoDB 很容易扩展。 
+* 它使用内部存储器来存储工作集，这是其快速访问的原因。
+</code></pre><p>（2）MongoDb的独特功能</p>
+<pre><code>* 使用方便
+* 重量轻/轻量级 
+* 比RDBMS快得多
+</code></pre><p>（3）MongoDB应用场景</p>
+<pre><code>* 大而复杂的数据 
+* 移动和社会基础设施数据 
+* 内容管理和交付 
+* 用户数据管理 
+* 数据中心
+</code></pre><p>（4）MongoDB和RDBMS的性能分析</p>
+<pre><code>* 在关系数据库(RDBMS)中，表用作存储元素，而在 MongoDB 中使用的是集合。 
+* 在RDBMS中有多个模式，在每个模式中，可创建用于存储数据的表，而 MongoDB 是面向文档的数据库，数据是以类似JSON格式的BSON格式编写的存储的。 
+* MongoDB几乎比传统数据库系统快100倍。
+</code></pre><h3 id="4、MongoDB快速入门"><a href="#4、MongoDB快速入门" class="headerlink" title="4、MongoDB快速入门"></a>4、MongoDB快速入门</h3><p>MongoDB是一个跨平台，面向文档的数据库，提供高性能，高可用性和易于扩展。MongoDB是工作在集合和文档上一种概念。<br>数据库<br>数据库是一个集合的物理容器。每个数据库获取其自己设定在文件系统上的文件。一个单一的MongoDB服务器通常有多个数据库。<br>集合<br>集合是一组MongoDB的文件。它与一个RDBMS表是等效的。一个集合存在于数据库中。集合不强制执行模式。集合中的文档可以有不同的字段。通常情况下，在一个集合中的所有文件都是类似或相关目的。<br>文档<br>文档是一组键值对。文档具有动态模式。动态模式是指，在同一个集合的文件不必具有相同一组集合的文档字段或结构，并且相同的字段可以保持不同类型的数据。</p>
+<h2 id="二、MongoDB安装"><a href="#二、MongoDB安装" class="headerlink" title="二、MongoDB安装"></a>二、MongoDB安装</h2><h3 id="1、下载"><a href="#1、下载" class="headerlink" title="1、下载"></a>1、下载</h3><p>MongoDb的linux版本下载地址为<br><a href="https://www.mongodb.org/dl/linux/" target="_blank" rel="noopener">https://www.mongodb.org/dl/linux/</a><br>选择合适的版本下载<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.20.tgz?_ga=2.11328048.543796309.1528358506-412859566.1526522668</span><br><span class="line">mv mongodb-linux-x86_64-rhel70-3.2.20.tgz\?_ga\=2.11328048.543796309.1528358506-412859566.1526522668 mongodb-linux-x86_64-rhel70-3.2.20.tgz</span><br><span class="line">tar -zxvf mongodb-linux-x86_64-rhel70-3.2.20.tgz </span><br><span class="line">mv mongodb-linux-x86_64-rhel70-3.2.20 /data/mongodb</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h3><p>将Mongod移动到/data目录下，然后加入系统环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#set mongodb environment</span></span><br><span class="line"><span class="built_in">export</span> PATH=/data/mongodb/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>执行以下命令使配置生效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>新建log、data、conf目录，如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/data/mongodb</span><br><span class="line"><span class="comment"># ll</span></span><br><span class="line">total 104</span><br><span class="line">drwxr-xr-x 2 root root  4096 Jun  7 04:16 bin</span><br><span class="line">drwxr-xr-x 2 root root     6 Jun  7 04:29 conf</span><br><span class="line">drwxr-xr-x 4 root root  4096 Jun  7 04:43 data</span><br><span class="line">-rw-r--r-- 1 root root 34520 May  8 18:08 GNU-AGPL-3.0</span><br><span class="line">drwxr-xr-x 2 root root     6 Jun  7 04:43 <span class="built_in">log</span></span><br><span class="line">-rw-r--r-- 1 root root 16726 May  8 18:08 MPL-2</span><br><span class="line">-rw-r--r-- 1 root root  2262 May  8 18:08 README</span><br><span class="line">-rw-r--r-- 1 root root 35910 May  8 18:08 THIRD-PARTY-NOTICES</span><br></pre></td></tr></table></figure></p>
+<p>mongodb的bin下各工具的用途：</p>
+<pre><code>* mongod：数据库服务端，类似mysqld，每个实例启动一个进程，可以fork为Daemon运行
+* mongo：客户端命令行工具，类似sqlplus/mysql，其实也是一个js解释器，支持js语法
+* mongodump/mongorestore：将数据导入为bson格式的文件/将bson文件恢复为数据库，类似xtracbackup
+* mongoexport/mongoimport：将collection导出为json/csv格式数据/将数据导入数据库，类似mysqldump/mysqlimport
+* bsondump：将bson格式的文件转储为json格式的数据
+* mongos：分片路由，如果使用了sharding功能，则应用程序连接的是mongos而不是mongod
+* mongofiles：GridFS管理工具
+* mongostat：实时监控工具启动mongodb
+</code></pre><p>启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath /data/mongodb/data/</span><br></pre></td></tr></table></figure></p>
+<p>出现以下信息表示启动成功<br><img src="http://pjakaipln.bkt.clouddn.com/20181212001.png" alt="Alt text"></p>
+<h3 id="3、配置"><a href="#3、配置" class="headerlink" title="3、配置"></a>3、配置</h3><p>配置mongodb<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat conf/mongodb.conf </span></span><br><span class="line">dbpath=/data/mongodb/data</span><br><span class="line">logpath=/data/mongodb/<span class="built_in">log</span>/mongodb.log</span><br><span class="line">pidfilepath=/data/mongodb/data/mongodb.pid</span><br><span class="line">logappend=<span class="literal">true</span></span><br><span class="line"><span class="comment">#bind_ip=10.186.21.85</span></span><br><span class="line">bind_ip=0.0.0.0</span><br><span class="line">port=27017</span><br><span class="line">maxConns=20000</span><br><span class="line">fork=<span class="literal">true</span></span><br><span class="line"><span class="comment">#auth = true    # 先关闭, 创建好用户在启动</span></span><br></pre></td></tr></table></figure></p>
+<p>mongod的主要参数有：<br>dbpath: 数据文件存放路径，每个数据库会在其中创建一个子目录。<br>logpath：错误日志文件<br>logappend： 错误日志采用追加模式（默认是覆写模式）<br>bind_ip： 对外服务的绑定ip，一般设置为空，及绑定在本机所有可用ip上，如有需要可以单独指定。只能绑定本机网卡上绑定的ip地址，如果指定ip没有绑定在本机网卡，则绑定0.0.0.0，此种情况适用于绑定云服务器的外网ip。<br>port： 对外服务端口。Web管理端口在这个port的基础上+1000<br>fork： 以后台Daemon形式运行服务<br>journal：开启日志功能，通过保存操作日志来降低单机故障的恢复时间，在1.8版本后正式加入，取代在1.7.5版本中的dur参数。<br>syncdelay： 执行sync的间隔，单位为秒。<br>directoryperdb： 每个db存放在单独的目录中，建议设置该参数。<br>maxConns： 最大连接数<br>repairpath： 执行repair时的临时目录。在如果没有开启journal，异常宕机后重启，必须执行repair操作。<br>此时可以指定配置文件启动mongodb<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mongod -f /data/mongodb/conf/mongodb.conf </span></span><br><span class="line">about to fork child process, waiting until server is ready <span class="keyword">for</span> connections.</span><br><span class="line">forked process: 20815</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure></p>
+<p>以上即表示启动成功</p>
+<h3 id="4、管理mongodb服务"><a href="#4、管理mongodb服务" class="headerlink" title="4、管理mongodb服务"></a>4、管理mongodb服务</h3><p>官网文档<a href="https://docs.mongodb.com/manual/tutorial/manage-mongodb-processes/#stop-mongod-processes" target="_blank" rel="noopener">https://docs.mongodb.com/manual/tutorial/manage-mongodb-processes/#stop-mongod-processes</a><br>Start mongod Processes<br>（1）mongod<br>（2）mongod –dbpath /srv/mongodb/<br>（3）mongod –port 12345<br>（4）mongod –fork –logpath /var/log/mongodb.log<br>（5）mongod -f /data/mongodb/conf/mongodb.conf<br>Stop mongod Processes<br>（1）Use shutdownServer()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin </span><br><span class="line">db.shutdownServer()</span><br></pre></td></tr></table></figure></p>
+<p>（2）Use –shutdown<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod –shutdown</span><br></pre></td></tr></table></figure></p>
+<p>（3）Use CTRL-C<br>（4）Use kill<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> &lt;mongod process ID&gt;</span><br><span class="line"><span class="built_in">kill</span> -2 &lt;mongod process ID&gt;</span><br></pre></td></tr></table></figure></p>
+<p>禁止使用-9<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WARNING:</span><br><span class="line">Never use <span class="built_in">kill</span> -9 (i.e. SIGKILL) to terminate a mongod instance.</span><br></pre></td></tr></table></figure></p>
+<h3 id="5、修复monogdb"><a href="#5、修复monogdb" class="headerlink" title="5、修复monogdb"></a>5、修复monogdb</h3><p>当出现服务器非正常关机的情况，重新启动的时候会出现以下类似报错<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: child process failed, exited with error number 100</span><br><span class="line">ERROR: child process failed, exited with error number 48</span><br></pre></td></tr></table></figure></p>
+<p>解决方法为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /data/mongodb/conf/mongodb.conf –repair</span><br><span class="line">mongod -f /data/mongodb/conf/mongodb.conf --auth</span><br><span class="line">mongod -f /data/mongodb/conf/mongodb.conf</span><br></pre></td></tr></table></figure></p>
+<p>通过repair修复<br>连接mongodb方法为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo --host 101.132.37.169:27017</span><br></pre></td></tr></table></figure></p>
+<p>其中ip地址为配置文件中bind_ip地址，如果是本地可以直接mongo连接<br>6、打开网页<br>在mongodb.conf配置文件中加入以下参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rest=<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>即可打开网页端口，默认为28017，如图所示<br><img src="http://pjakaipln.bkt.clouddn.com/20181212002.png" alt="Alt text"></p>
+<h2 id="三、MongoDB操作"><a href="#三、MongoDB操作" class="headerlink" title="三、MongoDB操作"></a>三、MongoDB操作</h2><h3 id="1、用户操作"><a href="#1、用户操作" class="headerlink" title="1、用户操作"></a>1、用户操作</h3><p>创建用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin </span><br><span class="line">db.createUser(&#123;user:<span class="string">"root"</span>,<span class="built_in">pwd</span>:<span class="string">"root"</span>,roles:[&#123;role:<span class="string">"readWrite"</span>,db:<span class="string">"admin"</span>&#125;]&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>查看已存在的用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.system.users.find()</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"admin.root"</span>, <span class="string">"user"</span> : <span class="string">"root"</span>, <span class="string">"db"</span> : <span class="string">"admin"</span>, <span class="string">"credentials"</span> : &#123; <span class="string">"SCRAM-SHA-1"</span> : &#123; <span class="string">"iterationCount"</span> : 10000, <span class="string">"salt"</span> : <span class="string">"1hkiX4Tscoj6bUpxF2x7+A=="</span>, <span class="string">"storedKey"</span> : <span class="string">"ciyQR1bc5Bbm6Qxg4euAijnadCw="</span>, <span class="string">"serverKey"</span> : <span class="string">"F/Gg0NmM19ih62VjbccW/SYOAh4="</span> &#125; &#125;, <span class="string">"roles"</span> : [ &#123; <span class="string">"role"</span> : <span class="string">"root"</span>, <span class="string">"db"</span> : <span class="string">"admin"</span> &#125; ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"testdb.testdb"</span>, <span class="string">"user"</span> : <span class="string">"testdb"</span>, <span class="string">"db"</span> : <span class="string">"testdb"</span>, <span class="string">"credentials"</span> : &#123; <span class="string">"SCRAM-SHA-1"</span> : &#123; <span class="string">"iterationCount"</span> : 10000, <span class="string">"salt"</span> : <span class="string">"VhSm/77+cGXEUwYAbdHvSw=="</span>, <span class="string">"storedKey"</span> : <span class="string">"hDtO9gq4OVNdcChNSoRhYiXmSQQ="</span>, <span class="string">"serverKey"</span> : <span class="string">"L1bPBquYwey5O0BYsDl7zsiSojs="</span> &#125; &#125;, <span class="string">"roles"</span> : [ &#123; <span class="string">"role"</span> : <span class="string">"dbOwner"</span>, <span class="string">"db"</span> : <span class="string">"testdb"</span> &#125; ] &#125;</span><br></pre></td></tr></table></figure></p>
+<p>删除用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.system.users.remove(&#123;user:<span class="string">"testdb1u1"</span>&#125;)</span><br><span class="line">WriteResult(&#123; <span class="string">"nRemoved"</span> : 1 &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>用户登录数据库测试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo -u testdb -p 123456 127.0.0.1:27017/testdb</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、数据库操作"><a href="#2、数据库操作" class="headerlink" title="2、数据库操作"></a>2、数据库操作</h3><p>创建数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use newdb</span><br><span class="line">switched to db newdb</span><br></pre></td></tr></table></figure></p>
+<p>检查当前选择的数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; db</span><br><span class="line">newdb</span><br></pre></td></tr></table></figure></p>
+<p>检查数据库列表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>新创建的数据库(newdb)不在列表中。要显示数据库，需要至少插入一个文档，否则空的数据库是不显示出来的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.items.insert(&#123;<span class="string">"name"</span>:<span class="string">"yiibai tutorials"</span>&#125;)</span><br><span class="line">WriteResult(&#123; <span class="string">"nInserted"</span> : 1 &#125;)</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br><span class="line">newdb  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>在 MongoDB 中默认数据库是：test。 如果您还没有创建过任何数据库，则集合/文档将存储在test数据库中。<br>删除数据库<br>MongoDB中的 db.dropDatabase()命令用于删除现有的数据库。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br><span class="line">newdb  0.000GB</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br><span class="line">newdb  0.000GB</span><br><span class="line">&gt; db</span><br><span class="line">newdb</span><br><span class="line">&gt; db.dropDatabase()</span><br><span class="line">&#123; <span class="string">"dropped"</span> : <span class="string">"newdb"</span>, <span class="string">"ok"</span> : 1 &#125;</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>以上过程已把数据库newdb删除</p>
+<h2 id="四、MongoDB集群"><a href="#四、MongoDB集群" class="headerlink" title="四、MongoDB集群"></a>四、MongoDB集群</h2><h3 id="1、MongoDB主从模式搭建"><a href="#1、MongoDB主从模式搭建" class="headerlink" title="1、MongoDB主从模式搭建"></a>1、MongoDB主从模式搭建</h3><p>（1）Master-Slave搭建<br>两台服务器IP分别为：10.186.21.85（主）、10.186.21.84（从）<br>关于mongodb的详细配置可以从配置文件看到<br>主库配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /data/mongodb/conf/mongodb.conf </span></span><br><span class="line">dbpath=/data/mongodb/data	<span class="comment">#数据库路径</span></span><br><span class="line">logpath=/data/mongodb/<span class="built_in">log</span>/mongodb.log	<span class="comment">#日志输出文件路径</span></span><br><span class="line">logappend=<span class="literal">true</span>  <span class="comment">#日志输出方式</span></span><br><span class="line">pidfilepath=/data/mongodb/data/mongodb.pid	<span class="comment">#pid文件路径</span></span><br><span class="line"><span class="comment">#bind_ip=10.186.21.85</span></span><br><span class="line">bind_ip=0.0.0.0</span><br><span class="line">port=27017	<span class="comment">#端口号</span></span><br><span class="line">rest=<span class="literal">true</span>	<span class="comment">#设置后打开28017网页端口</span></span><br><span class="line">httpinterface=<span class="literal">true</span></span><br><span class="line">maxConns=20000</span><br><span class="line">fork=<span class="literal">true</span>	<span class="comment">#设置后台运行</span></span><br><span class="line">shardsvr=<span class="literal">true</span></span><br><span class="line"><span class="comment">#directoryperdb=true</span></span><br><span class="line"><span class="comment">#auth = true    # 先关闭, 创建好用户在启动</span></span><br><span class="line"><span class="comment">#nohttpinterface=false</span></span><br><span class="line"></span><br><span class="line">journal=<span class="literal">true</span></span><br><span class="line">quiet=<span class="literal">true</span></span><br><span class="line">master=<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>从库配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /data/mongodb/conf/mongodb.conf </span></span><br><span class="line">dbpath=/data/mongodb/data	<span class="comment">#数据库路径</span></span><br><span class="line">logpath=/data/mongodb/<span class="built_in">log</span>/mongodb.log	<span class="comment">#日志输出文件路径</span></span><br><span class="line">logappend=<span class="literal">true</span>  <span class="comment">#日志输出方式</span></span><br><span class="line">pidfilepath=/data/mongodb/data/mongodb.pid	<span class="comment">#pid文件路径</span></span><br><span class="line"><span class="comment">#bind_ip=10.186.21.84</span></span><br><span class="line">bind_ip=0.0.0.0</span><br><span class="line">port=27017	<span class="comment">#端口号</span></span><br><span class="line">rest=<span class="literal">true</span>	<span class="comment">#设置后打开28017网页端口</span></span><br><span class="line">httpinterface=<span class="literal">true</span></span><br><span class="line">maxConns=20000</span><br><span class="line">fork=<span class="literal">true</span>	<span class="comment">#设置后台运行</span></span><br><span class="line">shardsvr=<span class="literal">true</span></span><br><span class="line"><span class="comment">#directoryperdb=true</span></span><br><span class="line"><span class="comment">#auth = true    # 先关闭, 创建好用户在启动</span></span><br><span class="line"><span class="comment">#nohttpinterface=false</span></span><br><span class="line"></span><br><span class="line">journal=<span class="literal">true</span></span><br><span class="line">quiet=<span class="literal">true</span></span><br><span class="line">slave=<span class="literal">true</span></span><br><span class="line"><span class="built_in">source</span>=10.186.21.85:27017</span><br></pre></td></tr></table></figure></p>
+<p>验证<br>主库添加数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br><span class="line">&gt; use testdb</span><br><span class="line">switched to db testdb</span><br><span class="line">&gt; db.items.insert(&#123;<span class="string">"name"</span>:<span class="string">"yiibai tutorials"</span>&#125;)</span><br><span class="line">WriteResult(&#123; <span class="string">"nInserted"</span> : 1 &#125;)</span><br><span class="line">&gt; use testdb</span><br><span class="line">switched to db testdb</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line"><span class="built_in">local</span>   0.000GB</span><br><span class="line">testdb  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>从库查看数据库验证<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; rs.slaveOk()</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line"><span class="built_in">local</span>   0.000GB</span><br><span class="line">testdb  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>登录从库后执行命令可能会报错<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[thread1] Error: listDatabases failed:&#123; <span class="string">"ok"</span> : 0, <span class="string">"errmsg"</span> : <span class="string">"not master and slaveOk=false"</span>, <span class="string">"code"</span> : 13435 &#125; :</span><br></pre></td></tr></table></figure></p>
+<p>解决方法为登录从库后执行rs.slaveOk()，如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">2018-06-08T05:25:43.065-0400 E QUERY    [thread1] Error: listDatabases failed:&#123; <span class="string">"ok"</span> : 0, <span class="string">"errmsg"</span> : <span class="string">"not master and slaveOk=false"</span>, <span class="string">"code"</span> : 13435 &#125; :</span><br><span class="line">_getErrorWithCode@src/mongo/shell/utils.js:25:13</span><br><span class="line">Mongo.prototype.getDBs@src/mongo/shell/mongo.js:62:1</span><br><span class="line">shellHelper.show@src/mongo/shell/utils.js:781:19</span><br><span class="line">shellHelper@src/mongo/shell/utils.js:671:15</span><br><span class="line">@(shellhelp2):1:1</span><br><span class="line"></span><br><span class="line">&gt; rs.slaveOk()</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin  0.000GB</span><br><span class="line"><span class="built_in">local</span>  0.000GB</span><br></pre></td></tr></table></figure></p>
+<p>（2）Master-Slave安全<br>这个主从安全在 MongoDB官网说的很清楚。不能和普通的mongod权限验证那样。这里除了需要加入 —auth 还需要加入 —keyFile 的验证。<br>首先，我们生成我们的keyFile，根据官网提供的说明，这个keyfile是可以任意内容的，只要保证所有集群中的机器都拥有同样的文件即可。在linux环境下，我们通过<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -base64 741 &gt; /data/mongodb/mongo-keyfile</span><br></pre></td></tr></table></figure></p>
+<p>这条命令来生成我们的keyFile。<br>保证主从库上使用的配置文件相同，在配置文件中加入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyFile=/data/mongodb/mongo-keyfile</span><br></pre></td></tr></table></figure></p>
+<p>重新启动monodb，报错<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mongod -f /data/mongodb/conf/mongodb.conf</span></span><br><span class="line">about to fork child process, waiting until server is ready <span class="keyword">for</span> connections.</span><br><span class="line">forked process: 16492</span><br><span class="line">ERROR: child process failed, exited with error number 1</span><br></pre></td></tr></table></figure></p>
+<p>查看日志<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTROL  [main] ***** SERVER RESTARTED *****</span><br><span class="line">ACCESS   [main] permissions on /data/mongodb/mongo-keyfile are too open</span><br></pre></td></tr></table></figure></p>
+<p>可以看到是文件权限过大<br>调整权限为400<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chmod 400 mongo-keyfile </span></span><br><span class="line"><span class="comment"># ll</span></span><br><span class="line">total 108</span><br><span class="line">drwxr-xr-x 2 root root  4096 Jun  7 04:16 bin</span><br><span class="line">drwxr-xr-x 2 root root    25 Jun  8 05:44 conf</span><br><span class="line">drwxr-xr-x 4 root root  4096 Jun  8 05:49 data</span><br><span class="line">-rw-r--r-- 1 root root 34520 May  8 18:08 GNU-AGPL-3.0</span><br><span class="line">drwxr-xr-x 2 root root    24 Jun  7 05:20 <span class="built_in">log</span></span><br><span class="line">-r-------- 1 root root     7 Jun  8 05:42 mongo-keyfile</span><br><span class="line">-rw-r--r-- 1 root root 16726 May  8 18:08 MPL-2</span><br><span class="line">-rw-r--r-- 1 root root  2262 May  8 18:08 README</span><br><span class="line">-rw-r--r-- 1 root root 35910 May  8 18:08 THIRD-PARTY-NOTICES</span><br></pre></td></tr></table></figure></p>
+<p>重新启动，即可启动成功</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/12/12/MongoDB基础文档/">MongoDB基础文档</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/2018/12/12/MongoDB基础文档/" title="MongoDB基础文档">http://www.cnops.com/2018/12/12/MongoDB基础文档/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/12/MongoDB基础文档/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"><i class="fa fa-tag"></i> MongoDB</a>
+          
+            <a href="/tags/集群/" rel="tag"><i class="fa fa-tag"></i> 集群</a>
+          
+            <a href="/tags/主从/" rel="tag"><i class="fa fa-tag"></i> 主从</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/11/Zabbix安装/" rel="next" title="Zabbix安装">
+                <i class="fa fa-chevron-left"></i> Zabbix安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/12/CentOS上安装Java环境/" rel="prev" title="CentOS上安装Java环境">
+                CentOS上安装Java环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Francis</p>
+              <p class="site-description motion-element" itemprop="description">云在青天水在瓶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/francisxys" title="GitHub &rarr; https://github.com/francisxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:824014778@qq.com" title="E-Mail &rarr; mailto:824014778@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/Teotihuacanxys" title="Weibo &rarr; https://weibo.com/Teotihuacanxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tiejiang.org" title="http://www.tiejiang.org" rel="noopener" target="_blank">铁匠运维网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="http://www.ityouknow.com/" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-MongoDB简介"><span class="nav-text">一、    MongoDB简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、MongoDB历史"><span class="nav-text">1、MongoDB历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、MongoDB特点"><span class="nav-text">2、MongoDB特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、MongoDB数据库的优点"><span class="nav-text">3、MongoDB数据库的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、MongoDB快速入门"><span class="nav-text">4、MongoDB快速入门</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、MongoDB安装"><span class="nav-text">二、MongoDB安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、下载"><span class="nav-text">1、下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装"><span class="nav-text">2、安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、配置"><span class="nav-text">3、配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、管理mongodb服务"><span class="nav-text">4、管理mongodb服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、修复monogdb"><span class="nav-text">5、修复monogdb</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、MongoDB操作"><span class="nav-text">三、MongoDB操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、用户操作"><span class="nav-text">1、用户操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据库操作"><span class="nav-text">2、数据库操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、MongoDB集群"><span class="nav-text">四、MongoDB集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、MongoDB主从模式搭建"><span class="nav-text">1、MongoDB主从模式搭建</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

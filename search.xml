@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[大日志文件进行分割的N种方法]]></title>
+    <url>%2F2018%2F12%2F13%2F%E5%A4%A7%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%88%86%E5%89%B2%E7%9A%84N%E7%A7%8D%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[当日志容量上G的时候，用vi查看具体内容效率就会变得特别低，这个时候就需要将大日志进行分割。为了比较各种分割方法的效果，我选取的测试日志基本信息如下：1234# ls -lrth test.log-rw-r--r-- 1 root root 645M 5月 30 20:42 test.log# wc -l test.log8856340 test.log 1、split方法分割split命令专门用来将一个大文件分割成很多个小文件，我把split命令的选项做一个简要说明 选项 含义 -b 分割后的文档大小，单位是byte -C 分割后的文档，单行最大byte数 -d 使用数字作为后缀，同时使用-a length指定后缀长度 -l 分割后文档的行数 为了尽量保证日志的可读性，我们按行分割大日志文件，并且指定分割后的文件的前缀和后缀 123456789101112131415#后缀是数字，占两位，前缀是test.logsplit -l 1000000 test.log -d -a 2 test.log#分割之后的结果ls -lrth总用量 1.3G-rw-r--r-- 1 root root 645M 5月 30 20:42 test.log-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log00-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log01-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log02-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log03-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log04-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log05-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log06-rw-r--r-- 1 root root 73M 5月 30 20:55 test.log07-rw-r--r-- 1 root root 64M 5月 30 20:55 test.log08 2、dd分割123dd bs=1M count=300 if=test.log of=newlog.1dd bs=1M count=300 if=test.log of=newlog.2 skip=300dd bs=1M count=300 if=test.log of=newlog.3 skip=600 分割后的效果123456ls -lrth总用量 1.3G-rw-r--r-- 1 root root 645M 5月 30 20:42 test.log-rw-r--r-- 1 root root 300M 5月 30 21:07 newlog.1-rw-r--r-- 1 root root 300M 5月 30 21:07 newlog.2-rw-r--r-- 1 root root 45M 5月 30 21:07 newlog.3 在上面使用的命令中，bs代表数据块的大小，count表示复制的块数，if表示输入文件，of表示输出文件。这个命令不能一下就把文件分割到我们想要的状态，而且很有可能一行日志被分到两个文件中。 3、head+tail分割用这两个命令获取文件部分内容，然后重定向就能实现文件分割，但是限制也挺多，只能把文件分成两部分，如果文件特别大，想要达到预期的效果，就要一直分割下去。head/tail -n $行数 test.log &gt; newlog因为这两个命令都比较熟悉，不再多讲。 4、sed实现分割实现原理就是用sed截取特定行之间的内容，然后进行重定向。12345sed -n '1,2000000p' test.log &gt; test.log.1sed -n '2000001,4000000p' test.log &gt; test.log.2sed -n '4000001,6000000p' test.log &gt; test.log.3sed -n '6000001,8000000p' test.log &gt; test.log.4sed -n '8000001,$p' test.log &gt; test.log.5 $表示最后一行，这个如果分割过多，也需要一个循环。 5、awk实现分割实现原理和sed差不多，因为使用awk不多，这里只举一个小例子：12awk ‘&#123;if (NR&lt;120000) print $0&#125;’ test.log &gt; a.txtawk ‘&#123;if (NR&gt;=120000) print $0&#125;’ test.log &gt; b.txt 还是split用得舒服。]]></content>
+      <categories>
+        <category>OS</category>
+      </categories>
+      <tags>
+        <tag>日志</tag>
+        <tag>分割</tag>
+        <tag>split</tag>
+        <tag>dd</tag>
+        <tag>head</tag>
+        <tag>tail</tag>
+        <tag>awk</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS上安装Nodejs]]></title>
     <url>%2F2018%2F12%2F12%2FCentOS%E4%B8%8A%E5%AE%89%E8%A3%85Nodejs%2F</url>
     <content type="text"><![CDATA[Node官方地址：https://nodejs.org/en/选择LTS最新版本 1、二进制包安装1234wget https://nodejs.org/dist/v10.14.2/node-v10.14.2-linux-x64.tar.xztar -d node-v10.14.2-linux-x64.tar.xztar -xvf node-v8.11.3-linux-x64.tarmv node-v8.11.3-linux-x64 /data/node 配置环境变量1vim /etc/profile 最后加入以下内容并保存12#set node environmentexport PATH=/data/node/bin:$PATH 执行以下命令，使环境变量生效1source /etc/profile 验证nodejs是否安装成功。12# node -vv8.11.3 出现以上信息即表示node安装成功。 2、源码包编译安装123456wget https://nodejs.org/dist/v10.14.2/node-v10.14.2.tar.gztar -zxvf node-v10.14.2.tar.gzcd node-v10.14.2./configure –prefix=/data/nodemakemake install 配置环境变量1vim /etc/profile 最后加入以下内容并保存12#set node environmentexport PATH=/data/node/bin:$PATH 执行以下命令，使环境变量生效1source /etc/profile 验证nodejs是否安装成功。12# node -vv8.11.3 出现以上信息即表示node安装成功。]]></content>
@@ -35,8 +52,8 @@
         <category>Env</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>CentOS</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -73,8 +90,8 @@
         <category>OS</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>CentOS</tag>
+        <tag>Python</tag>
         <tag>巡检</tag>
         <tag>excel</tag>
       </tags>
@@ -129,8 +146,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>CentOS</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -142,9 +159,9 @@
         <category>ELK</category>
       </categories>
       <tags>
-        <tag>ELK</tag>
-        <tag>head</tag>
         <tag>日志</tag>
+        <tag>head</tag>
+        <tag>ELK</tag>
         <tag>Elasticsearch</tag>
         <tag>Logstash</tag>
         <tag>Kibana</tag>

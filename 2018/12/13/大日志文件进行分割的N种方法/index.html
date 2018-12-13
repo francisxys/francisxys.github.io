@@ -112,27 +112,25 @@
 
 
 
-  <meta name="description" content="关于我从事LINUX运维工作，主要内容：  Linux系统运维 WEB运维，如Apache、Nginx、Tomcat等 自动化运维，如Ansible、SaltStack、Puppet 自动化发布，如gitlab+git+jenkins+maven框架 监控，如Zabbix、Nagios 脚本，如bash、python 微服务，如SpringBoot+SpringCloud、Docker+Kuber">
-<meta name="keywords" content="运维,监控,自动化,脚本,系统,数据库">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Francis&#39;Blog">
-<meta property="og:url" content="http://www.cnops.com/about/index.html">
+  <meta name="description" content="当日志容量上G的时候，用vi查看具体内容效率就会变得特别低，这个时候就需要将大日志进行分割。为了比较各种分割方法的效果，我选取的测试日志基本信息如下：1234# ls -lrth test.log-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log# wc -l test.log8856340 test.log 1、split方法分割split命令专门">
+<meta name="keywords" content="日志,分割,split,dd,head,tail,awk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大日志文件进行分割的N种方法">
+<meta property="og:url" content="http://www.cnops.com/2018/12/13/大日志文件进行分割的N种方法/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="关于我从事LINUX运维工作，主要内容：  Linux系统运维 WEB运维，如Apache、Nginx、Tomcat等 自动化运维，如Ansible、SaltStack、Puppet 自动化发布，如gitlab+git+jenkins+maven框架 监控，如Zabbix、Nagios 脚本，如bash、python 微服务，如SpringBoot+SpringCloud、Docker+Kuber">
+<meta property="og:description" content="当日志容量上G的时候，用vi查看具体内容效率就会变得特别低，这个时候就需要将大日志进行分割。为了比较各种分割方法的效果，我选取的测试日志基本信息如下：1234# ls -lrth test.log-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log# wc -l test.log8856340 test.log 1、split方法分割split命令专门">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%AB%E7%A0%81%E9%A2%86%E7%BA%A2%E5%8C%85.jpg">
-<meta property="og:updated_time" content="2018-12-12T07:05:49.097Z">
+<meta property="og:updated_time" content="2018-12-13T07:37:49.771Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Francis&#39;Blog">
-<meta name="twitter:description" content="关于我从事LINUX运维工作，主要内容：  Linux系统运维 WEB运维，如Apache、Nginx、Tomcat等 自动化运维，如Ansible、SaltStack、Puppet 自动化发布，如gitlab+git+jenkins+maven框架 监控，如Zabbix、Nagios 脚本，如bash、python 微服务，如SpringBoot+SpringCloud、Docker+Kuber">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%AB%E7%A0%81%E9%A2%86%E7%BA%A2%E5%8C%85.jpg">
+<meta name="twitter:title" content="大日志文件进行分割的N种方法">
+<meta name="twitter:description" content="当日志容量上G的时候，用vi查看具体内容效率就会变得特别低，这个时候就需要将大日志进行分割。为了比较各种分割方法的效果，我选取的测试日志基本信息如下：1234# ls -lrth test.log-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log# wc -l test.log8856340 test.log 1、split方法分割split命令专门">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/about/">
+  <link rel="canonical" href="http://www.cnops.com/2018/12/13/大日志文件进行分割的N种方法/">
 
 
 
@@ -142,7 +140,7 @@
   };
 </script>
 
-  <title> | Francis'Blog</title>
+  <title>大日志文件进行分割的N种方法 | Francis'Blog</title>
   
 
 
@@ -300,7 +298,7 @@
         
         
           
-          <li class="menu-item menu-item-about menu-item-active">
+          <li class="menu-item menu-item-about">
 
     
     
@@ -329,28 +327,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -399,65 +375,290 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/13/大日志文件进行分割的N种方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline"></h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>从事LINUX运维工作，主要内容：</p>
-<ul>
-<li>Linux系统运维</li>
-<li>WEB运维，如Apache、Nginx、Tomcat等</li>
-<li>自动化运维，如Ansible、SaltStack、Puppet</li>
-<li>自动化发布，如gitlab+git+jenkins+maven框架</li>
-<li>监控，如Zabbix、Nagios</li>
-<li>脚本，如bash、python</li>
-<li>微服务，如SpringBoot+SpringCloud、Docker+Kubernetes</li>
-<li>热爱<code>开源项目</code>、热爱<code>新技术</code>、热爱<code>新事物</code>。</li>
-</ul>
-<h3 id="关于工作"><a href="#关于工作" class="headerlink" title="关于工作"></a>关于工作</h3><p>城市：上海</p>
-<h3 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h3><p>一直再学习，进步没进步就不知道啦······<br>近期学习方向：Python (大数据、人工智能)</p>
-<h3 id="福利放送"><a href="#福利放送" class="headerlink" title="福利放送"></a>福利放送</h3><h4 id="阿里云产品优惠"><a href="#阿里云产品优惠" class="headerlink" title="阿里云产品优惠"></a><a href="https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=taqd2wlp" target="_blank" rel="noopener">阿里云产品优惠</a></h4><p><a href="https://promotion.aliyun.com/ntms/act/enterprise-discount.html?userCode=taqd2wlp" target="_blank" rel="noopener">【助力企业上云】性能级主机2-5折</a><br><a href="https://promotion.aliyun.com/ntms/act/ecsjianzhan.html?userCode=taqd2wlp" target="_blank" rel="noopener">【弹性计算11月狂欢延续】全场6折起</a><br><a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=taqd2wlp" target="_blank" rel="noopener">【全民云计算】云主机低至2折</a><br><a href="https://promotion.aliyun.com/ntms/act/shoppingcart.html?userCode=taqd2wlp" target="_blank" rel="noopener">【超高返现】购物车全产品返25%</a><br><a href="https://www.aliyun.com/jianzhan/?userCode=taqd2wlp" target="_blank" rel="noopener">【阿里云自营建站】千套模板 品质保证</a></p>
-<h4 id="支付宝红包"><a href="#支付宝红包" class="headerlink" title="支付宝红包"></a>支付宝红包</h4><p>扫码领红包</p>
-<p><center><br><img src="http://pjakaipln.bkt.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%AB%E7%A0%81%E9%A2%86%E7%BA%A2%E5%8C%85.jpg" width="25%" height="25%"><br></center></p>
-<h3 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h3><ul>
-<li>Blog: <a href="https://www.cnops.top" target="_blank" rel="noopener">www.cnops.top</a></li>
-<li>Email: <a href="mailto:824014778@qq.com" target="_blank" rel="noopener">824014778@qq.com</a></li>
-<li>GitHub: <a href="https://github.com/francisxys" target="_blank" rel="noopener">Francis</a></li>
-<li>WeiBo: <a href="http://weibo.com/francisxys" target="_blank" rel="noopener">Francis</a></li>
-</ul>
-
+          <h1 class="post-title" itemprop="name headline">大日志文件进行分割的N种方法
+              
+            
+          </h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-13 15:25:20 / 修改时间：15:37:49" itemprop="dateCreated datePublished" datetime="2018-12-13T15:25:20+08:00">2018-12-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>当日志容量上G的时候，用vi查看具体内容效率就会变得特别低，这个时候就需要将大日志进行分割。<br>为了比较各种分割方法的效果，我选取的测试日志基本信息如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ls -lrth test.log</span></span><br><span class="line">-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log</span><br><span class="line"><span class="comment"># wc -l test.log</span></span><br><span class="line">8856340 test.log</span><br></pre></td></tr></table></figure></p>
+<h3 id="1、split方法分割"><a href="#1、split方法分割" class="headerlink" title="1、split方法分割"></a>1、split方法分割</h3><p>split命令专门用来将一个大文件分割成很多个小文件，我把split命令的选项做一个简要说明</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-b</td>
+<td>分割后的文档大小，单位是byte</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>分割后的文档，单行最大byte数</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>使用数字作为后缀，同时使用-a length指定后缀长度</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>分割后文档的行数</td>
+</tr>
+</tbody>
+</table>
+<p>为了尽量保证日志的可读性，我们按行分割大日志文件，并且指定分割后的文件的前缀和后缀</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#后缀是数字，占两位，前缀是test.log</span></span><br><span class="line">split -l 1000000 test.log -d -a 2 test.log</span><br><span class="line"><span class="comment">#分割之后的结果</span></span><br><span class="line">ls -lrth</span><br><span class="line">总用量 1.3G</span><br><span class="line">-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log00</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log01</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log02</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log03</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log04</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log05</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log06</span><br><span class="line">-rw-r--r-- 1 root root  73M 5月  30 20:55 test.log07</span><br><span class="line">-rw-r--r-- 1 root root  64M 5月  30 20:55 test.log08</span><br></pre></td></tr></table></figure>
+<h3 id="2、dd分割"><a href="#2、dd分割" class="headerlink" title="2、dd分割"></a>2、dd分割</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dd bs=1M count=300 <span class="keyword">if</span>=test.log of=newlog.1</span><br><span class="line">dd bs=1M count=300 <span class="keyword">if</span>=test.log of=newlog.2 skip=300</span><br><span class="line">dd bs=1M count=300 <span class="keyword">if</span>=test.log of=newlog.3 skip=600</span><br></pre></td></tr></table></figure>
+<p>分割后的效果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ls -lrth</span><br><span class="line">总用量 1.3G</span><br><span class="line">-rw-r--r-- 1 root root 645M 5月  30 20:42 test.log</span><br><span class="line">-rw-r--r-- 1 root root 300M 5月  30 21:07 newlog.1</span><br><span class="line">-rw-r--r-- 1 root root 300M 5月  30 21:07 newlog.2</span><br><span class="line">-rw-r--r-- 1 root root  45M 5月  30 21:07 newlog.3</span><br></pre></td></tr></table></figure></p>
+<p>在上面使用的命令中，bs代表数据块的大小，count表示复制的块数，if表示输入文件，of表示输出文件。<br>这个命令不能一下就把文件分割到我们想要的状态，而且很有可能一行日志被分到两个文件中。</p>
+<h3 id="3、head-tail分割"><a href="#3、head-tail分割" class="headerlink" title="3、head+tail分割"></a>3、head+tail分割</h3><p>用这两个命令获取文件部分内容，然后重定向就能实现文件分割，但是限制也挺多，只能把文件分成两部分，如果文件特别大，想要达到预期的效果，就要一直分割下去。<br>head/tail -n $行数 test.log &gt; newlog<br>因为这两个命令都比较熟悉，不再多讲。</p>
+<h3 id="4、sed实现分割"><a href="#4、sed实现分割" class="headerlink" title="4、sed实现分割"></a>4、sed实现分割</h3><p>实现原理就是用sed截取特定行之间的内容，然后进行重定向。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sed -n <span class="string">'1,2000000p'</span> test.log &gt; test.log.1</span><br><span class="line">sed -n <span class="string">'2000001,4000000p'</span> test.log &gt; test.log.2</span><br><span class="line">sed -n <span class="string">'4000001,6000000p'</span> test.log &gt; test.log.3</span><br><span class="line">sed -n <span class="string">'6000001,8000000p'</span> test.log &gt; test.log.4</span><br><span class="line">sed -n <span class="string">'8000001,$p'</span> test.log &gt; test.log.5</span><br></pre></td></tr></table></figure></p>
+<p>$表示最后一行，这个如果分割过多，也需要一个循环。</p>
+<h3 id="5、awk实现分割"><a href="#5、awk实现分割" class="headerlink" title="5、awk实现分割"></a>5、awk实现分割</h3><p>实现原理和sed差不多，因为使用awk不多，这里只举一个小例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk ‘&#123;<span class="keyword">if</span> (NR&lt;120000) <span class="built_in">print</span> <span class="variable">$0</span>&#125;’ test.log &gt; a.txt</span><br><span class="line">awk ‘&#123;<span class="keyword">if</span> (NR&gt;=120000) <span class="built_in">print</span> <span class="variable">$0</span>&#125;’ test.log &gt; b.txt</span><br></pre></td></tr></table></figure></p>
+<p>还是split用得舒服。</p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/12/13/大日志文件进行分割的N种方法/">大日志文件进行分割的N种方法</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/2018/12/13/大日志文件进行分割的N种方法/" title="大日志文件进行分割的N种方法">http://www.cnops.com/2018/12/13/大日志文件进行分割的N种方法/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/13/大日志文件进行分割的N种方法/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/日志/" rel="tag"><i class="fa fa-tag"></i> 日志</a>
+          
+            <a href="/tags/分割/" rel="tag"><i class="fa fa-tag"></i> 分割</a>
+          
+            <a href="/tags/split/" rel="tag"><i class="fa fa-tag"></i> split</a>
+          
+            <a href="/tags/dd/" rel="tag"><i class="fa fa-tag"></i> dd</a>
+          
+            <a href="/tags/head/" rel="tag"><i class="fa fa-tag"></i> head</a>
+          
+            <a href="/tags/tail/" rel="tag"><i class="fa fa-tag"></i> tail</a>
+          
+            <a href="/tags/awk/" rel="tag"><i class="fa fa-tag"></i> awk</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/12/CentOS上安装Nodejs/" rel="next" title="CentOS上安装Nodejs">
+                <i class="fa fa-chevron-left"></i> CentOS上安装Nodejs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -722,7 +923,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于我"><span class="nav-text">关于我</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于工作"><span class="nav-text">关于工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于学习"><span class="nav-text">关于学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#福利放送"><span class="nav-text">福利放送</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#阿里云产品优惠"><span class="nav-text">阿里云产品优惠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支付宝红包"><span class="nav-text">支付宝红包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联系我"><span class="nav-text">联系我</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、split方法分割"><span class="nav-text">1、split方法分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、dd分割"><span class="nav-text">2、dd分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、head-tail分割"><span class="nav-text">3、head+tail分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、sed实现分割"><span class="nav-text">4、sed实现分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、awk实现分割"><span class="nav-text">5、awk实现分割</span></a></li></ol></div>
             
 
           </div>

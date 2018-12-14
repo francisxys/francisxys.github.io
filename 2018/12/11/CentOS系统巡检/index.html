@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="_1iFxvEkIImQlyvWe4Y4gLh85rLCe9HPYV56NcoolIE">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="RZoFTJvjGp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1、巡检脚本首先编写单台系统巡检脚本，内容如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929">
+<meta name="keywords" content="CentOS,Python,巡检,excel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS系统巡检">
+<meta property="og:url" content="http://www.cnops.com/2018/12/11/CentOS系统巡检/index.html">
+<meta property="og:site_name" content="Francis&#39;Blog">
+<meta property="og:description" content="1、巡检脚本首先编写单台系统巡检脚本，内容如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-14T06:31:25.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS系统巡检">
+<meta name="twitter:description" content="1、巡检脚本首先编写单台系统巡检脚本，内容如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.cnops.com/2018/12/11/CentOS系统巡检/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CentOS系统巡检 | Francis'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Francis'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Francis'Blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/11/CentOS系统巡检/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CentOS系统巡检
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-11 14:20:26" itemprop="dateCreated datePublished" datetime="2018-12-11T14:20:26+08:00">2018-12-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-14 14:31:25" itemprop="dateModified" datetime="2018-12-14T14:31:25+08:00">2018-12-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Scripts/" itemprop="url" rel="index"><span itemprop="name">Scripts</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1、巡检脚本"><a href="#1、巡检脚本" class="headerlink" title="1、巡检脚本"></a>1、巡检脚本</h2><p>首先编写单台系统巡检脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat checkos.sh</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">###################################################################</span></span><br><span class="line"><span class="comment"># Functions: this script from polling system status</span></span><br><span class="line"><span class="comment"># Info: be suitable for CentOS/RHEL 6/7 </span></span><br><span class="line"><span class="comment"># Changelog:</span></span><br><span class="line"><span class="comment">#      2016-09-15    shaon     initial commit</span></span><br><span class="line"><span class="comment">###################################################################</span></span><br><span class="line"><span class="comment">#set path env,if not set will some command not found in crontab</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">rm -f /data/scripts/*.csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># run this script use root</span></span><br><span class="line">[ $(id -u) -gt 0 ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"please use root run the script! "</span> &amp;&amp; <span class="built_in">exit</span> 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># check system  version</span></span><br><span class="line">OS_Version=$(awk <span class="string">'&#123;print $(NF-1)&#125;'</span> /etc/redhat-release)</span><br><span class="line"></span><br><span class="line"><span class="comment"># declare script version date</span></span><br><span class="line">Script_Version=<span class="string">"2018.10.30"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define polling log path</span></span><br><span class="line">LOGPATH=/data/scripts</span><br><span class="line">[ -d <span class="variable">$LOGPATH</span> ] || mkdir -p <span class="variable">$LOGPATH</span></span><br><span class="line">RESULTFILE=<span class="string">"<span class="variable">$LOGPATH</span>/`hostname`-`date +%Y%m%d`.csv"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define globle variable</span></span><br><span class="line">report_DateTime=<span class="string">""</span>    <span class="comment">#日期 ok</span></span><br><span class="line">report_Hostname=<span class="string">""</span>    <span class="comment">#主机名 ok</span></span><br><span class="line">report_OSRelease=<span class="string">""</span>    <span class="comment">#发行版本 ok</span></span><br><span class="line">report_Kernel=<span class="string">""</span>    <span class="comment">#内核 ok</span></span><br><span class="line">report_Language=<span class="string">""</span>    <span class="comment">#语言/编码 ok</span></span><br><span class="line">report_LastReboot=<span class="string">""</span>    <span class="comment">#最近启动时间 ok</span></span><br><span class="line">report_Uptime=<span class="string">""</span>    <span class="comment">#运行时间（天） ok</span></span><br><span class="line">report_CPUs=<span class="string">""</span>    <span class="comment">#CPU数量 ok</span></span><br><span class="line">report_CPUType=<span class="string">""</span>    <span class="comment">#CPU类型 ok</span></span><br><span class="line">report_Arch=<span class="string">""</span>    <span class="comment">#CPU架构 ok</span></span><br><span class="line">report_MemTotal=<span class="string">""</span>    <span class="comment">#内存总容量(MB) ok</span></span><br><span class="line">report_MemFree=<span class="string">""</span>    <span class="comment">#内存剩余(MB) ok</span></span><br><span class="line">report_MemUsedPercent=<span class="string">""</span>    <span class="comment">#内存使用率% ok</span></span><br><span class="line">report_DiskTotal=<span class="string">""</span>    <span class="comment">#硬盘总容量(GB) ok</span></span><br><span class="line">report_DiskFree=<span class="string">""</span>    <span class="comment">#硬盘剩余(GB) ok</span></span><br><span class="line">report_DiskUsedPercent=<span class="string">""</span>    <span class="comment">#硬盘使用率% ok</span></span><br><span class="line">report_InodeTotal=<span class="string">""</span>    <span class="comment">#Inode总量 ok</span></span><br><span class="line">report_InodeFree=<span class="string">""</span>    <span class="comment">#Inode剩余 ok</span></span><br><span class="line">report_InodeUsedPercent=<span class="string">""</span>    <span class="comment">#Inode使用率 ok</span></span><br><span class="line">report_IP=<span class="string">""</span>    <span class="comment">#IP地址 ok</span></span><br><span class="line">report_MAC=<span class="string">""</span>    <span class="comment">#MAC地址 ok</span></span><br><span class="line">report_Gateway=<span class="string">""</span>    <span class="comment">#默认网关 ok</span></span><br><span class="line">report_DNS=<span class="string">""</span>    <span class="comment">#DNS ok</span></span><br><span class="line">report_Listen=<span class="string">""</span>    <span class="comment">#监听 ok</span></span><br><span class="line">report_Selinux=<span class="string">""</span>    <span class="comment">#Selinux ok</span></span><br><span class="line">report_Firewall=<span class="string">""</span>    <span class="comment">#防火墙 ok</span></span><br><span class="line">report_USERs=<span class="string">""</span>    <span class="comment">#用户 ok</span></span><br><span class="line">report_USEREmptyPassword=<span class="string">""</span>   <span class="comment">#空密码用户 ok</span></span><br><span class="line">report_USERTheSameUID=<span class="string">""</span>      <span class="comment">#相同ID的用户 ok </span></span><br><span class="line">report_PasswordExpiry=<span class="string">""</span>    <span class="comment">#密码过期（天） ok</span></span><br><span class="line">report_RootUser=<span class="string">""</span>    <span class="comment">#root用户 ok</span></span><br><span class="line">report_Sudoers=<span class="string">""</span>    <span class="comment">#sudo授权  ok</span></span><br><span class="line">report_SSHAuthorized=<span class="string">""</span>    <span class="comment">#SSH信任主机 ok</span></span><br><span class="line">report_SSHDProtocolVersion=<span class="string">""</span>    <span class="comment">#SSH协议版本 ok</span></span><br><span class="line">report_SSHDPermitRootLogin=<span class="string">""</span>    <span class="comment">#允许root远程登录 ok</span></span><br><span class="line">report_DefunctProsess=<span class="string">""</span>    <span class="comment">#僵尸进程数量 ok</span></span><br><span class="line">report_SelfInitiatedService=<span class="string">""</span>    <span class="comment">#自启动服务数量 ok</span></span><br><span class="line">report_SelfInitiatedProgram=<span class="string">""</span>    <span class="comment">#自启动程序数量 ok</span></span><br><span class="line">report_RuningService=<span class="string">""</span>           <span class="comment">#运行中服务数  ok</span></span><br><span class="line">report_Crontab=<span class="string">""</span>    <span class="comment">#计划任务数 ok</span></span><br><span class="line">report_Syslog=<span class="string">""</span>    <span class="comment">#日志服务 ok</span></span><br><span class="line">report_SNMP=<span class="string">""</span>    <span class="comment">#SNMP  OK</span></span><br><span class="line">report_NTP=<span class="string">""</span>    <span class="comment">#NTP ok</span></span><br><span class="line">report_JDK=<span class="string">""</span>    <span class="comment">#JDK版本 ok</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">version</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"System Polling：Version <span class="variable">$Script_Version</span> "</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getCpuStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check CPU Status#############################"</span></span><br><span class="line">    Physical_CPUs=$(grep <span class="string">"physical id"</span> /proc/cpuinfo| sort | uniq | wc -l)</span><br><span class="line">    Virt_CPUs=$(grep <span class="string">"processor"</span> /proc/cpuinfo | wc -l)</span><br><span class="line">    CPU_Kernels=$(grep <span class="string">"cores"</span> /proc/cpuinfo|uniq| awk -F <span class="string">': '</span> <span class="string">'&#123;print $2&#125;'</span>)</span><br><span class="line">    CPU_Type=$(grep <span class="string">"model name"</span> /proc/cpuinfo | awk -F <span class="string">': '</span> <span class="string">'&#123;print $2&#125;'</span> | sort | uniq)</span><br><span class="line">    CPU_Arch=$(uname -m)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"物理CPU个数:<span class="variable">$Physical_CPUs</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"逻辑CPU个数:<span class="variable">$Virt_CPUs</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"每CPU核心数:<span class="variable">$CPU_Kernels</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"    CPU型号:<span class="variable">$CPU_Type</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"    CPU架构:<span class="variable">$CPU_Arch</span>"</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_CPUs=<span class="variable">$Virt_CPUs</span>    <span class="comment">#CPU数量</span></span><br><span class="line">    report_CPUType=<span class="variable">$CPU_Type</span>  <span class="comment">#CPU类型</span></span><br><span class="line">    report_Arch=<span class="variable">$CPU_Arch</span>     <span class="comment">#CPU架构</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getMemStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Memmory Usage ###########################"</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$OS_Version</span> &lt; 7 ]];<span class="keyword">then</span></span><br><span class="line">        free -mo</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        free -h</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    MemTotal=$(grep MemTotal /proc/meminfo| awk <span class="string">'&#123;print $2&#125;'</span>)  <span class="comment">#KB</span></span><br><span class="line">    MemFree=$(grep MemFree /proc/meminfo| awk <span class="string">'&#123;print $2&#125;'</span>)    <span class="comment">#KB</span></span><br><span class="line">    <span class="built_in">let</span> MemUsed=MemTotal-MemFree</span><br><span class="line">    MemPercent=$(awk <span class="string">"BEGIN &#123;if(<span class="variable">$MemTotal</span>==0)&#123;printf 100&#125;else&#123;printf \"%.2f\",<span class="variable">$MemUsed</span>*100/<span class="variable">$MemTotal</span>&#125;&#125;"</span>)</span><br><span class="line">    report_MemTotal=<span class="string">"<span class="variable">$((MemTotal/1024)</span>)"</span><span class="string">"MB"</span>        <span class="comment">#内存总容量(MB)</span></span><br><span class="line">    report_MemFree=<span class="string">"<span class="variable">$((MemFree/1024)</span>)"</span><span class="string">"MB"</span>          <span class="comment">#内存剩余(MB)</span></span><br><span class="line">    report_MemUsedPercent=<span class="string">"<span class="variable">$(awk "BEGIN &#123;if($MemTotal==0)</span>&#123;printf 100&#125;else&#123;printf \"%.2f\",<span class="variable">$MemUsed</span>*100/<span class="variable">$MemTotal</span>&#125;&#125;"</span>)<span class="string">""</span>%<span class="string">"   #内存使用率%</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function getDiskStatus()&#123;</span></span><br><span class="line"><span class="string">    echo "</span><span class="string">"</span></span><br><span class="line"><span class="string">    echo "</span><span class="comment">############################ Check Disk Status ############################"</span></span><br><span class="line">    df -hiP | sed <span class="string">'s/Mounted on/Mounted/'</span> &gt; /tmp/inode</span><br><span class="line">    df -hTP | sed <span class="string">'s/Mounted on/Mounted/'</span> &gt; /tmp/disk </span><br><span class="line">    join /tmp/disk /tmp/inode | awk <span class="string">'&#123;print $1,$2,"|",$3,$4,$5,$6,"|",$8,$9,$10,$11,"|",$12&#125;'</span>| column -t</span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    diskdata=$(df -TP | sed <span class="string">'1d'</span> | awk <span class="string">'$2!="tmpfs"&#123;print&#125;'</span>) <span class="comment">#KB</span></span><br><span class="line">    disktotal=$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$diskdata</span>"</span> | awk <span class="string">'&#123;total+=$3&#125;END&#123;print total&#125;'</span>) <span class="comment">#KB</span></span><br><span class="line">    diskused=$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$diskdata</span>"</span> | awk <span class="string">'&#123;total+=$4&#125;END&#123;print total&#125;'</span>)  <span class="comment">#KB</span></span><br><span class="line">    diskfree=$((disktotal-diskused)) <span class="comment">#KB</span></span><br><span class="line">    diskusedpercent=$(<span class="built_in">echo</span> <span class="variable">$disktotal</span> <span class="variable">$diskused</span> | awk <span class="string">'&#123;if($1==0)&#123;printf 100&#125;else&#123;printf "%.2f",$2*100/$1&#125;&#125;'</span>) </span><br><span class="line">    inodedata=$(df -iTP | sed <span class="string">'1d'</span> | awk <span class="string">'$2!="tmpfs"&#123;print&#125;'</span>)</span><br><span class="line">    inodetotal=$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$inodedata</span>"</span> | awk <span class="string">'&#123;total+=$3&#125;END&#123;print total&#125;'</span>)</span><br><span class="line">    inodeused=$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$inodedata</span>"</span> | awk <span class="string">'&#123;total+=$4&#125;END&#123;print total&#125;'</span>)</span><br><span class="line">    inodefree=$((inodetotal-inodeused))</span><br><span class="line">    inodeusedpercent=$(<span class="built_in">echo</span> <span class="variable">$inodetotal</span> <span class="variable">$inodeused</span> | awk <span class="string">'&#123;if($1==0)&#123;printf 100&#125;else&#123;printf "%.2f",$2*100/$1&#125;&#125;'</span>)</span><br><span class="line">    report_DiskTotal=$((disktotal/1024/1024))<span class="string">"GB"</span>   <span class="comment">#硬盘总容量(GB)</span></span><br><span class="line">    report_DiskFree=$((diskfree/1024/1024))<span class="string">"GB"</span>     <span class="comment">#硬盘剩余(GB)</span></span><br><span class="line">    report_DiskUsedPercent=<span class="string">"<span class="variable">$diskusedpercent</span>"</span><span class="string">"%"</span>    <span class="comment">#硬盘使用率%</span></span><br><span class="line">    report_InodeTotal=$((inodetotal/1000))<span class="string">"K"</span>       <span class="comment">#Inode总量</span></span><br><span class="line">    report_InodeFree=$((inodefree/1000))<span class="string">"K"</span>         <span class="comment">#Inode剩余</span></span><br><span class="line">    report_InodeUsedPercent=<span class="string">"<span class="variable">$inodeusedpercent</span>"</span><span class="string">"%"</span>  <span class="comment">#Inode使用率%</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getSystemStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check System Status ############################"</span></span><br><span class="line">    <span class="keyword">if</span> [ -e /etc/sysconfig/i18n ];<span class="keyword">then</span></span><br><span class="line">        default_LANG=<span class="string">"<span class="variable">$(grep "LANG=" /etc/sysconfig/i18n | grep -v "^#" | awk -F '"' '&#123;print $2&#125;')</span>"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        default_LANG=<span class="variable">$LANG</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">export</span> LANG=<span class="string">"en_US.UTF-8"</span></span><br><span class="line">    Release=$(cat /etc/redhat-release 2&gt;/dev/null)</span><br><span class="line">    Kernel=$(uname -r)</span><br><span class="line">    OS=$(uname -o)</span><br><span class="line">    Hostname=$(uname -n)</span><br><span class="line">    SELinux=$(/usr/sbin/sestatus | grep <span class="string">"SELinux status: "</span> | awk <span class="string">'&#123;print $3&#125;'</span>)</span><br><span class="line">    LastReboot=$(who -b | awk <span class="string">'&#123;print $3,$4&#125;'</span>)</span><br><span class="line">    uptime=$(cat /proc/uptime| awk -F. <span class="string">'&#123;run_days=$1 / 86400;run_hour=($1 % 86400)/3600;run_minute=($1 % 3600)/60;run_second=$1 % 60;printf("%d天%d时%d分%d秒",run_days,run_hour,run_minute,run_second)&#125;'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"     系统：<span class="variable">$OS</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">" 发行版本：<span class="variable">$Release</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"     内核：<span class="variable">$Kernel</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"   主机名：<span class="variable">$Hostname</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"  SELinux：<span class="variable">$SELinux</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"语言/编码：<span class="variable">$default_LANG</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">" 当前时间：<span class="variable">$(date +'%F %T')</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">" 最后启动：<span class="variable">$LastReboot</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">" 运行时间：<span class="variable">$uptime</span>"</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_DateTime=$(date +<span class="string">"%F %T"</span>)  <span class="comment">#日期</span></span><br><span class="line">    report_Hostname=<span class="string">"<span class="variable">$Hostname</span>"</span>       <span class="comment">#主机名</span></span><br><span class="line">    report_OSRelease=<span class="string">"<span class="variable">$Release</span>"</span>       <span class="comment">#发行版本</span></span><br><span class="line">    report_Kernel=<span class="string">"<span class="variable">$Kernel</span>"</span>           <span class="comment">#内核</span></span><br><span class="line">    report_Language=<span class="string">"<span class="variable">$default_LANG</span>"</span>   <span class="comment">#语言/编码</span></span><br><span class="line">    report_LastReboot=<span class="string">"<span class="variable">$LastReboot</span>"</span>   <span class="comment">#最近启动时间</span></span><br><span class="line">    report_Uptime=<span class="string">"<span class="variable">$uptime</span>"</span>           <span class="comment">#运行时间（天）</span></span><br><span class="line">    report_Selinux=<span class="string">"<span class="variable">$SELinux</span>"</span></span><br><span class="line">    <span class="built_in">export</span> LANG=<span class="string">"<span class="variable">$default_LANG</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getServiceStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Service Status ############################"</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$OS_Version</span> &gt; 7 ]];<span class="keyword">then</span></span><br><span class="line">        conf=$(systemctl list-unit-files --<span class="built_in">type</span>=service --state=enabled --no-pager | grep <span class="string">"enabled"</span>)</span><br><span class="line">        process=$(systemctl list-units --<span class="built_in">type</span>=service --state=running --no-pager | grep <span class="string">".service"</span>)</span><br><span class="line">        <span class="comment"># report information</span></span><br><span class="line">        report_SelfInitiatedService=<span class="string">"<span class="variable">$(echo "$conf" | wc -l)</span>"</span>       <span class="comment">#自启动服务数量</span></span><br><span class="line">        report_RuningService=<span class="string">"<span class="variable">$(echo "$process" | wc -l)</span>"</span>           <span class="comment">#运行中服务数量</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        conf=$(/sbin/chkconfig | grep -E <span class="string">":on|:启用"</span>)</span><br><span class="line">        process=$(/sbin/service --status-all 2&gt;/dev/null | grep -E <span class="string">"is running|正在运行"</span>)</span><br><span class="line">        <span class="comment"># report information</span></span><br><span class="line">        report_SelfInitiatedService=<span class="string">"<span class="variable">$(echo "$conf" | wc -l)</span>"</span>       <span class="comment">#自启动服务数量</span></span><br><span class="line">        report_RuningService=<span class="string">"<span class="variable">$(echo "$process" | wc -l)</span>"</span>           <span class="comment">#运行中服务数量</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Service Configure"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"--------------------------------"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$conf</span>"</span> | column -t</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"The Running Services"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"--------------------------------"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$process</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getAutoStartStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Self-starting Services ##########################"</span></span><br><span class="line">    conf=$(grep -v <span class="string">"^#"</span> /etc/rc.d/rc.local| sed <span class="string">'/^$/d'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$conf</span>"</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_SelfInitiatedProgram=<span class="string">"<span class="variable">$(echo $conf | wc -l)</span>"</span>    <span class="comment">#自启动程序数量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getLoginStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Login In ############################"</span></span><br><span class="line">    last | head</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getNetworkStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Network ############################"</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$OS_Version</span> &lt; 7 ]];<span class="keyword">then</span></span><br><span class="line">        /sbin/ifconfig -a | grep -v packets | grep -v collisions | grep -v inet6</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">#ip address</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> $(ip link | grep BROADCAST | awk -F: <span class="string">'&#123;print $2&#125;'</span>);<span class="keyword">do</span> ip add show <span class="variable">$i</span> | grep -E <span class="string">"BROADCAST|global"</span>| awk <span class="string">'&#123;print $2&#125;'</span> | tr <span class="string">'\n'</span> <span class="string">' '</span> ;<span class="built_in">echo</span> <span class="string">""</span> ;<span class="keyword">done</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    GATEWAY=$(ip route | grep default | awk <span class="string">'&#123;print $3&#125;'</span>)</span><br><span class="line">    DNS=$(grep nameserver /etc/resolv.conf| grep -v <span class="string">"#"</span> | awk <span class="string">'&#123;print $2&#125;'</span> | tr <span class="string">'\n'</span> <span class="string">','</span> | sed <span class="string">'s/,$//'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Gateway: <span class="variable">$GATEWAY</span> "</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">" DNS: <span class="variable">$DNS</span>"</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    IP=$(ip -f inet addr | grep -v 127.0.0.1 |  grep inet | awk <span class="string">'&#123;print $NF,$2&#125;'</span> | tr <span class="string">'\n'</span> <span class="string">','</span> | sed <span class="string">'s/,$//'</span>)</span><br><span class="line">    MAC=$(ip link | grep -v <span class="string">"LOOPBACK\|loopback"</span> | awk <span class="string">'&#123;print $2&#125;'</span> | sed <span class="string">'N;s/\n//'</span> | tr <span class="string">'\n'</span> <span class="string">','</span> | sed <span class="string">'s/,$//'</span>)</span><br><span class="line">    report_IP=<span class="string">"<span class="variable">$IP</span>"</span>            <span class="comment">#IP地址</span></span><br><span class="line">    report_MAC=<span class="variable">$MAC</span>            <span class="comment">#MAC地址</span></span><br><span class="line">    report_Gateway=<span class="string">"<span class="variable">$GATEWAY</span>"</span>  <span class="comment">#默认网关</span></span><br><span class="line">    report_DNS=<span class="string">"<span class="variable">$DNS</span>"</span>          <span class="comment">#DNS</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getListenStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Listen Status ############################"</span></span><br><span class="line"><span class="comment">#    TCPListen=$(ss -ntul | column -t)</span></span><br><span class="line">    TCPListen=$(netstat -ntulp | column -t)</span><br><span class="line">    AllConnect=$(ss -an | awk <span class="string">'NR&gt;1 &#123;++s[$1]&#125; END &#123;for(k in s) print k,s[k]&#125;'</span> | column -t)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$TCPListen</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$AllConnect</span>"</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_Listen=<span class="string">"<span class="variable">$(echo "$TCPListen"| sed '1d' | awk '/tcp/ &#123;print $5&#125;' | awk -F: '&#123;print $NF&#125;' | sort | uniq | wc -l)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getCronStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Crontab List ########################"</span></span><br><span class="line">    Crontab=0</span><br><span class="line">    <span class="keyword">for</span> shell <span class="keyword">in</span> $(grep -v <span class="string">"/sbin/nologin"</span> /etc/shells);<span class="keyword">do</span></span><br><span class="line">        <span class="keyword">for</span> user <span class="keyword">in</span> $(grep <span class="string">"<span class="variable">$shell</span>"</span> /etc/passwd | awk -F: <span class="string">'&#123;print $1&#125;'</span>);<span class="keyword">do</span></span><br><span class="line">            crontab -l -u <span class="variable">$user</span> &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">            status=$?</span><br><span class="line">            <span class="keyword">if</span> [ <span class="variable">$status</span> -eq 0 ];<span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$user</span>"</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"-------------"</span></span><br><span class="line">                crontab -l -u <span class="variable">$user</span></span><br><span class="line">                <span class="built_in">let</span> Crontab=Crontab+$(crontab -l -u <span class="variable">$user</span> | wc -l)</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="comment"># scheduled task</span></span><br><span class="line">    find /etc/cron* -<span class="built_in">type</span> f | xargs -i ls -l &#123;&#125; | column  -t</span><br><span class="line">    <span class="built_in">let</span> Crontab=Crontab+$(find /etc/cron* -<span class="built_in">type</span> f | wc -l)</span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_Crontab=<span class="string">"<span class="variable">$Crontab</span>"</span>    <span class="comment">#计划任务数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getHowLongAgo</span></span>()&#123;</span><br><span class="line">    <span class="comment"># 计算一个时间戳离现在有多久了</span></span><br><span class="line">    datetime=<span class="string">"$*"</span></span><br><span class="line">    [ -z <span class="string">"<span class="variable">$datetime</span>"</span> ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"错误的参数：getHowLongAgo() $*"</span></span><br><span class="line">    Timestamp=$(date +%s -d <span class="string">"<span class="variable">$datetime</span>"</span>)    <span class="comment">#转化为时间戳</span></span><br><span class="line">    Now_Timestamp=$(date +%s)</span><br><span class="line">    Difference_Timestamp=$((<span class="variable">$Now_Timestamp</span>-<span class="variable">$Timestamp</span>))</span><br><span class="line">    days=0;hours=0;minutes=0;</span><br><span class="line">    sec_in_day=$((60*60*24));</span><br><span class="line">    sec_in_hour=$((60*60));</span><br><span class="line">    sec_in_minute=60</span><br><span class="line">    <span class="keyword">while</span> (( $((<span class="variable">$Difference_Timestamp</span>-<span class="variable">$sec_in_day</span>)) &gt; 1 ))</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">let</span> Difference_Timestamp=Difference_Timestamp-sec_in_day</span><br><span class="line">        <span class="built_in">let</span> days++</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">while</span> (( $((<span class="variable">$Difference_Timestamp</span>-<span class="variable">$sec_in_hour</span>)) &gt; 1 ))</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">let</span> Difference_Timestamp=Difference_Timestamp-sec_in_hour</span><br><span class="line">        <span class="built_in">let</span> hours++</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$days</span> 天 <span class="variable">$hours</span> 小时前"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getUserLastLogin</span></span>()&#123;</span><br><span class="line">    <span class="comment"># 获取用户最近一次登录的时间，含年份</span></span><br><span class="line">    <span class="comment"># 很遗憾last命令不支持显示年份，只有"last -t YYYYMMDDHHMMSS"表示某个时间之间的登录，我</span></span><br><span class="line">    <span class="comment"># 们只能用最笨的方法了，对比今天之前和今年元旦之前（或者去年之前和前年之前……）某个用户</span></span><br><span class="line">    <span class="comment"># 登录次数，如果登录统计次数有变化，则说明最近一次登录是今年。</span></span><br><span class="line">    username=<span class="variable">$1</span></span><br><span class="line">    : <span class="variable">$&#123;username:="`whoami`"&#125;</span></span><br><span class="line">    thisYear=$(date +%Y)</span><br><span class="line">    oldesYear=$(last | tail -n1 | awk <span class="string">'&#123;print $NF&#125;'</span>)</span><br><span class="line">    <span class="keyword">while</span>(( <span class="variable">$thisYear</span> &gt;= <span class="variable">$oldesYear</span>));<span class="keyword">do</span></span><br><span class="line">        loginBeforeToday=$(last <span class="variable">$username</span> | grep <span class="variable">$username</span> | wc -l)</span><br><span class="line">        loginBeforeNewYearsDayOfThisYear=$(last <span class="variable">$username</span> -t <span class="variable">$thisYear</span><span class="string">"0101000000"</span> | grep <span class="variable">$username</span> | wc -l)</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$loginBeforeToday</span> -eq 0 ];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"Never Login"</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">elif</span> [ <span class="variable">$loginBeforeToday</span> -gt <span class="variable">$loginBeforeNewYearsDayOfThisYear</span> ];<span class="keyword">then</span></span><br><span class="line">            lastDateTime=$(last -i <span class="variable">$username</span> | head -n1 | awk <span class="string">'&#123;for(i=4;i&lt;(NF-2);i++)printf"%s ",$i&#125;'</span>)<span class="string">" <span class="variable">$thisYear</span>"</span> <span class="comment">#格式如: Sat Nov 2 20:33 2015</span></span><br><span class="line">            lastDateTime=$(date <span class="string">"+%Y-%m-%d %H:%M:%S"</span> -d <span class="string">"<span class="variable">$lastDateTime</span>"</span>)</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$lastDateTime</span>"</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            thisYear=$((thisYear-1))</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getUserStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check User ############################"</span></span><br><span class="line">    <span class="comment"># /etc/passwd the last modification time</span></span><br><span class="line">    pwdfile=<span class="string">"<span class="variable">$(cat /etc/passwd)</span>"</span></span><br><span class="line">    Modify=$(<span class="built_in">stat</span> /etc/passwd | grep Modify | tr <span class="string">'.'</span> <span class="string">' '</span> | awk <span class="string">'&#123;print $2,$3&#125;'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"/etc/passwd The last modification time：<span class="variable">$Modify</span> (<span class="variable">$(getHowLongAgo $Modify)</span>)"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"A privileged user"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"-----------------"</span></span><br><span class="line">    RootUser=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> user <span class="keyword">in</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$pwdfile</span>"</span> | awk -F: <span class="string">'&#123;print $1&#125;'</span>);<span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> [ $(id -u <span class="variable">$user</span>) -eq 0 ];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$user</span>"</span></span><br><span class="line">            RootUser=<span class="string">"<span class="variable">$RootUser</span>,<span class="variable">$user</span>"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"User List"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"--------"</span></span><br><span class="line">    USERs=0</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$(</span></span></span><br><span class="line"><span class="string"><span class="variable">    echo "UserName UID GID HOME SHELL LasttimeLogin"</span></span></span><br><span class="line"><span class="string"><span class="variable">    for shell in $(grep -v "/sbin/nologin" /etc/shells)</span>;do</span></span><br><span class="line"><span class="string">        for username in <span class="variable">$(grep "$shell" /etc/passwd| awk -F: '&#123;print $1&#125;')</span>;do</span></span><br><span class="line"><span class="string">            userLastLogin="</span>$(getUserLastLogin <span class="variable">$username</span>)<span class="string">"</span></span><br><span class="line"><span class="string">            echo "</span><span class="variable">$pwdfile</span><span class="string">" | grep -w "</span><span class="variable">$username</span><span class="string">" |grep -w "</span><span class="variable">$shell</span><span class="string">"| awk -F: -v lastlogin="</span>$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$userLastLogin</span>"</span> | tr <span class="string">' '</span> <span class="string">'_'</span>)<span class="string">" '&#123;print <span class="variable">$1</span>,<span class="variable">$3</span>,<span class="variable">$4</span>,<span class="variable">$6</span>,<span class="variable">$7</span>,lastlogin&#125;'</span></span><br><span class="line"><span class="string">        done</span></span><br><span class="line"><span class="string">        let USERs=USERs+<span class="variable">$(echo "$pwdfile" | grep "$shell"| wc -l)</span></span></span><br><span class="line"><span class="string">    done</span></span><br><span class="line"><span class="string">    )"</span> | column -t</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Null Password User"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"------------------"</span></span><br><span class="line">    USEREmptyPassword=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> shell <span class="keyword">in</span> $(grep -v <span class="string">"/sbin/nologin"</span> /etc/shells);<span class="keyword">do</span></span><br><span class="line">            <span class="keyword">for</span> user <span class="keyword">in</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$pwdfile</span>"</span> | grep <span class="string">"<span class="variable">$shell</span>"</span> | cut -d: -f1);<span class="keyword">do</span></span><br><span class="line">            r=$(awk -F: <span class="string">'$2=="!!"&#123;print $1&#125;'</span> /etc/shadow | grep -w <span class="variable">$user</span>)</span><br><span class="line">            <span class="keyword">if</span> [ ! -z <span class="variable">$r</span> ];<span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="variable">$r</span></span><br><span class="line">                USEREmptyPassword=<span class="string">"<span class="variable">$USEREmptyPassword</span>,"</span><span class="variable">$r</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">done</span>    </span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"The Same UID User"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"----------------"</span></span><br><span class="line">    USERTheSameUID=<span class="string">""</span></span><br><span class="line">    UIDs=$(cut -d: -f3 /etc/passwd | sort | uniq -c | awk <span class="string">'$1&gt;1&#123;print $2&#125;'</span>)</span><br><span class="line">    <span class="keyword">for</span> uid <span class="keyword">in</span> <span class="variable">$UIDs</span>;<span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> -n <span class="string">"<span class="variable">$uid</span>"</span>;</span><br><span class="line">        USERTheSameUID=<span class="string">"<span class="variable">$uid</span>"</span></span><br><span class="line">        r=$(awk -F: <span class="string">'ORS="";$3=='</span><span class="string">"<span class="variable">$uid</span>"</span><span class="string">'&#123;print ":",$1&#125;'</span> /etc/passwd)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$r</span>"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">        USERTheSameUID=<span class="string">"<span class="variable">$USERTheSameUID</span> <span class="variable">$r</span>,"</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_USERs=<span class="string">"<span class="variable">$USERs</span>"</span>    <span class="comment">#用户</span></span><br><span class="line">    report_USEREmptyPassword=$(<span class="built_in">echo</span> <span class="variable">$USEREmptyPassword</span> | sed <span class="string">'s/^,//'</span>) </span><br><span class="line">    report_USERTheSameUID=$(<span class="built_in">echo</span> <span class="variable">$USERTheSameUID</span> | sed <span class="string">'s/,$//'</span>) </span><br><span class="line">    report_RootUser=$(<span class="built_in">echo</span> <span class="variable">$RootUser</span> | sed <span class="string">'s/^,//'</span>)    <span class="comment">#特权用户</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> getPasswordStatus &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Check Password Status ############################"</span></span><br><span class="line">    pwdfile=<span class="string">"<span class="variable">$(cat /etc/passwd)</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Password Expiration Check"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"-------------------------"</span></span><br><span class="line">    result=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> shell <span class="keyword">in</span> $(grep -v <span class="string">"/sbin/nologin"</span> /etc/shells);<span class="keyword">do</span></span><br><span class="line">        <span class="keyword">for</span> user <span class="keyword">in</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$pwdfile</span>"</span> | grep <span class="string">"<span class="variable">$shell</span>"</span> | cut -d: -f1);<span class="keyword">do</span></span><br><span class="line">            get_expiry_date=$(/usr/bin/chage -l <span class="variable">$user</span> | grep <span class="string">'Password expires'</span> | cut -d: -f2)</span><br><span class="line">            <span class="keyword">if</span> [[ <span class="variable">$get_expiry_date</span> = <span class="string">' never'</span> || <span class="variable">$get_expiry_date</span> = <span class="string">'never'</span> ]];<span class="keyword">then</span></span><br><span class="line">                <span class="built_in">printf</span> <span class="string">"%-15s never expiration\n"</span> <span class="variable">$user</span></span><br><span class="line">                result=<span class="string">"<span class="variable">$result</span>,<span class="variable">$user</span>:never"</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                password_expiry_date=$(date -d <span class="string">"<span class="variable">$get_expiry_date</span>"</span> <span class="string">"+%s"</span>)</span><br><span class="line">                current_date=$(date <span class="string">"+%s"</span>)</span><br><span class="line">                diff=$((<span class="variable">$password_expiry_date</span>-<span class="variable">$current_date</span>))</span><br><span class="line">                <span class="built_in">let</span> DAYS=$((<span class="variable">$diff</span>/(60*60*24)))</span><br><span class="line">                <span class="built_in">printf</span> <span class="string">"%-15s %s expiration after days\n"</span> <span class="variable">$user</span> <span class="variable">$DAYS</span></span><br><span class="line">                result=<span class="string">"<span class="variable">$result</span>,<span class="variable">$user</span>:<span class="variable">$DAYS</span> days"</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    report_PasswordExpiry=$(<span class="built_in">echo</span> <span class="variable">$result</span> | sed <span class="string">'s/^,//'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Check The Password Policy"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"------------"</span></span><br><span class="line">    grep -v <span class="string">"#"</span> /etc/login.defs | grep -E <span class="string">"PASS_MAX_DAYS|PASS_MIN_DAYS|PASS_MIN_LEN|PASS_WARN_AGE"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getSudoersStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Sudoers Check #########################"</span></span><br><span class="line">    conf=$(grep -v <span class="string">"^#"</span> /etc/sudoers| grep -v <span class="string">"^Defaults"</span> | sed <span class="string">'/^$/d'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$conf</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_Sudoers=<span class="string">"<span class="variable">$(echo $conf | wc -l)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getInstalledStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Software Check ############################"</span></span><br><span class="line">    rpm -qa --last | head | column -t </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getProcessStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Process Check ############################"</span></span><br><span class="line">    <span class="keyword">if</span> [ $(ps -ef | grep defunct | grep -v grep | wc -l) -ge 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"zombie process"</span>;</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"--------"</span></span><br><span class="line">        ps -ef | head -n1</span><br><span class="line">        ps -ef | grep defunct | grep -v grep</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Merory Usage TOP10"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"-------------"</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">"PID %MEM RSS COMMAND</span></span><br><span class="line"><span class="string">    <span class="variable">$(ps aux | awk '&#123;print $2, $4, $6, $11&#125;' | sort -k3rn | head -n 10 )</span>"</span>| column -t </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"CPU Usage TOP10"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"------------"</span></span><br><span class="line">    top b -n1 | head -17 | tail -11</span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_DefunctProsess=<span class="string">"<span class="variable">$(ps -ef | grep defunct | grep -v grep|wc -l)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getJDKStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ JDK Check #############################"</span></span><br><span class="line">    java -version 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ];<span class="keyword">then</span></span><br><span class="line">        java -version 2&gt;&amp;1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"JAVA_HOME=\"<span class="variable">$JAVA_HOME</span>\""</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_JDK=<span class="string">"<span class="variable">$(java -version 2&gt;&amp;1 | grep version | awk '&#123;print $1,$3&#125;' | tr -d '"')</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getSyslogStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Syslog Check ##########################"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Service Status：<span class="variable">$(getState rsyslog)</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"/etc/rsyslog.conf"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"-----------------"</span></span><br><span class="line">    cat /etc/rsyslog.conf 2&gt;/dev/null | grep -v <span class="string">"^#"</span> | grep -v <span class="string">"^\\$"</span> | sed <span class="string">'/^$/d'</span>  | column -t</span><br><span class="line">    <span class="comment">#report information</span></span><br><span class="line">    report_Syslog=<span class="string">"<span class="variable">$(getState rsyslog)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getFirewallStatus</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ Firewall Check ##########################"</span></span><br><span class="line">    <span class="comment"># Firewall Status/Poilcy</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$OS_Version</span> &lt; 7 ]];<span class="keyword">then</span></span><br><span class="line">        /etc/init.d/iptables status &gt;/dev/null  2&gt;&amp;1</span><br><span class="line">        status=$?</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$status</span> -eq 0 ];<span class="keyword">then</span></span><br><span class="line">                s=<span class="string">"active"</span></span><br><span class="line">        <span class="keyword">elif</span> [ <span class="variable">$status</span> -eq 3 ];<span class="keyword">then</span></span><br><span class="line">                s=<span class="string">"inactive"</span></span><br><span class="line">        <span class="keyword">elif</span> [ <span class="variable">$status</span> -eq 4 ];<span class="keyword">then</span></span><br><span class="line">                s=<span class="string">"permission denied"</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                s=<span class="string">"unknown"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        s=<span class="string">"<span class="variable">$(getState iptables)</span>"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"iptables: <span class="variable">$s</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"/etc/sysconfig/iptables"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"-----------------------"</span></span><br><span class="line">    cat /etc/sysconfig/iptables 2&gt;/dev/null</span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_Firewall=<span class="string">"<span class="variable">$s</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getSNMPStatus</span></span>()&#123;</span><br><span class="line">    <span class="comment">#SNMP Service Status,Configure</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ SNMP Check ############################"</span></span><br><span class="line">    status=<span class="string">"<span class="variable">$(getState snmpd)</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Service Status：<span class="variable">$status</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="keyword">if</span> [ -e /etc/snmp/snmpd.conf ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"/etc/snmp/snmpd.conf"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"--------------------"</span></span><br><span class="line">        cat /etc/snmp/snmpd.conf 2&gt;/dev/null | grep -v <span class="string">"^#"</span> | sed <span class="string">'/^$/d'</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_SNMP=<span class="string">"<span class="variable">$(getState snmpd)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getState</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$OS_Version</span> &lt; 7 ]];<span class="keyword">then</span></span><br><span class="line">        <span class="keyword">if</span> [ -e <span class="string">"/etc/init.d/<span class="variable">$1</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">            <span class="keyword">if</span> [ `/etc/init.d/<span class="variable">$1</span> status 2&gt;/dev/null | grep -E <span class="string">"is running|正在运行"</span> | wc -l` -ge 1 ];<span class="keyword">then</span></span><br><span class="line">                r=<span class="string">"active"</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                r=<span class="string">"inactive"</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            r=<span class="string">"unknown"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">#CentOS 7+</span></span><br><span class="line">        r=<span class="string">"<span class="variable">$(systemctl is-active $1 2&gt;&amp;1)</span>"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$r</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getSSHStatus</span></span>()&#123;</span><br><span class="line">    <span class="comment">#SSHD Service Status,Configure</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ SSH Check #############################"</span></span><br><span class="line">    <span class="comment"># Check the trusted host</span></span><br><span class="line">    pwdfile=<span class="string">"<span class="variable">$(cat /etc/passwd)</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Service Status：<span class="variable">$(getState sshd)</span>"</span></span><br><span class="line">    Protocol_Version=$(cat /etc/ssh/sshd_config | grep Protocol | awk <span class="string">'&#123;print $2&#125;'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"SSH Protocol Version：<span class="variable">$Protocol_Version</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Trusted Host"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"------------"</span></span><br><span class="line">    authorized=0</span><br><span class="line">    <span class="keyword">for</span> user <span class="keyword">in</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$pwdfile</span>"</span> | grep /bin/bash | awk -F: <span class="string">'&#123;print $1&#125;'</span>);<span class="keyword">do</span></span><br><span class="line">        authorize_file=$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$pwdfile</span>"</span> | grep -w <span class="variable">$user</span> | awk -F: <span class="string">'&#123;printf $6"/.ssh/authorized_keys"&#125;'</span>)</span><br><span class="line">        authorized_host=$(cat <span class="variable">$authorize_file</span> 2&gt;/dev/null | awk <span class="string">'&#123;print $3&#125;'</span> | tr <span class="string">'\n'</span> <span class="string">','</span> | sed <span class="string">'s/,$//'</span>)</span><br><span class="line">        <span class="keyword">if</span> [ ! -z <span class="variable">$authorized_host</span> ];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$user</span> authorization \"<span class="variable">$authorized_host</span>\" Password-less access"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">let</span> authorized=authorized+$(cat <span class="variable">$authorize_file</span> 2&gt;/dev/null | awk <span class="string">'&#123;print $3&#125;'</span>|wc -l)</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Whether to allow ROOT remote login"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"----------------------------------"</span></span><br><span class="line">    config=$(cat /etc/ssh/sshd_config | grep PermitRootLogin)</span><br><span class="line">    firstChar=<span class="variable">$&#123;config:0:1&#125;</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$firstChar</span> == <span class="string">"#"</span> ];<span class="keyword">then</span></span><br><span class="line">        PermitRootLogin=<span class="string">"yes"</span>  <span class="comment">#The default is to allow ROOT remote login</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        PermitRootLogin=$(<span class="built_in">echo</span> <span class="variable">$config</span> | awk <span class="string">'&#123;print $2&#125;'</span>)</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"PermitRootLogin <span class="variable">$PermitRootLogin</span>"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"/etc/ssh/sshd_config"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"--------------------"</span></span><br><span class="line">    cat /etc/ssh/sshd_config | grep -v <span class="string">"^#"</span> | sed <span class="string">'/^$/d'</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_SSHAuthorized=<span class="string">"<span class="variable">$authorized</span>"</span>    <span class="comment">#SSH信任主机</span></span><br><span class="line">    report_SSHDProtocolVersion=<span class="string">"<span class="variable">$Protocol_Version</span>"</span>    <span class="comment">#SSH协议版本</span></span><br><span class="line">    report_SSHDPermitRootLogin=<span class="string">"<span class="variable">$PermitRootLogin</span>"</span>    <span class="comment">#允许root远程登录</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getNTPStatus</span></span>()&#123;</span><br><span class="line">    <span class="comment"># The NTP service status, the current time, configuration, etc</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"############################ NTP Check #############################"</span></span><br><span class="line">    <span class="keyword">if</span> [ -e /etc/ntp.conf ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Service Status：<span class="variable">$(getState ntpd)</span>"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"/etc/ntp.conf"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"-------------"</span></span><br><span class="line">        cat /etc/ntp.conf 2&gt;/dev/null | grep -v <span class="string">"^#"</span> | sed <span class="string">'/^$/d'</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">    report_NTP=<span class="string">"<span class="variable">$(getState ntpd)</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getZabbixStatus</span></span>()&#123;</span><br><span class="line">    <span class="comment"># Check Zabbix Serivce Status</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"######################### Zabbix Check ##############################"</span></span><br><span class="line">    netstat -nltp | grep -v grep | grep zabbix &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ];<span class="keyword">then</span></span><br><span class="line">       <span class="built_in">echo</span> <span class="string">"Service Status"</span>: Zabbix is running!</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">       <span class="built_in">echo</span> <span class="string">"Service Status"</span>: Zabbix not running!</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># report information</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">uploadHostDailyCheckReport</span></span>()&#123;</span><br><span class="line">    json=<span class="string">"&#123;</span></span><br><span class="line"><span class="string">        \"DateTime\":\"<span class="variable">$report_DateTime</span>\",</span></span><br><span class="line"><span class="string">        \"Hostname\":\"<span class="variable">$report_Hostname</span>\",</span></span><br><span class="line"><span class="string">        \"OSRelease\":\"<span class="variable">$report_OSRelease</span>\",</span></span><br><span class="line"><span class="string">        \"Kernel\":\"<span class="variable">$report_Kernel</span>\",</span></span><br><span class="line"><span class="string">        \"Language\":\"<span class="variable">$report_Language</span>\",</span></span><br><span class="line"><span class="string">        \"LastReboot\":\"<span class="variable">$report_LastReboot</span>\",</span></span><br><span class="line"><span class="string">        \"Uptime\":\"<span class="variable">$report_Uptime</span>\",</span></span><br><span class="line"><span class="string">        \"CPUs\":\"<span class="variable">$report_CPUs</span>\",</span></span><br><span class="line"><span class="string">        \"CPUType\":\"<span class="variable">$report_CPUType</span>\",</span></span><br><span class="line"><span class="string">        \"Arch\":\"<span class="variable">$report_Arch</span>\",</span></span><br><span class="line"><span class="string">        \"MemTotal\":\"<span class="variable">$report_MemTotal</span>\",</span></span><br><span class="line"><span class="string">        \"MemFree\":\"<span class="variable">$report_MemFree</span>\",</span></span><br><span class="line"><span class="string">        \"MemUsedPercent\":\"<span class="variable">$report_MemUsedPercent</span>\",</span></span><br><span class="line"><span class="string">        \"DiskTotal\":\"<span class="variable">$report_DiskTotal</span>\",</span></span><br><span class="line"><span class="string">        \"DiskFree\":\"<span class="variable">$report_DiskFree</span>\",</span></span><br><span class="line"><span class="string">        \"DiskUsedPercent\":\"<span class="variable">$report_DiskUsedPercent</span>\",</span></span><br><span class="line"><span class="string">        \"InodeTotal\":\"<span class="variable">$report_InodeTotal</span>\",</span></span><br><span class="line"><span class="string">        \"InodeFree\":\"<span class="variable">$report_InodeFree</span>\",</span></span><br><span class="line"><span class="string">        \"InodeUsedPercent\":\"<span class="variable">$report_InodeUsedPercent</span>\",</span></span><br><span class="line"><span class="string">        \"IP\":\"<span class="variable">$report_IP</span>\",</span></span><br><span class="line"><span class="string">        \"MAC\":\"<span class="variable">$report_MAC</span>\",</span></span><br><span class="line"><span class="string">        \"Gateway\":\"<span class="variable">$report_Gateway</span>\",</span></span><br><span class="line"><span class="string">        \"DNS\":\"<span class="variable">$report_DNS</span>\",</span></span><br><span class="line"><span class="string">        \"Listen\":\"<span class="variable">$report_Listen</span>\",</span></span><br><span class="line"><span class="string">        \"Selinux\":\"<span class="variable">$report_Selinux</span>\",</span></span><br><span class="line"><span class="string">        \"Firewall\":\"<span class="variable">$report_Firewall</span>\",</span></span><br><span class="line"><span class="string">        \"USERs\":\"<span class="variable">$report_USERs</span>\",</span></span><br><span class="line"><span class="string">        \"USEREmptyPassword\":\"<span class="variable">$report_USEREmptyPassword</span>\",</span></span><br><span class="line"><span class="string">        \"USERTheSameUID\":\"<span class="variable">$report_USERTheSameUID</span>\",</span></span><br><span class="line"><span class="string">        \"PasswordExpiry\":\"<span class="variable">$report_PasswordExpiry</span>\",</span></span><br><span class="line"><span class="string">        \"RootUser\":\"<span class="variable">$report_RootUser</span>\",</span></span><br><span class="line"><span class="string">        \"Sudoers\":\"<span class="variable">$report_Sudoers</span>\",</span></span><br><span class="line"><span class="string">        \"SSHAuthorized\":\"<span class="variable">$report_SSHAuthorized</span>\",</span></span><br><span class="line"><span class="string">        \"SSHDProtocolVersion\":\"<span class="variable">$report_SSHDProtocolVersion</span>\",</span></span><br><span class="line"><span class="string">        \"SSHDPermitRootLogin\":\"<span class="variable">$report_SSHDPermitRootLogin</span>\",</span></span><br><span class="line"><span class="string">        \"DefunctProsess\":\"<span class="variable">$report_DefunctProsess</span>\",</span></span><br><span class="line"><span class="string">        \"SelfInitiatedService\":\"<span class="variable">$report_SelfInitiatedService</span>\",</span></span><br><span class="line"><span class="string">        \"SelfInitiatedProgram\":\"<span class="variable">$report_SelfInitiatedProgram</span>\",</span></span><br><span class="line"><span class="string">        \"RuningService\":\"<span class="variable">$report_RuningService</span>\",</span></span><br><span class="line"><span class="string">        \"Crontab\":\"<span class="variable">$report_Crontab</span>\",</span></span><br><span class="line"><span class="string">        \"Syslog\":\"<span class="variable">$report_Syslog</span>\",</span></span><br><span class="line"><span class="string">        \"SNMP\":\"<span class="variable">$report_SNMP</span>\",</span></span><br><span class="line"><span class="string">        \"NTP\":\"<span class="variable">$report_NTP</span>\",</span></span><br><span class="line"><span class="string">        \"JDK\":\"<span class="variable">$report_JDK</span>\"</span></span><br><span class="line"><span class="string">    &#125;"</span></span><br><span class="line">    <span class="comment">#echo "$json" </span></span><br><span class="line">    curl -l -H <span class="string">"Content-type: application/json"</span> -X POST -d <span class="string">"<span class="variable">$json</span>"</span> <span class="string">"<span class="variable">$uploadHostDailyCheckReportApi</span>"</span> 2&gt;/dev/null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">check</span></span>()&#123;</span><br><span class="line">    version</span><br><span class="line">    getSystemStatus</span><br><span class="line">    getCpuStatus</span><br><span class="line">    getMemStatus</span><br><span class="line">    getDiskStatus</span><br><span class="line">    getNetworkStatus</span><br><span class="line">    getListenStatus</span><br><span class="line">    getProcessStatus</span><br><span class="line">    getServiceStatus</span><br><span class="line">    getAutoStartStatus</span><br><span class="line">    getLoginStatus</span><br><span class="line">    getCronStatus</span><br><span class="line">    getUserStatus</span><br><span class="line">    getPasswordStatus</span><br><span class="line">    getSudoersStatus</span><br><span class="line">    getJDKStatus</span><br><span class="line">    getFirewallStatus</span><br><span class="line">    getSSHStatus</span><br><span class="line">    getSyslogStatus</span><br><span class="line">    getSNMPStatus</span><br><span class="line">    getNTPStatus</span><br><span class="line">    getZabbixStatus</span><br><span class="line">    getInstalledStatus</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Perform inspections and save the inspection results  #执行检查并保存检查结果</span></span><br><span class="line">check &gt; <span class="variable">$RESULTFILE</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Check the result：<span class="variable">$RESULTFILE</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Upload the result file  #上传检查结果的文件</span></span><br><span class="line"><span class="comment">#curl -F "filename=@$RESULTFILE" "$uploadHostDailyCheckApi" 2&gt;/dev/null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Upload inspection result report  #上传检查结果的报表</span></span><br><span class="line"><span class="comment">#uploadHostDailyCheckReport 1&gt;/dev/null</span></span><br></pre></td></tr></table></figure></p>
+<p>运行脚本后，会在脚本设定的目录：/data/scripts/checklog/下生成以csv为后缀的文件，文件格式也是在脚本中已经设定。</p>
+<h2 id="2、文件合并"><a href="#2、文件合并" class="headerlink" title="2、文件合并"></a>2、文件合并</h2><p>需要将多个csv文件合成为xlsx后缀的文件，将多台服务器的执行结果都保存在checklog目录下。<br>脚本内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat toall_xlsx.py </span></span><br><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># coding=utf_8_sig</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import csv</span><br><span class="line">import glob</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">sys.path.append(<span class="string">"/home/shdi/bin/pymodule"</span>)</span><br><span class="line">import xlsxwriter</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>) </span><br><span class="line"></span><br><span class="line">def merge_csv2xlsx(csv_dir, xlsxfile):</span><br><span class="line">  <span class="comment"># Create a new workbook and add a worksheet</span></span><br><span class="line">  workbook = xlsxwriter.Workbook(xlsxfile)</span><br><span class="line">  fmt_plain = workbook.add_format(&#123;</span><br><span class="line">      <span class="string">'font_size'</span>:  12,</span><br><span class="line">      <span class="string">'font_name'</span>:  <span class="string">"Arial Narrow"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> filename <span class="keyword">in</span> glob.glob(<span class="string">"%s/*.csv"</span> % csv_dir):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"  procsss %s"</span> % filename</span><br><span class="line">    (f_path, f_name) = os.path.split(filename)</span><br><span class="line">    (f_short_name, f_extension) = os.path.splitext(f_name)</span><br><span class="line">    sheet_name = f_short_name</span><br><span class="line">    worksheet = workbook.add_worksheet(sheet_name)</span><br><span class="line">    spamReader = csv.reader(open(filename, <span class="string">'rb'</span>), delimiter=<span class="string">','</span>,quotechar=<span class="string">'"'</span>)</span><br><span class="line">    row_count = 0</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> spamReader:</span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> range(len(row)):</span><br><span class="line">            <span class="comment">#ws.write(row_count,col,row[col])</span></span><br><span class="line">            worksheet.write(row_count, col, row[col],fmt_plain)</span><br><span class="line">        row_count +=1</span><br><span class="line"></span><br><span class="line">  workbook.close()</span><br><span class="line">  <span class="built_in">print</span> <span class="string">"xlsx file saved: %s"</span> % xlsxfile</span><br><span class="line">  <span class="built_in">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> len(sys.argv) != 2:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"Usage:"</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">"\t%s &lt;csvdir&gt;"</span> % sys.argv[0]</span><br><span class="line">    sys.exit(0)</span><br><span class="line"></span><br><span class="line">  csvdir = sys.argv[1]</span><br><span class="line">  savefile = time.strftime(<span class="string">"/data/scripts/checklog/check_%Y%m%d.xlsx"</span>)</span><br><span class="line">  merge_csv2xlsx(csvdir, savefile)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"\n\nCVS merged file saved to %s"</span> % savefile)</span><br></pre></td></tr></table></figure></p>
+<p>此脚本放在checklog下，讲同目录下所有文件合并成xlsx文件。</p>
+<h2 id="3、定时任务"><a href="#3、定时任务" class="headerlink" title="3、定时任务"></a>3、定时任务</h2><p>添加多台服务器ip，并将脚本添加进定时任务<br>脚本如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/data/scripts</span><br><span class="line">[root@gbw_manage scripts]<span class="comment"># cat run_xunjian.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">HOSTLIST=(<span class="string">"172.16.109.139 </span></span><br><span class="line"><span class="string">172.16.109.149</span></span><br><span class="line"><span class="string">172.16.109.145 </span></span><br><span class="line"><span class="string">172.16.109.146 </span></span><br><span class="line"><span class="string">172.16.109.150 </span></span><br><span class="line"><span class="string">172.16.109.140 </span></span><br><span class="line"><span class="string">172.16.109.151 </span></span><br><span class="line"><span class="string">172.16.109.147 </span></span><br><span class="line"><span class="string">172.16.109.141 </span></span><br><span class="line"><span class="string">172.16.109.137 </span></span><br><span class="line"><span class="string">172.16.109.138 </span></span><br><span class="line"><span class="string">172.16.109.144 </span></span><br><span class="line"><span class="string">172.16.109.148 </span></span><br><span class="line"><span class="string">172.16.109.143 </span></span><br><span class="line"><span class="string">172.16.109.142</span></span><br><span class="line"><span class="string">172.16.109.153"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#echo "$HOSTLIST"</span></span><br><span class="line">COUNT=`<span class="built_in">echo</span> <span class="string">"<span class="variable">$HOSTLIST</span>"</span> |grep -v <span class="string">'^$'</span>|wc -l`</span><br><span class="line"><span class="comment">#echo $COUNT</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ip <span class="keyword">in</span> <span class="variable">$&#123;HOSTLIST[*]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    /usr/bin/ssh root@<span class="variable">$ip</span> -C <span class="string">"/bin/bash"</span> &lt; /data/scripts/checkos.sh</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$ip</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">rm -f /data/scripts/checklog/*.csv</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ip <span class="keyword">in</span> <span class="variable">$&#123;HOSTLIST[*]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        scp root@<span class="variable">$ip</span>:/data/scripts/*.csv /data/scripts/checklog/</span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$ip</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">/usr/bin/python /data/scripts/checklog/toall_xlsx.py /data/scripts/checklog</span><br></pre></td></tr></table></figure></p>
+<p>最后的结果文档会保存在/data/scripts/checklog下，文件后缀为xlsx。<br>将此脚本添加定时任务，每天1点执行一次，即可实现定时巡检系统。<br>完善：可以在脚本内增加邮件发送功能，将最后的结果文件发送到对应的接收人员。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/12/11/CentOS系统巡检/">CentOS系统巡检</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/2018/12/11/CentOS系统巡检/" title="CentOS系统巡检">http://www.cnops.com/2018/12/11/CentOS系统巡检/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/11/CentOS系统巡检/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"><i class="fa fa-tag"></i> CentOS</a>
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/巡检/" rel="tag"><i class="fa fa-tag"></i> 巡检</a>
+          
+            <a href="/tags/excel/" rel="tag"><i class="fa fa-tag"></i> excel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/10/RabbitMQ应用文档/" rel="next" title="RabbitMQ应用文档">
+                <i class="fa fa-chevron-left"></i> RabbitMQ应用文档
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/11/Zabbix安装/" rel="prev" title="Zabbix安装">
+                Zabbix安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Francis</p>
+              <p class="site-description motion-element" itemprop="description">云在青天水在瓶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/francisxys" title="GitHub &rarr; https://github.com/francisxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:824014778@qq.com" title="E-Mail &rarr; mailto:824014778@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/Teotihuacanxys" title="Weibo &rarr; https://weibo.com/Teotihuacanxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tiejiang.org" title="http://www.tiejiang.org" rel="noopener" target="_blank">铁匠运维网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="http://www.ityouknow.com/" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、巡检脚本"><span class="nav-text">1、巡检脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、文件合并"><span class="nav-text">2、文件合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、定时任务"><span class="nav-text">3、定时任务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

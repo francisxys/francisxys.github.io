@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="_1iFxvEkIImQlyvWe4Y4gLh85rLCe9HPYV56NcoolIE">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="RZoFTJvjGp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="注意事项1）开头加解释器：#!/bin/bash   2）语法缩进，使用四个空格；多加注释说明。   3）命名建议规则：变量名大写、局部变量小写，函数名小写，名字体现出实际作用。  4）默认变量是全局的，在函数中变量local指定为局部变量，避免污染其他作用域。   5）有两个命令能帮助我调试脚本：set -e 遇到执行非0时退出脚本，set-x 打印执行过程。     6）写脚本一定先测试再到生">
+<meta name="keywords" content="Shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell脚本常见面试题">
+<meta property="og:url" content="http://www.cnops.com/2018/12/24/Shell脚本常见面试题/index.html">
+<meta property="og:site_name" content="Francis&#39;Blog">
+<meta property="og:description" content="注意事项1）开头加解释器：#!/bin/bash   2）语法缩进，使用四个空格；多加注释说明。   3）命名建议规则：变量名大写、局部变量小写，函数名小写，名字体现出实际作用。  4）默认变量是全局的，在函数中变量local指定为局部变量，避免污染其他作用域。   5）有两个命令能帮助我调试脚本：set -e 遇到执行非0时退出脚本，set-x 打印执行过程。     6）写脚本一定先测试再到生">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-24T03:24:01.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell脚本常见面试题">
+<meta name="twitter:description" content="注意事项1）开头加解释器：#!/bin/bash   2）语法缩进，使用四个空格；多加注释说明。   3）命名建议规则：变量名大写、局部变量小写，函数名小写，名字体现出实际作用。  4）默认变量是全局的，在函数中变量local指定为局部变量，避免污染其他作用域。   5）有两个命令能帮助我调试脚本：set -e 遇到执行非0时退出脚本，set-x 打印执行过程。     6）写脚本一定先测试再到生">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.cnops.com/2018/12/24/Shell脚本常见面试题/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Shell脚本常见面试题 | Francis'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Francis'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Francis'Blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/24/Shell脚本常见面试题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shell脚本常见面试题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-24 11:09:57 / 修改时间：11:24:01" itemprop="dateCreated datePublished" datetime="2018-12-24T11:09:57+08:00">2018-12-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Scripts/" itemprop="url" rel="index"><span itemprop="name">Scripts</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Scripts/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><pre><code>1）开头加解释器：#!/bin/bash  
+2）语法缩进，使用四个空格；多加注释说明。  
+3）命名建议规则：变量名大写、局部变量小写，函数名小写，名字体现出实际作用。  4）默认变量是全局的，在函数中变量local指定为局部变量，避免污染其他作用域。  
+5）有两个命令能帮助我调试脚本：set -e 遇到执行非0时退出脚本，set-x 打印执行过程。    
+6）写脚本一定先测试再到生产上。
+</code></pre><h2 id="脚本目录"><a href="#脚本目录" class="headerlink" title="脚本目录"></a>脚本目录</h2><h3 id="1、获取随机字符串或数字"><a href="#1、获取随机字符串或数字" class="headerlink" title="1、获取随机字符串或数字"></a>1、获取随机字符串或数字</h3><p>获取随机8位字符串：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">方法1：</span><br><span class="line"><span class="comment"># echo $RANDOM |md5sum |cut -c 1-8</span></span><br><span class="line">471b94f2</span><br><span class="line">方法2：</span><br><span class="line"><span class="comment"># openssl rand -base64 4</span></span><br><span class="line">vg3BEg==</span><br><span class="line">方法3：</span><br><span class="line"><span class="comment"># cat /proc/sys/kernel/random/uuid |cut -c 1-8</span></span><br><span class="line">ed9e032c</span><br></pre></td></tr></table></figure></p>
+<p>获取随机8位数字：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">方法1：</span><br><span class="line"><span class="comment"># echo $RANDOM |cksum |cut -c 1-8</span></span><br><span class="line">23648321</span><br><span class="line">方法2：</span><br><span class="line"><span class="comment"># openssl rand -base64 4 |cksum |cut -c 1-8</span></span><br><span class="line">38571131</span><br><span class="line">方法3：</span><br><span class="line"><span class="comment"># date +%N |cut -c 1-8</span></span><br><span class="line">69024815</span><br></pre></td></tr></table></figure></p>
+<p>cksum：打印CRC效验和统计字节</p>
+<h3 id="2、定义一个颜色输出字符串函数"><a href="#2、定义一个颜色输出字符串函数" class="headerlink" title="2、定义一个颜色输出字符串函数"></a>2、定义一个颜色输出字符串函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">方法1：</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">echo_color</span></span>() &#123;</span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$1</span> == <span class="string">"green"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">"\033[32;40m<span class="variable">$2</span>\033[0m"</span></span><br><span class="line">    <span class="keyword">elif</span> [ <span class="variable">$1</span> == <span class="string">"red"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">"\033[31;40m<span class="variable">$2</span>\033[0m"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">方法2：</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">echo_color</span></span>() &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">        green)</span><br><span class="line">            <span class="built_in">echo</span> -e <span class="string">"\033[32;40m<span class="variable">$2</span>\033[0m"</span></span><br><span class="line">            ;;</span><br><span class="line">        red)</span><br><span class="line">            <span class="built_in">echo</span> -e <span class="string">"\033[31;40m<span class="variable">$2</span>\033[0m"</span> </span><br><span class="line">            ;;</span><br><span class="line">        *) </span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"Example: echo_color red string"</span></span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方法：echo_color green “test”<br>function关键字定义一个函数，可加或不加。</p>
+<h3 id="3、批量创建用户"><a href="#3、批量创建用户" class="headerlink" title="3、批量创建用户"></a>3、批量创建用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=$(date +%F_%T)</span><br><span class="line">USER_FILE=user.txt</span><br><span class="line"><span class="function"><span class="title">echo_color</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$1</span> == <span class="string">"green"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">"\033[32;40m<span class="variable">$2</span>\033[0m"</span></span><br><span class="line">    <span class="keyword">elif</span> [ <span class="variable">$1</span> == <span class="string">"red"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">"\033[31;40m<span class="variable">$2</span>\033[0m"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 如果用户文件存在并且大小大于0就备份</span></span><br><span class="line"><span class="keyword">if</span> [ -s <span class="variable">$USER_FILE</span> ]; <span class="keyword">then</span></span><br><span class="line">    mv <span class="variable">$USER_FILE</span> <span class="variable">$&#123;USER_FILE&#125;</span>-<span class="variable">$&#123;DATE&#125;</span>.bak</span><br><span class="line">    echo_color green <span class="string">"<span class="variable">$USER_FILE</span> exist, rename <span class="variable">$&#123;USER_FILE&#125;</span>-<span class="variable">$&#123;DATE&#125;</span>.bak"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"User\tPassword"</span> &gt;&gt; <span class="variable">$USER_FILE</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"----------------"</span> &gt;&gt; <span class="variable">$USER_FILE</span></span><br><span class="line"><span class="keyword">for</span> USER <span class="keyword">in</span> user&#123;1..10&#125;; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> ! id <span class="variable">$USER</span> &amp;&gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">        PASS=$(<span class="built_in">echo</span> <span class="variable">$RANDOM</span> |md5sum |cut -c 1-8)</span><br><span class="line">        useradd <span class="variable">$USER</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$PASS</span> |passwd --stdin <span class="variable">$USER</span> &amp;&gt;/dev/null</span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">"<span class="variable">$USER</span>\t<span class="variable">$PASS</span>"</span> &gt;&gt; <span class="variable">$USER_FILE</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$USER</span> User create successful."</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        echo_color red <span class="string">"<span class="variable">$USER</span> User already exists!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="4、检查软件包是否安装"><a href="#4、检查软件包是否安装" class="headerlink" title="4、检查软件包是否安装"></a>4、检查软件包是否安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> rpm -q sysstat &amp;&gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"sysstat is already installed."</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"sysstat is not installed!"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h3 id="5、检查服务状态"><a href="#5、检查服务状态" class="headerlink" title="5、检查服务状态"></a>5、检查服务状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">PORT_C=$(ss -anu |grep -c 123)</span><br><span class="line">PS_C=$(ps -ef |grep ntpd |grep -vc grep)</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$PORT_C</span> -eq 0 -o <span class="variable">$PS_C</span> -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"内容"</span> | mail -s <span class="string">"主题"</span> dst@example.com</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h3 id="6、检查主机存活状态"><a href="#6、检查主机存活状态" class="headerlink" title="6、检查主机存活状态"></a>6、检查主机存活状态</h3><p>方法1：将错误IP放到数组里面判断是否ping失败三次<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line">IP_LIST=<span class="string">"192.168.18.1 192.168.1.1 192.168.18.2"</span></span><br><span class="line"><span class="keyword">for</span> IP <span class="keyword">in</span> <span class="variable">$IP_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    NUM=1</span><br><span class="line">    <span class="keyword">while</span> [ <span class="variable">$NUM</span> -le 3 ]; <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> ping -c 1 <span class="variable">$IP</span> &gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$IP</span> Ping is successful."</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="comment"># echo "$IP Ping is failure $NUM"</span></span><br><span class="line">            FAIL_COUNT[<span class="variable">$NUM</span>]=<span class="variable">$IP</span></span><br><span class="line">            <span class="built_in">let</span> NUM++</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$&#123;#FAIL_COUNT[*]&#125;</span> -eq 3 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;FAIL_COUNT[1]&#125;</span> Ping is failure!"</span></span><br><span class="line">        <span class="built_in">unset</span> FAIL_COUNT[*]</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<p>方法2：将错误次数放到FAIL_COUNT变量里面判断是否ping失败三次<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line">IP_LIST=<span class="string">"192.168.18.1 192.168.1.1 192.168.18.2"</span></span><br><span class="line"><span class="keyword">for</span> IP <span class="keyword">in</span> <span class="variable">$IP_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    FAIL_COUNT=0</span><br><span class="line">    <span class="keyword">for</span> ((i=1;i&lt;=3;i++)); <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> ping -c 1 <span class="variable">$IP</span> &gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$IP</span> Ping is successful."</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="comment"># echo "$IP Ping is failure $i"</span></span><br><span class="line">            <span class="built_in">let</span> FAIL_COUNT++</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$FAIL_COUNT</span> -eq 3 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$IP</span> Ping is failure!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<p>方法3：利用for循环将ping通就跳出循环继续，如果不跳出就会走到打印ping失败<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="function"><span class="title">ping_success_status</span></span>() &#123;</span><br><span class="line">    <span class="keyword">if</span> ping -c 1 <span class="variable">$IP</span> &gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$IP</span> Ping is successful."</span></span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">IP_LIST=<span class="string">"192.168.18.1 192.168.1.1 192.168.18.2"</span></span><br><span class="line"><span class="keyword">for</span> IP <span class="keyword">in</span> <span class="variable">$IP_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    ping_success_status</span><br><span class="line">    ping_success_status</span><br><span class="line">    ping_success_status</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$IP</span> Ping is failure!"</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="7、监控CPU、内存和硬盘利用率"><a href="#7、监控CPU、内存和硬盘利用率" class="headerlink" title="7、监控CPU、内存和硬盘利用率"></a>7、监控CPU、内存和硬盘利用率</h3><h4 id="1）CPU"><a href="#1）CPU" class="headerlink" title="1）CPU"></a>1）CPU</h4><p>借助vmstat工具来分析CPU统计信息。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=$(date +%F<span class="string">" "</span>%H:%M)</span><br><span class="line">IP=$(ifconfig eth0 |awk -F <span class="string">'[ :]+'</span> <span class="string">'/inet addr/&#123;print $4&#125;'</span>)  <span class="comment"># 只支持CentOS6</span></span><br><span class="line">MAIL=<span class="string">"example@mail.com"</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">which</span> vmstat &amp;&gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"vmstat command no found, Please install procps package."</span> </span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">US=$(vmstat |awk <span class="string">'NR==3&#123;print $13&#125;'</span>)</span><br><span class="line">SY=$(vmstat |awk <span class="string">'NR==3&#123;print $14&#125;'</span>)</span><br><span class="line">IDLE=$(vmstat |awk <span class="string">'NR==3&#123;print $15&#125;'</span>)</span><br><span class="line">WAIT=$(vmstat |awk <span class="string">'NR==3&#123;print $16&#125;'</span>)</span><br><span class="line">USE=$((<span class="variable">$US</span>+<span class="variable">$SY</span>))</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$USE</span> -ge 50 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"</span></span><br><span class="line"><span class="string">    Date: <span class="variable">$DATE</span></span></span><br><span class="line"><span class="string">    Host: <span class="variable">$IP</span></span></span><br><span class="line"><span class="string">    Problem: CPU utilization <span class="variable">$USE</span></span></span><br><span class="line"><span class="string">    "</span> | mail -s <span class="string">"CPU Monitor"</span> <span class="variable">$MAIL</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="2）内存"><a href="#2）内存" class="headerlink" title="2）内存"></a>2）内存</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=$(date +%F<span class="string">" "</span>%H:%M)</span><br><span class="line">IP=$(ifconfig eth0 |awk -F <span class="string">'[ :]+'</span> <span class="string">'/inet addr/&#123;print $4&#125;'</span>)  </span><br><span class="line">MAIL=<span class="string">"example@mail.com"</span></span><br><span class="line">TOTAL=$(free -m |awk <span class="string">'/Mem/&#123;print $2&#125;'</span>)</span><br><span class="line">USE=$(free -m |awk <span class="string">'/Mem/&#123;print $3-$6-$7&#125;'</span>)</span><br><span class="line">FREE=$((<span class="variable">$TOTAL</span>-<span class="variable">$USE</span>))</span><br><span class="line"><span class="comment"># 内存小于1G发送报警邮件</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$FREE</span> -lt 1024 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"</span></span><br><span class="line"><span class="string">    Date: <span class="variable">$DATE</span></span></span><br><span class="line"><span class="string">    Host: <span class="variable">$IP</span></span></span><br><span class="line"><span class="string">    Problem: Total=<span class="variable">$TOTAL</span>,Use=<span class="variable">$USE</span>,Free=<span class="variable">$FREE</span></span></span><br><span class="line"><span class="string">    "</span> | mail -s <span class="string">"Memory Monitor"</span> <span class="variable">$MAIL</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h4 id="3）硬盘"><a href="#3）硬盘" class="headerlink" title="3）硬盘"></a>3）硬盘</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=$(date +%F<span class="string">" "</span>%H:%M)</span><br><span class="line">IP=$(ifconfig eth0 |awk -F <span class="string">'[ :]+'</span> <span class="string">'/inet addr/&#123;print $4&#125;'</span>)  </span><br><span class="line">MAIL=<span class="string">"example@mail.com"</span></span><br><span class="line">TOTAL=$(fdisk -l |awk -F<span class="string">'[: ]+'</span> <span class="string">'BEGIN&#123;OFS="="&#125;/^Disk \/dev/&#123;printf "%s=%sG,",$2,$3&#125;'</span>)</span><br><span class="line">PART_USE=$(df -h |awk <span class="string">'BEGIN&#123;OFS="="&#125;/^\/dev/&#123;print $1,int($5),$6&#125;'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$PART_USE</span>; <span class="keyword">do</span></span><br><span class="line">    PART=$(<span class="built_in">echo</span> <span class="variable">$i</span> |cut -d<span class="string">"="</span> -f1)</span><br><span class="line">    USE=$(<span class="built_in">echo</span> <span class="variable">$i</span> |cut -d<span class="string">"="</span> -f2)</span><br><span class="line">    MOUNT=$(<span class="built_in">echo</span> <span class="variable">$i</span> |cut -d<span class="string">"="</span> -f3)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$USE</span> -gt 80 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"</span></span><br><span class="line"><span class="string">        Date: <span class="variable">$DATE</span></span></span><br><span class="line"><span class="string">        Host: <span class="variable">$IP</span></span></span><br><span class="line"><span class="string">        Total: <span class="variable">$TOTAL</span></span></span><br><span class="line"><span class="string">        Problem: <span class="variable">$PART</span>=<span class="variable">$USE</span>(<span class="variable">$MOUNT</span>)</span></span><br><span class="line"><span class="string">        "</span> | mail -s <span class="string">"Disk Monitor"</span> <span class="variable">$MAIL</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="8、批量主机磁盘利用率监控"><a href="#8、批量主机磁盘利用率监控" class="headerlink" title="8、批量主机磁盘利用率监控"></a>8、批量主机磁盘利用率监控</h3><p>前提监控端和被监控端SSH免交互登录或者密钥登录。<br>写一个配置文件保存被监控主机SSH连接信息，文件内容格式：IP User Port<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">HOST_INFO=host.info</span><br><span class="line"><span class="keyword">for</span> IP <span class="keyword">in</span> $(awk <span class="string">'/^[^#]/&#123;print $1&#125;'</span> <span class="variable">$HOST_INFO</span>); <span class="keyword">do</span></span><br><span class="line">    USER=$(awk -v ip=<span class="variable">$IP</span> <span class="string">'ip==$1&#123;print $2&#125;'</span> <span class="variable">$HOST_INFO</span>)</span><br><span class="line">    PORT=$(awk -v ip=<span class="variable">$IP</span> <span class="string">'ip==$1&#123;print $3&#125;'</span> <span class="variable">$HOST_INFO</span>)</span><br><span class="line">    TMP_FILE=/tmp/disk.tmp</span><br><span class="line">    ssh -p <span class="variable">$PORT</span> <span class="variable">$USER</span>@<span class="variable">$IP</span> <span class="string">'df -h'</span> &gt; <span class="variable">$TMP_FILE</span></span><br><span class="line">    USE_RATE_LIST=$(awk <span class="string">'BEGIN&#123;OFS="="&#125;/^\/dev/&#123;print $1,int($5)&#125;'</span> <span class="variable">$TMP_FILE</span>)</span><br><span class="line">    <span class="keyword">for</span> USE_RATE <span class="keyword">in</span> <span class="variable">$USE_RATE_LIST</span>; <span class="keyword">do</span></span><br><span class="line">        PART_NAME=<span class="variable">$&#123;USE_RATE%=*&#125;</span></span><br><span class="line">        USE_RATE=<span class="variable">$&#123;USE_RATE#*=&#125;</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$USE_RATE</span> -ge 80 ]; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$PART_NAME</span> Partition usage <span class="variable">$USE_RATE</span>%!"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="9、检查网站可用性"><a href="#9、检查网站可用性" class="headerlink" title="9、检查网站可用性"></a>9、检查网站可用性</h3><h4 id="1）检查URL可用性"><a href="#1）检查URL可用性" class="headerlink" title="1）检查URL可用性"></a>1）检查URL可用性</h4><p>方法1：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">check_url</span></span>() &#123;</span><br><span class="line">    HTTP_CODE=$(curl -o /dev/null --connect-timeout 3 -s -w <span class="string">"%&#123;http_code&#125;"</span> <span class="variable">$1</span>)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$HTTP_CODE</span> -ne 200 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$1</span> Access failure!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>方法2：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">check_url</span></span>() &#123;</span><br><span class="line"><span class="keyword">if</span> ! wget -T 10 --tries=1 --spider <span class="variable">$1</span> &gt;/dev/null 2&gt;&amp;1; <span class="keyword">then</span>  </span><br><span class="line"><span class="comment">#-T超时时间，--tries尝试1次，--spider爬虫模式</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$1</span> Access failure!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用方法：check_url <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
+<h4 id="2）判断三次URL可用性"><a href="#2）判断三次URL可用性" class="headerlink" title="2）判断三次URL可用性"></a>2）判断三次URL可用性</h4><p>思路与上面检查主机存活状态一样。<br>方法1：利用循环技巧，如果成功就跳出当前循环，否则执行到最后一行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line"><span class="function"><span class="title">check_url</span></span>() &#123;</span><br><span class="line">    HTTP_CODE=$(curl -o /dev/null --connect-timeout 3 -s -w <span class="string">"%&#123;http_code&#125;"</span> <span class="variable">$1</span>)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$HTTP_CODE</span> -eq 200 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">URL_LIST=<span class="string">"www.baidu.com www.agasgf.com"</span></span><br><span class="line"><span class="keyword">for</span> URL <span class="keyword">in</span> <span class="variable">$URL_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    check_url <span class="variable">$URL</span></span><br><span class="line">    check_url <span class="variable">$URL</span></span><br><span class="line">    check_url <span class="variable">$URL</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$URL</span> Access failure!"</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<p>方法2：错误次数保存到变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line">URL_LIST=<span class="string">"www.baidu.com www.agasgf.com"</span></span><br><span class="line"><span class="keyword">for</span> URL <span class="keyword">in</span> <span class="variable">$URL_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    FAIL_COUNT=0</span><br><span class="line">    <span class="keyword">for</span> ((i=1;i&lt;=3;i++)); <span class="keyword">do</span></span><br><span class="line">        HTTP_CODE=$(curl -o /dev/null --connect-timeout 3 -s -w <span class="string">"%&#123;http_code&#125;"</span> <span class="variable">$URL</span>)</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$HTTP_CODE</span> -ne 200 ]; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">let</span> FAIL_COUNT++</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$FAIL_COUNT</span> -eq 3 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$URL</span> Access failure!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<p>方法3：错误次数保存到数组<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line">URL_LIST=<span class="string">"www.baidu.com www.agasgf.com"</span></span><br><span class="line"><span class="keyword">for</span> URL <span class="keyword">in</span> <span class="variable">$URL_LIST</span>; <span class="keyword">do</span></span><br><span class="line">    NUM=1</span><br><span class="line">    <span class="keyword">while</span> [ <span class="variable">$NUM</span> -le 3 ]; <span class="keyword">do</span></span><br><span class="line">        HTTP_CODE=$(curl -o /dev/null --connect-timeout 3 -s -w <span class="string">"%&#123;http_code&#125;"</span> <span class="variable">$URL</span>)</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$HTTP_CODE</span> -ne 200 ]; <span class="keyword">then</span></span><br><span class="line">            FAIL_COUNT[<span class="variable">$NUM</span>]=<span class="variable">$IP</span>  <span class="comment">#创建数组，以$NUM下标，$IP元素</span></span><br><span class="line">            <span class="built_in">let</span> NUM++</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$&#123;#FAIL_COUNT[*]&#125;</span> -eq 3 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Warning: <span class="variable">$URL</span> Access failure!"</span></span><br><span class="line">        <span class="built_in">unset</span> FAIL_COUNT[*]    <span class="comment">#清空数组</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="10、检查MySQL主从同步状态"><a href="#10、检查MySQL主从同步状态" class="headerlink" title="10、检查MySQL主从同步状态"></a>10、检查MySQL主从同步状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line">USER=bak</span><br><span class="line">PASSWD=123456</span><br><span class="line">IO_SQL_STATUS=$(mysql -u<span class="variable">$USER</span> -p<span class="variable">$PASSWD</span> -e <span class="string">'show slave status\G'</span> |awk -F: <span class="string">'/Slave_.*_Running/&#123;gsub(": ",":");print $0&#125;'</span>)  <span class="comment">#gsub去除冒号后面的空格</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$IO_SQL_STATUS</span>; <span class="keyword">do</span></span><br><span class="line">    THREAD_STATUS_NAME=<span class="variable">$&#123;i%:*&#125;</span></span><br><span class="line">    THREAD_STATUS=<span class="variable">$&#123;i#*:&#125;</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$THREAD_STATUS</span>"</span> != <span class="string">"Yes"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Error: MySQL Master-Slave <span class="variable">$THREAD_STATUS_NAME</span> status is <span class="variable">$THREAD_STATUS</span>!"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/12/24/Shell脚本常见面试题/">Shell脚本常见面试题</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/2018/12/24/Shell脚本常见面试题/" title="Shell脚本常见面试题">http://www.cnops.com/2018/12/24/Shell脚本常见面试题/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/24/Shell脚本常见面试题/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Shell/" rel="tag"><i class="fa fa-tag"></i> Shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/20/JVM调优命令/" rel="next" title="JVM调优命令">
+                <i class="fa fa-chevron-left"></i> JVM调优命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/24/Linux下解决docker端口映射到宿主机后外网无法访问的问题/" rel="prev" title="Linux下解决docker端口映射到宿主机后外网无法访问的问题">
+                Linux下解决docker端口映射到宿主机后外网无法访问的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Francis</p>
+              <p class="site-description motion-element" itemprop="description">云在青天水在瓶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/francisxys" title="GitHub &rarr; https://github.com/francisxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:824014778@qq.com" title="E-Mail &rarr; mailto:824014778@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/Teotihuacanxys" title="Weibo &rarr; https://weibo.com/Teotihuacanxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tiejiang.org" title="http://www.tiejiang.org" rel="noopener" target="_blank">铁匠运维网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="http://www.ityouknow.com/" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本目录"><span class="nav-text">脚本目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、获取随机字符串或数字"><span class="nav-text">1、获取随机字符串或数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、定义一个颜色输出字符串函数"><span class="nav-text">2、定义一个颜色输出字符串函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、批量创建用户"><span class="nav-text">3、批量创建用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、检查软件包是否安装"><span class="nav-text">4、检查软件包是否安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、检查服务状态"><span class="nav-text">5、检查服务状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、检查主机存活状态"><span class="nav-text">6、检查主机存活状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、监控CPU、内存和硬盘利用率"><span class="nav-text">7、监控CPU、内存和硬盘利用率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）CPU"><span class="nav-text">1）CPU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）内存"><span class="nav-text">2）内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3）硬盘"><span class="nav-text">3）硬盘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、批量主机磁盘利用率监控"><span class="nav-text">8、批量主机磁盘利用率监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、检查网站可用性"><span class="nav-text">9、检查网站可用性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）检查URL可用性"><span class="nav-text">1）检查URL可用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）判断三次URL可用性"><span class="nav-text">2）判断三次URL可用性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、检查MySQL主从同步状态"><span class="nav-text">10、检查MySQL主从同步状态</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

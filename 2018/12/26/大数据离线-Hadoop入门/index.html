@@ -124,7 +124,9 @@
 <meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226002.png">
 <meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226003.png">
 <meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226004.png">
-<meta property="og:updated_time" content="2018-12-27T01:55:53.910Z">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181227002.png">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181227003.png">
+<meta property="og:updated_time" content="2018-12-27T07:22:17.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据离线-Hadoop入门">
 <meta name="twitter:description" content="Hadoop介绍一般我们讲的Hadoop分为狭义和广义两部分 狭义上讲Hadoop 指 Apache 这款开源框架Hadoop 是 Apache 旗下的一个用 java 语言实现开源软件框架， 是一个开发和运行处理大规模数据的软件平台。 允许使用简单的编程模型在大量计算机集群上对大型数据集进行分布式处理。它的核心组件有：  HDFS（分布式文件系统）：解决海量数据存储 YARN（作业调度和集群资源">
@@ -453,7 +455,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-27 09:55:53" itemprop="dateModified" datetime="2018-12-27T09:55:53+08:00">2018-12-27</time>
+                <time title="修改时间：2018-12-27 15:22:17" itemprop="dateModified" datetime="2018-12-27T15:22:17+08:00">2018-12-27</time>
               
             
           </span>
@@ -616,35 +618,74 @@ node-03 10.186.65.43
 <li><p>刷新配置:source /etc/profile</p>
 </li>
 </ul>
-<h4 id="Hadoop-安装"><a href="#Hadoop-安装" class="headerlink" title="Hadoop 安装"></a>Hadoop 安装</h4><p>上传hadoop,解压 hadoop-2.7.4-with-centos-6.7.tar.g<br>hadoop的目录结构</p>
-<p>bin： Hadoop 最基本的管理脚本和使用脚本的目录，这些脚本是 sbin 目录下管理脚本的基础实现，用户可以直接使用这些脚本管理和使用 Hadoop。<br>etc： Hadoop 配置文件所在的目录，包括 core-site,xml、 hdfs-site.xml、mapred-site.xml 等从 Hadoop1.0 继承而来的配置文件和 yarn-site.xml Hadoop2.0 新增的配置文件。<br>include：对外提供的编程库头文件（具体动态库和静态库在 lib 目录中），这些头文件均是用 C++定义的，通常用于 C++程序访问 HDFS 或者编写 MapReduce<br>程序。<br>lib：该目录包含了 Hadoop 对外提供的编程动态库和静态库，与 include 目录中的头文件结合使用。<br>libexec：各个服务对用的 shell 配置文件所在的目录，可用于配置日志输出、启动参数（比如 JVM 参数）等基本信息。<br>sbin： Hadoop 管理脚本所在的目录，主要包含 HDFS 和 YARN 中各类服务的<br>启动/关闭脚本。<br>share： Hadoop 各个模块编译后的 jar 包所在的目录.</p>
-<ol start="6">
-<li>Hadoop 配置文件修改</li>
-</ol>
-<p>Hadoop 安装主要就是配置文件的修改， 一般在主节点进行修改，完毕后 scp<br>下发给其他各个从节点机器。下面的文件都在 hadoop的<strong><em>etc</em></strong>目录下：</p>
-<p>hadoop-env.sh<br>命令：vi hadoop-env.sh<br>更改export JAVA_HOME的后的位置<br>export JAVA_HOME=/root/apps/jdk1.8.0_65<br>1<br>修改core-site.xml文件，在configuration中增加代码</p>
-<configuration>
-
-<!-- 用于设置 Hadoop 的文件系统，由 URI 指定 -->
-<pre><code>&lt;property&gt;
-    &lt;name&gt;fs.defaultFS&lt;/name&gt;
-    &lt;value&gt;hdfs://node-1:9000&lt;/value&gt;
-&lt;/property&gt;
-</code></pre><!-- 配置 Hadoop 的临时目录,默认/tmp/hadoop-${user.name} -->
-<pre><code>&lt;property&gt;
-    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
-    &lt;value&gt;/export/data/hadoopData&lt;/value&gt;
-&lt;/property&gt;
-</code></pre><p></p></configuration><br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>修改hdfs-site.xml，在configuration中增加代码<p></p>
-<p><configuration><br><!-- 指定 HDFS 副本的数量 --><br> <property><br>  <name>dfs.replication</name><br>  <value>2</value><br> </property><br>&lt;!– secondary namenode 所在主机的 ip 和端口-&gt;<br> <property><br>   <name>dfs.namenode.secondary.http-address</name><br>   <value>192.168.25.101:50090</value><br> </property><br></configuration><br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>修改mapred-site.xml的，configuration中增加代码</p>
-<p><configuration><br><!-- 指定 mr 运行时框架，这里指定在 yarn 上，默认是 local --><br>  <property><br>     <name>mapreduce.framework.name</name><br>     <value>yarn</value><br>  </property><br></configuration><br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>修改yarn-site.xml的，configuration中增加代码</p>
-<p><configuration><br><!-- 指定 YARN 的老大（ ResourceManager）的地址 --><br>  <property><br>    <name>yarn.resourcemanager.hostname</name><br>    <value>node-1</value><br>  </property><br><!-- NodeManager上运行的附属服务。需配置成mapreduce_shuffle，才可运行MapReduce程序默认值： "" --><br>  <property><br>    <name>yarn.nodemanager.aux-services</name><br>    <value>mapreduce_shuffle</value><br>  </property><br></configuration><br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>创建slaves文件，如果存在进行编辑，删除<strong><em>locahost</em></strong>，增加文件<br>node-1<br>node-2<br>node-3<br>1<br>2<br>3<br>将hadoop添加到环境变量 ，命令<strong><em>vim /etc/proflie</em></strong><br>export HADOOP_HOME=/export/server/hadoop-2.7.4<br>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin<br>1<br>2<br>保存配置文件，刷新配置文件：source /etc/profile<br>集群启动</p>
-<p>启动方式<br>要启动 Hadoop 集群，需要启动 HDFS 和 YARN 两个集群。<br>注意： 首次启动 HDFS 时，必须对其进行格式化操作。 本质上是一些清理和准备工作，因为此时的 HDFS 在物理上还是不存在的。<br>hdfs namenode– format 或者 hadoop namenode – format<br>单节点逐个启动<br>在主节点上使用以下命令启动 HDFS NameNode：<br>hadoop-daemon.sh start namenode<br>在每个从节点上使用以下命令启动 HDFS DataNode：<br>hadoop-daemon.sh start datanode<br>在主节点上使用以下命令启动 YARN ResourceManager：<br>yarn-daemon.sh start resourcemanager<br>在每个从节点上使用以下命令启动 YARN nodemanager：<br>yarn-daemon.sh start nodemanager<br>以上脚本位于$HADOOP_PREFIX/sbin/目录下。 如果想要停止某个节点上某个角色，只需要把命令中的 start 改为 stop 即可。</p>
-<p>脚本一键启动<br>如果配置了 etc/hadoop/slaves 和 ssh 免密登录，则可以使用程序脚本启动<br>所有 Hadoop 两个集群的相关进程，在主节点所设定的机器上执行。<br>hdfs： /sbin/start-dfs.sh<br>yarn: /sbin/start-yarn.sh<br>停止集群： stop-dfs.sh、 stop-yarn.sh<br>集群 web-ui<br>一旦 Hadoop 集群启动并运行， 可以通过 web-ui 进行集群查看，如下所述：<br>node-1:50070 HDFS的NameNode节点</p>
-<hr>
-<p>作者：xipenfei<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/weixin_42229056/article/details/82597804" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42229056/article/details/82597804</a> </p>
-<h2 id="版权声明：本文为博主原创文章，转载请附上博文链接！"><a href="#版权声明：本文为博主原创文章，转载请附上博文链接！" class="headerlink" title="版权声明：本文为博主原创文章，转载请附上博文链接！"></a>版权声明：本文为博主原创文章，转载请附上博文链接！</h2><p>作者：xipenfei<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/weixin_42229056/article/details/82597804" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42229056/article/details/82597804</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
-
+<h4 id="Hadoop-安装"><a href="#Hadoop-安装" class="headerlink" title="Hadoop 安装"></a>Hadoop 安装</h4><p>首先我们要有一版是适合我们系统版本的hadoop，所以我们需要编译。<br>为什么要编译以及如何编译参考：<a href="https://www.cnops.top/2018/12/27/Hadoop2-9-2%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/" target="_blank" rel="noopener">Hadoop2.9.2源码编译 </a><br>上传hadoop,解压hadoop-2.9.2-with-centos7.6.tar.gz<br>hadoop的目录结构<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/data/hadoop/hadoop-2.9.2</span><br><span class="line">[root@node-01 hadoop-2.9.2]<span class="comment"># ll</span></span><br><span class="line">total 128</span><br><span class="line">drwxr-xr-x 2 root root    194 Dec 27 03:45 bin</span><br><span class="line">drwxr-xr-x 3 root root     20 Dec 27 03:45 etc</span><br><span class="line">drwxr-xr-x 2 root root    106 Dec 27 03:45 include</span><br><span class="line">drwxr-xr-x 3 root root     20 Dec 27 03:45 lib</span><br><span class="line">drwxr-xr-x 2 root root    239 Dec 27 03:45 libexec</span><br><span class="line">-rw-r--r-- 1 root root 106210 Dec 27 03:45 LICENSE.txt</span><br><span class="line">-rw-r--r-- 1 root root  15917 Dec 27 03:45 NOTICE.txt</span><br><span class="line">-rw-r--r-- 1 root root   1366 Dec 27 03:45 README.txt</span><br><span class="line">drwxr-xr-x 3 root root   4096 Dec 27 03:45 sbin</span><br><span class="line">drwxr-xr-x 4 root root     31 Dec 27 03:45 share</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>bin： Hadoop 最基本的管理脚本和使用脚本的目录，这些脚本是 sbin 目录下管理脚本的基础实现，用户可以直接使用这些脚本管理和使用 Hadoop。</li>
+<li>etc： Hadoop 配置文件所在的目录，包括 core-site,xml、 hdfs-site.xml、mapred-site.xml 等从 Hadoop1.0 继承而来的配置文件和 yarn-site.xml Hadoop2.0 新增的配置文件。</li>
+<li>include：对外提供的编程库头文件（具体动态库和静态库在 lib 目录中），这些头文件均是用 C++定义的，通常用于 C++程序访问 HDFS 或者编写 MapReduce程序。</li>
+<li>lib：该目录包含了 Hadoop 对外提供的编程动态库和静态库，与 include 目录中的头文件结合使用。</li>
+<li>libexec：各个服务对用的 shell 配置文件所在的目录，可用于配置日志输出、启动参数（比如 JVM 参数）等基本信息。</li>
+<li>sbin： Hadoop 管理脚本所在的目录，主要包含 HDFS 和 YARN 中各类服务的启动/关闭脚本。</li>
+<li>share： Hadoop 各个模块编译后的 jar 包所在的目录。</li>
+</ul>
+<h4 id="Hadoop配置文件修改"><a href="#Hadoop配置文件修改" class="headerlink" title="Hadoop配置文件修改"></a>Hadoop配置文件修改</h4><p>Hadoop 安装主要就是配置文件的修改， 一般在主节点进行修改，完毕后 scp<br>下发给其他各个从节点机器。下面的文件都在 hadoop的<strong>etc/hadoop</strong>目录下：</p>
+<ul>
+<li>修改hadoop-env.sh文件，更改</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span></span><br></pre></td></tr></table></figure>
+<p>为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/data/jdk1.8</span><br></pre></td></tr></table></figure></p>
+<p>此处JAVA_HOME为JDK的位置。</p>
+<ul>
+<li>修改core-site.xml文件，在configuration中增加代码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 用于设置 Hadoop 的文件系统，由 URI 指定 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://node-1:9000&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 配置 Hadoop 的临时目录,默认/tmp/hadoop-<span class="variable">$&#123;user.name&#125;</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/<span class="built_in">export</span>/data/hadoopData&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改hdfs-site.xml，在configuration中增加代码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 HDFS 副本的数量 --&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;2&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;!-- secondary namenode 所在主机的 ip 和端口-&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">   &lt;value&gt;node-02:50090&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改mapred-site.xml的，configuration中增加代码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 mr 运行时框架，这里指定在 yarn 上，默认是 <span class="built_in">local</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">     &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改yarn-site.xml的，configuration中增加代码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 YARN 的老大（ ResourceManager）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;node-1&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;!-- NodeManager上运行的附属服务。需配置成mapreduce_shuffle，才可运行MapReduce程序默认值： <span class="string">""</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建slaves文件，如果存在进行编辑，删除<strong>locahost</strong>，增加文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node-1</span><br><span class="line">node-2</span><br><span class="line">node-3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将hadoop添加到环境变量 ，命令<code>vim /etc/proflie</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HADOOP_HOME=/data/hadoop/hadoop-2.9.2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin</span><br></pre></td></tr></table></figure>
+<p>保存配置文件，刷新配置文件：<code>source /etc/profile</code></p>
+<h4 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h4><ul>
+<li>启动方式</li>
+</ul>
+<p>要启动 Hadoop 集群，需要启动 HDFS 和 YARN 两个集群。<br>注意： 首次启动 HDFS 时，必须对其进行格式化操作。 本质上是一些清理和准备工作，因为此时的 HDFS 在物理上还是不存在的。<br><code>hdfs namenode– format</code>或者<code>hadoop namenode – format</code></p>
+<ul>
+<li>单节点逐个启动</li>
+</ul>
+<p>1、在主节点上使用以下命令启动 HDFS NameNode：<br><code>hadoop-daemon.sh start namenode</code><br>2、在每个从节点上使用以下命令启动 HDFS DataNode：<br><code>hadoop-daemon.sh start datanode</code><br>3、在主节点上使用以下命令启动 YARN ResourceManager：<br><code>yarn-daemon.sh start resourcemanager</code><br>4、在每个从节点上使用以下命令启动 YARN nodemanager：<br><code>yarn-daemon.sh start nodemanager</code><br>以上脚本位于$HADOOP_PREFIX/sbin/目录下。 如果想要停止某个节点上某个角色，只需要把命令中的 start 改为 stop 即可。</p>
+<ul>
+<li>脚本一键启动</li>
+</ul>
+<p>如果配置了 etc/hadoop/slaves 和 ssh 免密登录，则可以使用程序脚本启动<br>所有 Hadoop 两个集群的相关进程，在主节点所设定的机器上执行。<br><code>hdfs： /sbin/start-dfs.sh</code><br><code>yarn: /sbin/start-yarn.sh</code><br>停止集群： <code>stop-dfs.sh</code>、 <code>stop-yarn.sh</code><br>集群 web-ui<br>一旦 Hadoop 集群启动并运行， 可以通过 web-ui 进行集群查看，如下所述：<br>node-1:50070 HDFS的NameNode节点<br><img src="http://pjakaipln.bkt.clouddn.com/20181227002.png" alt="Alt text" title="Francis&#39;Blog"><br>node-1:8088 YARN的主页<br><img src="http://pjakaipln.bkt.clouddn.com/20181227003.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h2 id="Hadoop初体验"><a href="#Hadoop初体验" class="headerlink" title="Hadoop初体验"></a>Hadoop初体验</h2><p>上传文件</p>
+<pre><code>从 Linux 本地上传一个文本文件到 hdfs 的/test/input 目录下
+hadoop fs -mkdir -p /wordcount/input 创建文件夹
+hadoop fs -put /root/somewords.txt /wordcount/input Linux上传到hadoop
+</code></pre><p>运行程序</p>
+<pre><code>运行 mapreduce 程序
+在 Hadoop 安装包的 hadoop-2.7.4/share/hadoop/mapreduce 下有官方自带的 mapreduce 程序。 我们可以使用如下的命令进行运行测试。示例程序 jar:
+hadoop-mapreduce-examples-2.7.4.jar
+</code></pre><p>计算圆周率</p>
+<pre><code>计算圆周率:
+hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
+这里使用的是Monte Carlo 方法来计算 Pi 值
+使用Monte Carlo 计算圆周率
+</code></pre>
       
     </div>
 
@@ -1102,7 +1143,7 @@ node-03 10.186.65.43
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop介绍"><span class="nav-text">Hadoop介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#狭义上讲"><span class="nav-text">狭义上讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义上讲"><span class="nav-text">广义上讲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop发展历史"><span class="nav-text">Hadoop发展历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop的特点"><span class="nav-text">Hadoop的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-国内外应用"><span class="nav-text">Hadoop 国内外应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop集群搭建"><span class="nav-text">Hadoop集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发行版本"><span class="nav-text">发行版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群介绍"><span class="nav-text">集群介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群安装"><span class="nav-text">集群安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器准备"><span class="nav-text">服务器准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器系统设置"><span class="nav-text">服务器系统设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK环境安装"><span class="nav-text">JDK环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hadoop-安装"><span class="nav-text">Hadoop 安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版权声明：本文为博主原创文章，转载请附上博文链接！"><span class="nav-text">版权声明：本文为博主原创文章，转载请附上博文链接！</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop介绍"><span class="nav-text">Hadoop介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#狭义上讲"><span class="nav-text">狭义上讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义上讲"><span class="nav-text">广义上讲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop发展历史"><span class="nav-text">Hadoop发展历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop的特点"><span class="nav-text">Hadoop的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-国内外应用"><span class="nav-text">Hadoop 国内外应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop集群搭建"><span class="nav-text">Hadoop集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发行版本"><span class="nav-text">发行版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群介绍"><span class="nav-text">集群介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群安装"><span class="nav-text">集群安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器准备"><span class="nav-text">服务器准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器系统设置"><span class="nav-text">服务器系统设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK环境安装"><span class="nav-text">JDK环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hadoop-安装"><span class="nav-text">Hadoop 安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hadoop配置文件修改"><span class="nav-text">Hadoop配置文件修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群启动"><span class="nav-text">集群启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop初体验"><span class="nav-text">Hadoop初体验</span></a></li></ol></div>
             
 
           </div>

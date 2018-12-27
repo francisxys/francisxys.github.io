@@ -112,19 +112,19 @@
 
 
 
-  <meta name="description" content="在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1810 (Core) # uname -aLinux node-01 3.10.0-862.14">
+  <meta name="description" content="官方对每个版本的hadoop提供了源码版本和二进制版本，但是官方提供的二进制版本是32位的，所以在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1">
 <meta name="keywords" content="Maven,Hadoop,编译,Protobuf,FindBugs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop2.9.2源码编译">
 <meta property="og:url" content="http://www.cnops.com/2018/12/27/Hadoop2-9-2源码编译/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1810 (Core) # uname -aLinux node-01 3.10.0-862.14">
+<meta property="og:description" content="官方对每个版本的hadoop提供了源码版本和二进制版本，但是官方提供的二进制版本是32位的，所以在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181227001.png">
-<meta property="og:updated_time" content="2018-12-27T06:29:24.835Z">
+<meta property="og:updated_time" content="2018-12-27T06:41:19.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.9.2源码编译">
-<meta name="twitter:description" content="在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1810 (Core) # uname -aLinux node-01 3.10.0-862.14">
+<meta name="twitter:description" content="官方对每个版本的hadoop提供了源码版本和二进制版本，但是官方提供的二进制版本是32位的，所以在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1">
 <meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181227001.png">
 
 
@@ -433,7 +433,7 @@
                 
               
 
-              <time title="创建时间：2018-12-27 10:07:06 / 修改时间：14:29:24" itemprop="dateCreated datePublished" datetime="2018-12-27T10:07:06+08:00">2018-12-27</time>
+              <time title="创建时间：2018-12-27 10:07:06 / 修改时间：14:41:19" itemprop="dateCreated datePublished" datetime="2018-12-27T10:07:06+08:00">2018-12-27</time>
             
 
             
@@ -496,7 +496,7 @@
       
 
       
-        <p>在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。</p>
+        <p>官方对每个版本的hadoop提供了源码版本和二进制版本，但是官方提供的二进制版本是32位的，所以在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。</p>
 <h2 id="编译准备"><a href="#编译准备" class="headerlink" title="编译准备"></a>编译准备</h2><h3 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"><span class="comment"># uname -a</span></span><br><span class="line">Linux node-01 3.10.0-862.14.4.el7.x86_64 <span class="comment">#1 SMP Wed Sep 26 15:12:11 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span></span><br></pre></td></tr></table></figure>
 <p>可以看到当前系统版本为centos7.6，64位，内核版本为3.10。</p>
 <h3 id="Hadoop下载"><a href="#Hadoop下载" class="headerlink" title="Hadoop下载"></a>Hadoop下载</h3><p>下载地址：<a href="http://mirror.bit.edu.cn/apache/hadoop/common/hadoop-2.9.2/hadoop-2.9.2-src.tar.gz" target="_blank" rel="noopener">Hadoop2.9.2下载</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-2.9.2-src.tar.gz</span><br><span class="line"><span class="built_in">cd</span> hadoop-2.9.2-src</span><br><span class="line">less BUILDING.txt</span><br></pre></td></tr></table></figure></p>

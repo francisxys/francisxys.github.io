@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Zabbix自动监控Windows端口]]></title>
+    <url>%2F2018%2F12%2F29%2FZabbix%E8%87%AA%E5%8A%A8%E7%9B%91%E6%8E%A7Windows%E7%AB%AF%E5%8F%A3%2F</url>
+    <content type="text"><![CDATA[Windows服务端有需要监控的端口，主要监控处于LISTEN状态、协议为TCP的端口。 脚本首先编写脚本，脚本名为discovertcpport.bat，脚本内容如下1234567@echo offecho &#123;echo "data":[for /F "tokens=2 delims= " %%i IN ('netstat -anp tcp^|find /i "LISTENING"') DO for /F "tokens=2 delims=:" %%j IN ("%%i") DO echo &#123;"&#123;#LISTEN_PORT&#125;":"%%j"&#125;,echo &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125;echo ]echo &#125; 脚本说明：命令netstat -anp tcp ^|find /i &quot;LISTENING&quot;用来查看监听状态的TCP端口；for /F “tokens=2 delims= “表示循环输出的截取值，即每行以空格（delims=）分隔的第2段（token=2）值，以变量%%i输出；之后以同样的循环截取出端口号并格式化输出结果；这里的输出格式必须按JSON对象格式输出，否则报错“Value should be a JSON object”；特别要注意最后一行没有逗号，因此单独添加一行1echo &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125; 来结束，以满足JSON对象格式。 配置文件客户端的zabbix_agentd.conf中添加以下内容：12UnsafeUserParameters=1UserParameter=tcpportlisten,C:\zabbix_agents_3.0.10.win\discovertcpport.bat 说明：一条表示允许使用用户自定义参数，第二条设置用户参数，名称tcpportlisten是自定义的KEY名，后接KEY要执行的命令或脚本文件。 重新启动zabbix agentd服务12C:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -xC:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -s server端从server端尝试获取数据12345678910111213141516171819202122232425# /data/zabbix/bin/zabbix_get -s 172.16.92.251 -k Port_Low_Discovery&#123; "data":[ &#123;"&#123;#LISTEN_PORT&#125;":"22"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"80"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"135"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"443"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"445"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"593"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"3388"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"3389"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"5504"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"8122"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"28000"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"28001"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"47001"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49152"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49153"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49154"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49155"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"139"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125; ]&#125; 可以看到获取了很多端口，这些端口有些是我们要监控的服务的端口，有些是系统主服务的端口，所以我们要过滤我们需要监控的端口。在zabbixserver的web界面去配置正则表达式。正则表达式如下图所示可以换个理解方式，只有在正则表达式中填写的端口号，zabbix才能去discovery。接下来配置模板和自发现准则，如下图所示下图为配置使用正则表达式来过滤获取到的端口Item prototypes配置如下Trigger prototypes配置如下 {Template OS Windows Port:net.tcp.listen[{#LISTEN_PORT}].count(#3,0,&quot;eq&quot;)}=3 表示三次获取信息为0即触发报警，Item prototypes配置时间为30秒，即90秒没有回应触发报警。这样配置是为了防止zabbixserver端和agent端通讯质量不好。]]></content>
+      <categories>
+        <category>Monitor</category>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+        <tag>Windows</tag>
+        <tag>Port</tag>
+        <tag>Discovery</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hadoop2.9.2源码编译]]></title>
     <url>%2F2018%2F12%2F27%2FHadoop2-9-2%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%2F</url>
     <content type="text"><![CDATA[官方对每个版本的hadoop提供了源码版本和二进制版本，但是官方提供的二进制版本是32位的，所以在安装hadoop时，为了更好的兼容系统位数和系统版本，或者添加Hadoop一些额外功能时，需要对Hadoop源码进行编译，本文以Hadoop2.9.2为例进行源码编译。 编译准备查看系统信息1234# cat /etc/redhat-release CentOS Linux release 7.6.1810 (Core) # uname -aLinux node-01 3.10.0-862.14.4.el7.x86_64 #1 SMP Wed Sep 26 15:12:11 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux 可以看到当前系统版本为centos7.6，64位，内核版本为3.10。 Hadoop下载下载地址：Hadoop2.9.2下载123tar -zxvf hadoop-2.9.2-src.tar.gzcd hadoop-2.9.2-srcless BUILDING.txt 可以看到所需编译环境 Requirements: * Unix System * JDK 1.7 or 1.8 * Maven 3.0 or later * Findbugs 1.3.9 (if running findbugs) * ProtocolBuffer 2.5.0 * CMake 2.6 or newer (if compiling native code), must be 3.0 or newer on Mac * Zlib devel (if compiling native code) * openssl devel (if compiling native hadoop-pipes and to get the best HDFS encryption performance) * Linux FUSE (Filesystem in Userspace) version 2.6 or above (if compiling fuse_dfs) * Internet connection for first build (to fetch all Maven and Hadoop dependencies) * python (for releasedocs) * Node.js / bower / Ember-cli (for YARN UI v2 building) 这是编译所需要的软件，包括： JDK1.7 or 1.8 maven 3.0 or later findbugs 1.3.9 protocolBuffer 2.5.0 cmake 2.6 zlib-devel openssl-devel 解决编译依赖需安装autoconf automake gcc等。 软件安装安装库文件yum -y install patch svn ncurses-devel gcc* yum -y install lzo-devel zlib-devel autoconf automake libtool cmake openssl-devel 安装JDK参考：CentOS上安装Java环境 安装Maven参考：CentOS上安装Maven 安装protocolBuffer概述：Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准,Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。目前提供了 C++、Java、Python 三种语言的 API。下载地址：protocol-buffers-2.5.0.tar.gz解压并编译安装1234567cd /data/backupwget https://github.com/protocolbuffers/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gztar -zxvf protobuf-2.5.0.tar.gzcd protobuf-2.5.0/./configuremakemake install 验证：输入protoc –version,有下面输出结果则安装并配置正确。12# protoc --versionlibprotoc 2.5.0 安装findbugs概述：FindBugs 是由马里兰大学提供的一款开源 Java静态代码分析工具。FindBugs通过检查类文件或 JAR文件，将字节码与一组缺陷模式进行对比从而发现代码缺陷，完成静态代码分析。下载地址：findbugs-1.3.9 下载解压123cd /data/backupwget https://jaist.dl.sourceforge.net/project/findbugs/findbugs/1.3.9/findbugs-1.3.9.tar.gztar -zxvf findbugs-1.3.9.tar.gz -C /data/findbugs1.3.9 配置环境变量1vim /etc/profile 末尾添加以下内容123#set findbugs environmentexport FINDBUGS_HOME=/data/findbugs1.3.9export PATH=$PATH:$FINDBUGS_HOME/bin 使环境变量生效1source /etc/profile (立即生效) 验证12# findbugs -version1.3.9 编译首先保证主机能上网，在编译过程中网络保持畅通；为了保证maven编译更顺畅，也可以更本地maven仓库地址更改为国内地址。进入到hadoop2.9.1源码的解压目录下，输入下面命令： # mvn package -Pdist,native -DskipTests -Dtar 或者 # mvn package -Pdist,native,docs,src -DskipTests -Dtar 前面只编译本地代码，后者编译本地代码和文档，因此前者速度较快。接下来开始等待出现如下界面表示编译成功编译好的文件在../hadoop-dist/target/hadoop-2.7.1.tar.gz下。 编译中的问题错误11Connection to http://repo.maven.apache.org refused 表示连接maven远程仓库拒绝，此时再运行一下编译命令，就会接着下载jar包。错误212[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project hadoop-nfs: Compilation failure: Compilation failure:[ERROR] /data/backup/hadoop-2.9.2-src/hadoop-common-project/hadoop-nfs/src/main/java/org/apache/hadoop/oncrpc/XDR.java:[23,30] package org.jboss.netty.buffer does not exist 这个错误估计很少遇到，这是因为更换的仓库地址不能用，恢复成默认的仓库地址就好，虽然有点慢。错误312[ERROR] around Ant part ...&lt;exec dir="/data/backup/hadoop-2.9.2-src/hadoop-hdfs-project/hadoop-hdfs-httpfs/target" executable="sh" failonerror="true"&gt;... @ 10:123 in /data/backup/hadoop-2.9.2-src/hadoop-hdfs-project/hadoop-hdfs-httpfs/target/antrun/build-main.xml[ERROR] -&gt; [Help 1] 这是由于tomcat的apache-tomcat-6.0.41.tar.gz包太大，没有下载完整，可以到…/hadoop-2.9.2-src/hadoop-hdfs-project/hadoop-hdfs-httpfs/downloads/apache-tomcat-6.0.41.tar.gz这个目录下，删除重新下载。提醒： 有时候编译过程中会出现下载某个包的时间太久，这是由于连接网站的过程中会出现假死，此时按ctrl+c，重新运行编译命令。 如果出现缺少了某个文件的情况，则要先清理maven(使用命令 mvn clean) 再重新编译。]]></content>
@@ -25,8 +40,8 @@
         <category>Hadoop</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>Hadoop</tag>
+        <tag>大数据</tag>
       </tags>
   </entry>
   <entry>
@@ -227,8 +242,8 @@
         <category>Env</category>
       </categories>
       <tags>
-        <tag>CentOS</tag>
         <tag>Java</tag>
+        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>

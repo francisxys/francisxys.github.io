@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[MongoDB定时备份]]></title>
+    <url>%2F2019%2F01%2F04%2FMongoDB%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%2F</url>
+    <content type="text"><![CDATA[MongoDB数据备份在MongoDB中我们使用mongodump命令来备份MongoDB数据语法： mongodump -h dbhost --port dbport -u user -p password -d dbname --authenticationDatabase admin -o dbdirectory -h MongDB所在服务器地址，例如：127.0.0.1，当然也可以指定端口号：127.0.0.1:27017，-h 127.0.0.1:27017等同于-h 127.0.0.1 –port 27017-d 需要备份的数据库实例，例如：test，没有指定即使备份全部数据库-o 备份的数据存放位置，例如：c:datadump，当然该目录需要提前建立，在备份完成后，系统自动在dump目录下建立一个test目录，这个目录里面存放该数据库实例的备份数据。-u -p 如果有设置用户和密码，需要设置对应的用户名和密码，否则没有权限–authenticationDatabase admin 验证权限 MongoDB数据恢复mongodb 使用 mongorestore 命令来恢复备份的数据 mongorestore -h &lt;hostname&gt;&lt;:port&gt; -d dbname &lt;path&gt; –host &lt;:port&gt;, -h &lt;:port&gt;：MongoDB所在服务器地址，默认为： localhost:27017–db , -d ：需要恢复的数据库实例，例如：test，当然这个名称也可以和备份时候的不一样，比如test2–drop：恢复的时候，先删除当前数据，然后恢复备份的数据。就是说，恢复后，备份后添加修改的数据都会被删除，慎用哦！ ：最后的一个参数，设置备份数据所在位置，例如：c:datadumptest。你不能同时指定 和 –dir 选项，–dir也可以设置备份目录。–dir：指定备份的目录不能同时指定 和 –dir 选项。 MongoDB定时备份Shell脚本编写脚步mongodb_bak.sh，脚本内容为12345678910111213141516171819202122232425262728293031323334#!/bin/shDUMP=/data/mongodb/bin/mongodump #mongodump备份文件执行路径OUT_DIR=/data/backup/mongodb_bak/baknow#临时备份目录TAR_DIR=/data/backup/mongodb_bak/baklist#备份存放路径DATE=`date +%Y%m%d` #获取当前系统时间DB_HOST=127.0.0.1#数据库地址DB_PORT=27017#数据库端口DB_USER=***#数据库账号DB_PASS=******#数据库密码DAYS=30#DAYS=30代表删除7天前的备份，即只保留最近7天的备份TAR_BAK="mongodb_bak_$DATE.tar.gz" #最终保存的数据库备份文件名cd $OUT_DIRrm -rf $OUT_DIR/*mkdir -p $OUT_DIR/$DATE$DUMP -h $DB_HOST --port $DB_PORT -u $DB_USER -p $DB_PASS --authenticationDatabase admin -o $OUT_DIR/$DATE#备份全部数据库tar -zcvP -f $TAR_DIR/$TAR_BAK $OUT_DIR/$DATE/*#压缩为.tar.gz格式find $TAR_DIR/ -mtime +$DAYS -delete #删除30天前的备份文件 脚本中的目录、host、port、user、password等需要根据实际情况自行修改，脚本放在/data/scripts目录下 创建对应的备份目录12mkdir -p /data/backup/mongodb_bak/baknowmkdir -p /data/backup/mongodb_bak/baklist 修改文件属性，使其可执行1chmod +x /data/scripts/mongodb_bak.sh 添加计划任务执行crontab -e添加130 1 * * * root /data/scripts/mongodb_bak.sh 其中计划任务是每天1点半执行备份任务crontab命令1234/sbin/service crond start /sbin/service crond stop /sbin/service crond restart /sbin/service crond reload 以上分别为重启服务、停止服务、启动服务、重新加载配置的命令修改过计划任务，需要执行restart或者reload]]></content>
+      <categories>
+        <category>DB</category>
+        <category>MongoDB</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
+        <tag>MongoDB</tag>
+        <tag>定时任务</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Zabbix自动监控Windows端口]]></title>
     <url>%2F2018%2F12%2F29%2FZabbix%E8%87%AA%E5%8A%A8%E7%9B%91%E6%8E%A7Windows%E7%AB%AF%E5%8F%A3%2F</url>
     <content type="text"><![CDATA[Windows服务端有需要监控的端口，主要监控处于LISTEN状态、协议为TCP的端口。 脚本首先编写脚本，脚本名为discovertcpport.bat，脚本内容如下1234567@echo offecho &#123;echo "data":[for /F "tokens=2 delims= " %%i IN ('netstat -anp tcp^|find /i "LISTENING"') DO for /F "tokens=2 delims=:" %%j IN ("%%i") DO echo &#123;"&#123;#LISTEN_PORT&#125;":"%%j"&#125;,echo &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125;echo ]echo &#125; 脚本说明：命令netstat -anp tcp ^|find /i &quot;LISTENING&quot;用来查看监听状态的TCP端口；for /F “tokens=2 delims= “表示循环输出的截取值，即每行以空格（delims=）分隔的第2段（token=2）值，以变量%%i输出；之后以同样的循环截取出端口号并格式化输出结果；这里的输出格式必须按JSON对象格式输出，否则报错“Value should be a JSON object”；特别要注意最后一行没有逗号，因此单独添加一行1echo &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125; 来结束，以满足JSON对象格式。 配置文件客户端的zabbix_agentd.conf中添加以下内容：12UnsafeUserParameters=1UserParameter=tcpportlisten,C:\zabbix_agents_3.0.10.win\discovertcpport.bat 说明：一条表示允许使用用户自定义参数，第二条设置用户参数，名称tcpportlisten是自定义的KEY名，后接KEY要执行的命令或脚本文件。 重新启动zabbix agentd服务12C:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -xC:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -s server端从server端尝试获取数据12345678910111213141516171819202122232425# /data/zabbix/bin/zabbix_get -s 172.16.92.251 -k Port_Low_Discovery&#123; "data":[ &#123;"&#123;#LISTEN_PORT&#125;":"22"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"80"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"135"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"443"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"445"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"593"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"3388"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"3389"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"5504"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"8122"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"28000"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"28001"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"47001"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49152"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49153"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49154"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"49155"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"139"&#125;, &#123;"&#123;#LISTEN_PORT&#125;":"10050"&#125; ]&#125; 可以看到获取了很多端口，这些端口有些是我们要监控的服务的端口，有些是系统主服务的端口，所以我们要过滤我们需要监控的端口。在zabbixserver的web界面去配置正则表达式。正则表达式如下图所示可以换个理解方式，只有在正则表达式中填写的端口号，zabbix才能去discovery。接下来配置模板和自发现准则，如下图所示下图为配置使用正则表达式来过滤获取到的端口Item prototypes配置如下Trigger prototypes配置如下 {Template OS Windows Port:net.tcp.listen[{#LISTEN_PORT}].count(#3,0,&quot;eq&quot;)}=3 表示三次获取信息为0即触发报警，Item prototypes配置时间为30秒，即90秒没有回应触发报警。这样配置是为了防止zabbixserver端和agent端通讯质量不好。]]></content>
@@ -242,8 +256,8 @@
         <category>Env</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>CentOS</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

@@ -112,32 +112,27 @@
 
 
 
-  <meta name="description" content="Hadoop介绍一般我们讲的Hadoop分为狭义和广义两部分 狭义上讲Hadoop 指 Apache 这款开源框架Hadoop 是 Apache 旗下的一个用 java 语言实现开源软件框架， 是一个开发和运行处理大规模数据的软件平台。 允许使用简单的编程模型在大量计算机集群上对大型数据集进行分布式处理。它的核心组件有：  HDFS（分布式文件系统）：解决海量数据存储 YARN（作业调度和集群资源">
-<meta name="keywords" content="Hadoop,大数据">
+  <meta name="description" content="需求领导要求春节期间对某台业务服务器进行重点巡检，但是回老家很不方便，所以制定一个脚本。脚本思路大概如下： 1、获取服务器的性能信息，业务信息，数据库备份信息等 2、制定word模板 3、将服务器信息插入到word模板中生成新的word文档 4、将word文档通过邮件方式发送给领导 具体实现word模板主要信息定制如下   CPU利用率      系统平均负载    内存使用率 used/tota">
+<meta name="keywords" content="Python,Word,邮件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大数据离线-Hadoop入门">
-<meta property="og:url" content="http://www.cnops.com/2018/12/26/大数据离线-Hadoop入门/index.html">
+<meta property="og:title" content="Python系统监控脚本">
+<meta property="og:url" content="http://www.cnops.com/2019/01/25/Python系统监控脚本/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="Hadoop介绍一般我们讲的Hadoop分为狭义和广义两部分 狭义上讲Hadoop 指 Apache 这款开源框架Hadoop 是 Apache 旗下的一个用 java 语言实现开源软件框架， 是一个开发和运行处理大规模数据的软件平台。 允许使用简单的编程模型在大量计算机集群上对大型数据集进行分布式处理。它的核心组件有：  HDFS（分布式文件系统）：解决海量数据存储 YARN（作业调度和集群资源">
+<meta property="og:description" content="需求领导要求春节期间对某台业务服务器进行重点巡检，但是回老家很不方便，所以制定一个脚本。脚本思路大概如下： 1、获取服务器的性能信息，业务信息，数据库备份信息等 2、制定word模板 3、将服务器信息插入到word模板中生成新的word文档 4、将word文档通过邮件方式发送给领导 具体实现word模板主要信息定制如下   CPU利用率      系统平均负载    内存使用率 used/tota">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226001.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226003.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181226004.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181227002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181227003.png">
-<meta property="og:updated_time" content="2018-12-29T06:22:25.057Z">
+<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20190125001.png">
+<meta property="og:updated_time" content="2019-01-28T09:35:27.752Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大数据离线-Hadoop入门">
-<meta name="twitter:description" content="Hadoop介绍一般我们讲的Hadoop分为狭义和广义两部分 狭义上讲Hadoop 指 Apache 这款开源框架Hadoop 是 Apache 旗下的一个用 java 语言实现开源软件框架， 是一个开发和运行处理大规模数据的软件平台。 允许使用简单的编程模型在大量计算机集群上对大型数据集进行分布式处理。它的核心组件有：  HDFS（分布式文件系统）：解决海量数据存储 YARN（作业调度和集群资源">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181226001.png">
+<meta name="twitter:title" content="Python系统监控脚本">
+<meta name="twitter:description" content="需求领导要求春节期间对某台业务服务器进行重点巡检，但是回老家很不方便，所以制定一个脚本。脚本思路大概如下： 1、获取服务器的性能信息，业务信息，数据库备份信息等 2、制定word模板 3、将服务器信息插入到word模板中生成新的word文档 4、将word文档通过邮件方式发送给领导 具体实现word模板主要信息定制如下   CPU利用率      系统平均负载    内存使用率 used/tota">
+<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20190125001.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/2018/12/26/大数据离线-Hadoop入门/">
+  <link rel="canonical" href="http://www.cnops.com/2019/01/25/Python系统监控脚本/">
 
 
 
@@ -147,7 +142,7 @@
   };
 </script>
 
-  <title>大数据离线-Hadoop入门 | Francis'Blog</title>
+  <title>Python系统监控脚本 | Francis'Blog</title>
   
 
 
@@ -396,7 +391,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2018/12/26/大数据离线-Hadoop入门/">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/2019/01/25/Python系统监控脚本/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Francis">
@@ -413,7 +408,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">大数据离线-Hadoop入门
+          <h1 class="post-title" itemprop="name headline">Python系统监控脚本
               
             
           </h1>
@@ -438,7 +433,7 @@
                 
               
 
-              <time title="创建时间：2018-12-26 15:13:39" itemprop="dateCreated datePublished" datetime="2018-12-26T15:13:39+08:00">2018-12-26</time>
+              <time title="创建时间：2019-01-25 10:12:32" itemprop="dateCreated datePublished" datetime="2019-01-25T10:12:32+08:00">2019-01-25</time>
             
 
             
@@ -455,7 +450,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-29 14:22:25" itemprop="dateModified" datetime="2018-12-29T14:22:25+08:00">2018-12-29</time>
+                <time title="修改时间：2019-01-28 17:35:27" itemprop="dateModified" datetime="2019-01-28T17:35:27+08:00">2019-01-28</time>
               
             
           </span>
@@ -472,14 +467,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Scripts/" itemprop="url" rel="index"><span itemprop="name">Scripts</span></a></span>
 
                 
                 
                   ，
                 
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Scripts/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
 
                 
                 
@@ -513,179 +508,55 @@
       
 
       
-        <h2 id="Hadoop介绍"><a href="#Hadoop介绍" class="headerlink" title="Hadoop介绍"></a>Hadoop介绍</h2><p>一般我们讲的Hadoop分为狭义和广义两部分</p>
-<h3 id="狭义上讲"><a href="#狭义上讲" class="headerlink" title="狭义上讲"></a>狭义上讲</h3><p>Hadoop 指 Apache 这款开源框架<br><img src="http://pjakaipln.bkt.clouddn.com/20181226001.png" alt="Alt text" title="Francis&#39;Blog"><br>Hadoop 是 Apache 旗下的一个用 java 语言实现开源软件框架， 是一个开发和运行处理大规模数据的软件平台。 允许使用简单的编程模型在大量计算机集群上对大型数据集进行分布式处理。它的核心组件有：</p>
-<ul>
-<li>HDFS（分布式文件系统）：解决海量数据存储</li>
-<li>YARN（作业调度和集群资源管理的框架）：解决资源任务调度</li>
-<li>MAPREDUCE（分布式运算编程框架）： 解决海量数据计算</li>
-</ul>
-<h3 id="广义上讲"><a href="#广义上讲" class="headerlink" title="广义上讲"></a>广义上讲</h3><p>Hadoop 通常是指一个更广泛的概念——Hadoop 生态圈。<br><img src="http://pjakaipln.bkt.clouddn.com/20181226002.png" alt="Alt text" title="Francis&#39;Blog"><br>当下的 Hadoop 已经成长为一个庞大的体系，随着生态系统的成长，新出现的项目越来越多，其中不乏一些非 Apache 主管的项目，这些项目对 HADOOP 是很好的补充或者更高层的抽象。 比如：</p>
-<ul>
-<li>HDFS：分布式文件系统</li>
-<li>MAPREDUCE：分布式运算程序开发框架</li>
-<li>HIVE：基于 HADOOP 的分布式数据仓库，提供基于 SQL 的查询数据操作</li>
-<li>HBASE：基于 HADOOP 的分布式海量数据库</li>
-<li>ZOOKEEPER：分布式协调服务基础组件</li>
-<li>Mahout：基于 mapreduce/spark/flink 等分布式运算框架的机器学习算法库</li>
-<li>Oozie：工作流调度框架</li>
-<li>Sqoop：数据导入导出工具（比如用于 mysql 和 HDFS 之间）</li>
-<li>Flume：日志数据采集框架</li>
-<li>Impala： 基于 Hadoop 的实时分析</li>
-</ul>
-<h2 id="Hadoop发展历史"><a href="#Hadoop发展历史" class="headerlink" title="Hadoop发展历史"></a>Hadoop发展历史</h2><ul>
-<li>Hadoop 是 Apache Lucene 创始人 Doug Cutting 创建的。最早起源于 Nutch，它是 Lucene 的子项目。 Nutch 的设计目标是构建一个大型的全网搜索引擎，包括网页抓取、索引、查询等功能，但随着抓取网页数量的增加，遇到了严重的可扩展性问题： 如何解决数十亿网页的存储和索引问题。</li>
-<li>2003 年 Google 发表了一篇论文为该问题提供了可行的解决方案。 论文中描述的是谷歌的产品架构，该架构称为： 谷歌分布式文件系统（GFS） ,可以解决他们在网页爬取和索引过程中产生的超大文件的存储需求。</li>
-<li>2004 年 Google 发表论文向全世界介绍了谷歌版的 MapReduce 系统。同时期， Nutch 的开发人员完成了相应的开源实现 HDFS 和 MAPREDUCE，并从Nutch 中剥离成为独立项目 HADOOP，到 2008 年 1 月， HADOOP 成为 Apache 顶级项目，迎来了它的快速发展期。</li>
-<li>2006 年 Google 发表了论文是关于 BigTable 的，这促使了后来的 Hbase 的发<br>展。</li>
-</ul>
-<p><strong>因此， Hadoop 及其生态圈的发展离不开 Google 的贡献。</strong></p>
-<h2 id="Hadoop的特点"><a href="#Hadoop的特点" class="headerlink" title="Hadoop的特点"></a>Hadoop的特点</h2><p><strong>1、扩容能力</strong><br>Hadoop 是在可用的计算机集群间分配数据并完成计算任务的，这些集群可用方便的扩展到数以千计的节点中。<br><strong>2、成本低</strong><br>Hadoop 通过普通廉价的机器组成服务器集群来分发以及处理数据，以至于成本很低。<br><strong>3、高效率</strong><br>通过并发数据， Hadoop 可以在节点之间动态并行的移动数据，使得速度非常快。<br><strong>4、可靠性</strong><br>能自动维护数据的多份复制，并且在任务失败后能自动地重新部署（redeploy）计算任务。所以 Hadoop 的按位存储和处理数据的能力值得人们信赖。</p>
-<h2 id="Hadoop-国内外应用"><a href="#Hadoop-国内外应用" class="headerlink" title="Hadoop 国内外应用"></a>Hadoop 国内外应用</h2><p>不管是国内还是国外， Hadoop 最受青睐的行业是互联网领域， 可以说互联<br>网公司是 hadoop 的主要使用力量。<br><strong>国外应用</strong></p>
-<ul>
-<li>Yahoo 的 Hadoop 应用在支持广告系统、 用户行为分析、 支持 Web 搜索等。</li>
-<li>Facebook 主要使用 Hadoop 存储内部日志与多维数据，并以此作为报告、分<br>析和机器学习的数据源。</li>
-</ul>
-<p><strong>国内应用</strong><br>国内来说，BAT领头的互联网公司是当仁不让的 Hadoop 使用者、维护者。比如 Ali 云梯（14 年国内最大 Hadoop 集群）、百度的日志分析平台、推荐引擎系统等。<br><img src="http://pjakaipln.bkt.clouddn.com/20181226003.png" alt="Alt text" title="Francis&#39;Blog"><br>国内其他非互联网领域也有不少 hadoop 的应用，比如： </p>
-<ul>
-<li>金融行业： 个人征信分析 </li>
-<li>证券行业： 投资模型分析 </li>
-<li>交通行业： 车辆、路况监控分析 </li>
-<li>电信行业： 用户上网行为分析</li>
-</ul>
-<p>总之： hadoop 并不会跟某种具体的行业或者某个具体的业务挂钩，它只是<br>一种用来做海量数据分析处理的工具。</p>
-<h2 id="Hadoop集群搭建"><a href="#Hadoop集群搭建" class="headerlink" title="Hadoop集群搭建"></a>Hadoop集群搭建</h2><h3 id="发行版本"><a href="#发行版本" class="headerlink" title="发行版本"></a>发行版本</h3><p>Hadoop 发行版本分为开源社区版和商业版。</p>
-<ul>
-<li>社区版是指由 Apache 软件基金会维护的版本，是官方维护的版本体系。</li>
-<li>商业版 Hadoop 是指由第三方商业公司在社区版 Hadoop 基础上进行了一些修改、整合以及各个服务组件兼容性测试而发行的版本， 比较著名的有 cloudera 的 CDH、 mapR 等。</li>
-</ul>
-<p>我们介绍的是社区版： Apache Hadoop。 后续如未说明都是指 Apache 版。Hadoop 的版本很特殊，是由多条分支并行的发展着。 大的来看分为 3 个大的系列版本： 1.x、 2.x、 3.x。</p>
-<ul>
-<li>Hadoop1.0 由一个分布式文件系统 HDFS 和一个离线计算框架 MapReduce 组成。</li>
-<li>Hadoop 2.0 则包含一个支持 NameNode 横向扩展的 HDFS，一个资源管理系统YARN 和一个运行在 YARN 上的离线计算框架 MapReduce。相比于 Hadoop1.0，Hadoop 2.0 功能更加强大，且具有更好的扩展性、性能，并支持多种计算框架。</li>
-<li>Hadoop 3.0 相比之前的 Hadoop 2.0 有一系列的功能增强。但目前还是个alpha 版本，有很多 bug，且不能保证 API 的稳定和质量。</li>
-</ul>
-<p>当前 2 系列最稳定版本： Apache Hadoop 2.9.2。</p>
-<h3 id="集群介绍"><a href="#集群介绍" class="headerlink" title="集群介绍"></a>集群介绍</h3><p>HADOOP 集群具体来说包含两个集群：<code>HDFS集群</code>和<code>YARN集群</code>，<code>两者逻辑上分
-离，但物理上常在一起</code>。</p>
-<ul>
-<li>HDFS 集群负责海量数据的存储，集群中的角色主要有：<br>NameNode、 DataNode、 SecondaryNameNode</li>
-<li>YARN 集群负责海量数据运算时的资源调度，集群中的角色主要有：<br>ResourceManager、 NodeManager</li>
-<li>mapreduce 是一个分布式运算编程框架，是应用程序开发包，由用户按照编程规范进行程序开发，后打包运行在 HDFS 集群上，并且受到 YARN 集群的资源调度管理。</li>
-</ul>
-<p>Hadoop 部署方式分三种:</p>
-<ul>
-<li>独立模式又称为单机模式， 仅 1 个机器运行 1 个 java 进程，主要用于调试。(单机)</li>
-<li>伪分布模式也是在 1 个机器上运行 HDFS 的 NameNode 和 DataNode、 YARN 的<br>ResourceManger 和 NodeManager， 但分别启动单独的 java 进程，主要用于调试。（单机）</li>
-<li>集群模式主要用于生产环境部署。 会使用 N 台主机组成一个 Hadoop 集群。<br>这种部署模式下， 主节点和从节点会分开部署在不同的机器上。</li>
-</ul>
-<p>我们以 3 节点为例进行搭建，角色分配如下：<br><img src="http://pjakaipln.bkt.clouddn.com/20181226004.png" alt="Alt text" title="Francis&#39;Blog"><br>角色分配如下：</p>
-<pre><code>node-01 NameNode DataNode ResourceManager
-node-02 DataNode NodeManager SecondaryNameNode
-node-03 DataNode NodeManager
-</code></pre><h3 id="集群安装"><a href="#集群安装" class="headerlink" title="集群安装"></a>集群安装</h3><h4 id="服务器准备"><a href="#服务器准备" class="headerlink" title="服务器准备"></a>服务器准备</h4><pre><code>node-01 10.186.60.12
-node-02 10.186.60.60
-node-03 10.186.65.43
-</code></pre><h4 id="服务器系统设置"><a href="#服务器系统设置" class="headerlink" title="服务器系统设置"></a>服务器系统设置</h4><p><strong>同步时间</strong></p>
-<ul>
-<li>#手动同步集群各机器时间</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date -s <span class="string">"2017-03-03 03:03:03"</span></span><br><span class="line">yum install ntpdate</span><br></pre></td></tr></table></figure>
-<ul>
-<li>#网络同步时间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate ntp6.aliyun.com</span><br></pre></td></tr></table></figure>
-<p><strong>设置主机名</strong></p>
-<p>Linux主机名设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure></p>
-<p>输入内容</p>
-<pre><code>10.186.60.12 node-01
-10.186.60.60 node-02
-10.186.65.43 node-03
-</code></pre><p>window主机名映射<br>地址：C:\Windows\System32\drivers\etc<br>修改hosts文件，添加内容</p>
-<pre><code>192.168.33.101 node-01
-192.168.33.102 node-02
-192.168.33.103 node-03
-</code></pre><p><strong>配置 ssh 免密登陆</strong><br>生成 ssh 免登陆密钥<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa （四个回车）</span><br></pre></td></tr></table></figure></p>
-<p>执行完这个命令后，会生成 id_rsa（私钥）、 id_rsa.pub（公钥）<br>将公钥拷贝到要免密登陆的目标机器上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id node-02</span><br><span class="line">ssh-copy-id node-03</span><br></pre></td></tr></table></figure></p>
-<p><strong>配置防火墙</strong><br>查看防火墙状态 service iptables status<br>关闭防火墙 service iptables stop<br>查看防火墙开机启动状态 chkconfig iptables –list<br>关闭防火墙开机启动 chkconfig iptables off</p>
-<h4 id="JDK环境安装"><a href="#JDK环境安装" class="headerlink" title="JDK环境安装"></a>JDK环境安装</h4><ul>
-<li>上传 jdk 安装包 jdk-8u161-linux-x64.tar.gz</li>
-<li>解压安装包 tar -zxvf jdk-8u161-linux-x64.tar.gz -C /data/jdk1.8</li>
-<li>配置环境变量 vim /etc/profile</li>
-<li><p>插入下面的内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/data/jdk1.8</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>刷新配置:source /etc/profile</p>
-</li>
-</ul>
-<h4 id="Hadoop-安装"><a href="#Hadoop-安装" class="headerlink" title="Hadoop 安装"></a>Hadoop 安装</h4><p>首先我们要有一版是适合我们系统版本的hadoop，所以我们需要编译。<br>为什么要编译以及如何编译参考：<a href="https://www.cnops.top/2018/12/27/Hadoop2-9-2%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/" target="_blank" rel="noopener">Hadoop2.9.2源码编译 </a><br>上传hadoop,解压hadoop-2.9.2-with-centos7.6.tar.gz<br>hadoop的目录结构<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/data/hadoop/hadoop-2.9.2</span><br><span class="line">[root@node-01 hadoop-2.9.2]<span class="comment"># ll</span></span><br><span class="line">total 128</span><br><span class="line">drwxr-xr-x 2 root root    194 Dec 27 03:45 bin</span><br><span class="line">drwxr-xr-x 3 root root     20 Dec 27 03:45 etc</span><br><span class="line">drwxr-xr-x 2 root root    106 Dec 27 03:45 include</span><br><span class="line">drwxr-xr-x 3 root root     20 Dec 27 03:45 lib</span><br><span class="line">drwxr-xr-x 2 root root    239 Dec 27 03:45 libexec</span><br><span class="line">-rw-r--r-- 1 root root 106210 Dec 27 03:45 LICENSE.txt</span><br><span class="line">-rw-r--r-- 1 root root  15917 Dec 27 03:45 NOTICE.txt</span><br><span class="line">-rw-r--r-- 1 root root   1366 Dec 27 03:45 README.txt</span><br><span class="line">drwxr-xr-x 3 root root   4096 Dec 27 03:45 sbin</span><br><span class="line">drwxr-xr-x 4 root root     31 Dec 27 03:45 share</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>bin： Hadoop 最基本的管理脚本和使用脚本的目录，这些脚本是 sbin 目录下管理脚本的基础实现，用户可以直接使用这些脚本管理和使用 Hadoop。</li>
-<li>etc： Hadoop 配置文件所在的目录，包括 core-site,xml、 hdfs-site.xml、mapred-site.xml 等从 Hadoop1.0 继承而来的配置文件和 yarn-site.xml Hadoop2.0 新增的配置文件。</li>
-<li>include：对外提供的编程库头文件（具体动态库和静态库在 lib 目录中），这些头文件均是用 C++定义的，通常用于 C++程序访问 HDFS 或者编写 MapReduce程序。</li>
-<li>lib：该目录包含了 Hadoop 对外提供的编程动态库和静态库，与 include 目录中的头文件结合使用。</li>
-<li>libexec：各个服务对用的 shell 配置文件所在的目录，可用于配置日志输出、启动参数（比如 JVM 参数）等基本信息。</li>
-<li>sbin： Hadoop 管理脚本所在的目录，主要包含 HDFS 和 YARN 中各类服务的启动/关闭脚本。</li>
-<li>share： Hadoop 各个模块编译后的 jar 包所在的目录。</li>
-</ul>
-<h4 id="Hadoop配置文件修改"><a href="#Hadoop配置文件修改" class="headerlink" title="Hadoop配置文件修改"></a>Hadoop配置文件修改</h4><p>Hadoop 安装主要就是配置文件的修改， 一般在主节点进行修改，完毕后 scp<br>下发给其他各个从节点机器。下面的文件都在 hadoop的<strong>etc/hadoop</strong>目录下：</p>
-<ul>
-<li>修改hadoop-env.sh文件，更改</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span></span><br></pre></td></tr></table></figure>
-<p>为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/data/jdk1.8</span><br></pre></td></tr></table></figure></p>
-<p>此处JAVA_HOME为JDK的位置。</p>
-<ul>
-<li>修改core-site.xml文件，在configuration中增加代码</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 用于设置 Hadoop 的文件系统，由 URI 指定 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://node-1:9000&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 配置 Hadoop 的临时目录,默认/tmp/hadoop-<span class="variable">$&#123;user.name&#125;</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/<span class="built_in">export</span>/data/hadoopData&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改hdfs-site.xml，在configuration中增加代码</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 HDFS 副本的数量 --&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;2&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;!-- secondary namenode 所在主机的 ip 和端口-&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">   &lt;value&gt;node-02:50090&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改mapred-site.xml的，configuration中增加代码</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 mr 运行时框架，这里指定在 yarn 上，默认是 <span class="built_in">local</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">     &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改yarn-site.xml的，configuration中增加代码</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- 指定 YARN 的老大（ ResourceManager）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;node-1&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;!-- NodeManager上运行的附属服务。需配置成mapreduce_shuffle，才可运行MapReduce程序默认值： <span class="string">""</span> --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建slaves文件，如果存在进行编辑，删除<strong>locahost</strong>，增加文件</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node-1</span><br><span class="line">node-2</span><br><span class="line">node-3</span><br></pre></td></tr></table></figure>
-<ul>
-<li>将hadoop添加到环境变量 ，命令<code>vim /etc/proflie</code></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HADOOP_HOME=/data/hadoop/hadoop-2.9.2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin</span><br></pre></td></tr></table></figure>
-<p>保存配置文件，刷新配置文件：<code>source /etc/profile</code></p>
-<h4 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h4><ul>
-<li>启动方式</li>
-</ul>
-<p>要启动 Hadoop 集群，需要启动 HDFS 和 YARN 两个集群。<br>注意： 首次启动 HDFS 时，必须对其进行格式化操作。 本质上是一些清理和准备工作，因为此时的 HDFS 在物理上还是不存在的。<br><code>hdfs namenode –format</code>或者<code>hadoop namenode –format</code></p>
-<ul>
-<li>单节点逐个启动</li>
-</ul>
-<p>1、在主节点上使用以下命令启动 HDFS NameNode：<br><code>hadoop-daemon.sh start namenode</code><br>2、在每个从节点上使用以下命令启动 HDFS DataNode：<br><code>hadoop-daemon.sh start datanode</code><br>3、在主节点上使用以下命令启动 YARN ResourceManager：<br><code>yarn-daemon.sh start resourcemanager</code><br>4、在每个从节点上使用以下命令启动 YARN nodemanager：<br><code>yarn-daemon.sh start nodemanager</code><br>以上脚本位于$HADOOP_PREFIX/sbin/目录下。 如果想要停止某个节点上某个角色，只需要把命令中的 start 改为 stop 即可。</p>
-<ul>
-<li>脚本一键启动</li>
-</ul>
-<p>如果配置了 etc/hadoop/slaves 和 ssh 免密登录，则可以使用程序脚本启动<br>所有 Hadoop 两个集群的相关进程，在主节点所设定的机器上执行。<br><code>hdfs： /sbin/start-dfs.sh</code><br><code>yarn: /sbin/start-yarn.sh</code><br>停止集群： <code>stop-dfs.sh</code>、 <code>stop-yarn.sh</code><br>集群 web-ui<br>一旦 Hadoop 集群启动并运行， 可以通过 web-ui 进行集群查看，如下所述：<br>node-1:50070 HDFS的NameNode节点<br><img src="http://pjakaipln.bkt.clouddn.com/20181227002.png" alt="Alt text" title="Francis&#39;Blog"><br>node-1:8088 YARN的主页<br><img src="http://pjakaipln.bkt.clouddn.com/20181227003.png" alt="Alt text" title="Francis&#39;Blog"></p>
-<h2 id="Hadoop初体验"><a href="#Hadoop初体验" class="headerlink" title="Hadoop初体验"></a>Hadoop初体验</h2><p>上传文件</p>
-<pre><code>从 Linux 本地上传一个文本文件到 hdfs 的/test/input 目录下
-hadoop fs -mkdir -p /wordcount/input 创建文件夹
-hadoop fs -put /root/somewords.txt /wordcount/input Linux上传到hadoop
-</code></pre><p>运行程序</p>
-<pre><code>运行 mapreduce 程序
-在 Hadoop 安装包的 hadoop-2.7.4/share/hadoop/mapreduce 下有官方自带的 mapreduce 程序。 我们可以使用如下的命令进行运行测试。示例程序 jar:
-hadoop-mapreduce-examples-2.7.4.jar
-</code></pre><p>计算圆周率</p>
-<pre><code>计算圆周率:
-hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
-这里使用的是Monte Carlo 方法来计算 Pi 值
-使用Monte Carlo 计算圆周率
-</code></pre>
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>领导要求春节期间对某台业务服务器进行重点巡检，但是回老家很不方便，所以制定一个脚本。<br>脚本思路大概如下：</p>
+<pre><code>1、获取服务器的性能信息，业务信息，数据库备份信息等
+2、制定word模板
+3、将服务器信息插入到word模板中生成新的word文档
+4、将word文档通过邮件方式发送给领导
+</code></pre><h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="word模板主要信息定制如下"><a href="#word模板主要信息定制如下" class="headerlink" title="word模板主要信息定制如下"></a>word模板主要信息定制如下</h3><table>
+<thead>
+<tr>
+<th>CPU利用率</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统平均负载</td>
+<td></td>
+</tr>
+<tr>
+<td>内存使用率</td>
+<td>used/total   </td>
+</tr>
+<tr>
+<td>磁盘空间可用率</td>
+<td>Filesystem      Size    Used Avail Use% Mounted on   </td>
+</tr>
+<tr>
+<td>应用程序状态</td>
+<td></td>
+</tr>
+<tr>
+<td>业务报错日志</td>
+<td></td>
+</tr>
+<tr>
+<td>数据库运行状态</td>
+<td></td>
+</tr>
+<tr>
+<td>数据库备份</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://pjakaipln.bkt.clouddn.com/20190125001.png" alt="Alt text" title="Francis&#39;Blog"> </p>
+<h3 id="脚本内容如下"><a href="#脚本内容如下" class="headerlink" title="脚本内容如下"></a>脚本内容如下</h3><p>使用脚本之前需要解决缺少openssl-devel支持的问题，命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc libffi-devel python-devel openssl-devel -y</span><br></pre></td></tr></table></figure></p>
+<p>在脚本内需要使用psutil包和docxtpl包，使用pip安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install psutil</span><br><span class="line">pip install docxtpl</span><br></pre></td></tr></table></figure></p>
+<p>脚本内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"># coding:utf-8</span><br><span class="line">#Author:Francis</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import subprocess</span><br><span class="line">import psutil</span><br><span class="line">import time</span><br><span class="line">import commands</span><br><span class="line">import datetime</span><br><span class="line">import smtplib</span><br><span class="line"></span><br><span class="line">from email.header import Header</span><br><span class="line">from email.mime.text import MIMEText</span><br><span class="line">from email.mime.multipart import MIMEMultipart</span><br><span class="line">from email.mime.application import MIMEApplication</span><br><span class="line">from psutil import *</span><br><span class="line">from docxtpl import DocxTemplate</span><br><span class="line"></span><br><span class="line">def date_1():</span><br><span class="line">    return time.strftime(&apos;%Y/%m/%d&apos;,time.localtime(time.time()))</span><br><span class="line">  </span><br><span class="line">def date_2():</span><br><span class="line">    return time.strftime(&apos;%Y%m%d&apos;,time.localtime(time.time()))</span><br><span class="line"></span><br><span class="line">def hostname():</span><br><span class="line">    print socket.gethostname()</span><br><span class="line"></span><br><span class="line">def cpu_usage_rate():</span><br><span class="line">    #cmd = &quot;&quot;&quot; top -bn1 | grep &apos;%Cpu(s)&apos;|awk &apos;&#123;for(i=1;i&lt;9;i=i+1)&#123;printf $i&quot; &quot;&#125;;printf &quot;\n&quot;&#125;&apos; &quot;&quot;&quot;</span><br><span class="line">    cmd = &quot;&quot;&quot; top -bn1 | grep &apos;%Cpu(s)&apos;|awk &apos;&#123;for(i=1;i&lt;9;i=i+1)&#123;printf $i&quot; &quot;&#125;&#125;&apos; &quot;&quot;&quot;</span><br><span class="line">    cpu_usage = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)</span><br><span class="line">    #print (cpu_usage.stdout.read())</span><br><span class="line">    #print (&apos;获取内存占用率： &apos;+(str)(psutil.virtual_memory().percent)+&apos;%&apos;)</span><br><span class="line">    #print (&apos;打印本机cpu占用率： &apos;+(str)(psutil.cpu_percent(0))+&apos;%&apos;)</span><br><span class="line">    return cpu_usage.stdout.read()</span><br><span class="line"></span><br><span class="line">def os_load_average():</span><br><span class="line">    cmd = &quot;&quot;&quot; uptime | sed &apos;s/,//g&apos; | awk &apos;&#123;print $8,$9,$10&#125;&apos; &quot;&quot;&quot;</span><br><span class="line">    load_average = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)</span><br><span class="line">    #rint (load_average.stdout.read())</span><br><span class="line">    return load_average.stdout.read()</span><br><span class="line"></span><br><span class="line">def memory_usage_rate():</span><br><span class="line">    vime = virtual_memory()</span><br><span class="line">    #print &apos;Memory: %5s%% %6s/%s&apos; % (</span><br><span class="line">        #vime.percent, str(int(vime.used / 1024 / 1024)) + &apos;M&apos;, str(int(vime.total / 1024 / 1024)) + &apos;M&apos;)</span><br><span class="line">    return &apos;Memory: %5s%% %6s/%s&apos; % (</span><br><span class="line">        vime.percent, str(int(vime.used / 1024 / 1024)) + &apos;M&apos;, str(int(vime.total / 1024 / 1024)) + &apos;M&apos;)</span><br><span class="line"></span><br><span class="line">def disk_info():</span><br><span class="line">    cmd = &quot;&quot;&quot; df -h|grep &apos;/dev/vd&apos; &quot;&quot;&quot;</span><br><span class="line">    disk_info = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)</span><br><span class="line">    #print (disk_info.stdout.read())  </span><br><span class="line">    return disk_info.stdout.read()</span><br><span class="line"></span><br><span class="line">def process_info():</span><br><span class="line">    cmd = &quot;&quot;&quot; ps -ef|grep java|grep -Ev &apos;grep&apos; &quot;&quot;&quot;</span><br><span class="line">    process_info = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)</span><br><span class="line">    #print (process_info.stdout.read())</span><br><span class="line">    return process_info.stdout.read()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def is_error(SubStrList,Str):</span><br><span class="line"></span><br><span class="line">#判断字符串Str是否包含序列SubStrList中的每一个子字符串</span><br><span class="line">    flag=[] </span><br><span class="line">    for substr in SubStrList:</span><br><span class="line">        for i in Str:</span><br><span class="line">            if substr in i:</span><br><span class="line">                flag.append(i)</span><br><span class="line">  </span><br><span class="line">    return flag</span><br><span class="line"></span><br><span class="line">def new_error_file():</span><br><span class="line">    #要求文件名称中包含这些字符</span><br><span class="line">    keyword=[&apos;error&apos;]</span><br><span class="line">    file_dir = &quot;/data/work/log/&quot;</span><br><span class="line">    listtmp=os.listdir(file_dir)</span><br><span class="line">    #rint listtmp</span><br><span class="line">    #rint &apos;—&apos;*100</span><br><span class="line">    list=is_error(keyword,listtmp)</span><br><span class="line">    #rint list</span><br><span class="line">    list.sort(key=lambda fn: os.path.getmtime(file_dir+fn) if not os.path.isdir(file_dir+fn) else 0)</span><br><span class="line">    file=os.path.join(file_dir,list[-1])</span><br><span class="line">    d=datetime.datetime.fromtimestamp(os.path.getmtime(file_dir+list[-1]))</span><br><span class="line">    #rint &apos;—&apos;*100</span><br><span class="line">    #rint(&apos;最后改动的文件是&apos;+list[-1]+&quot;，时间：&quot;+d.strftime(&quot;%Y-%m-%d %H-%M-%S&quot;))</span><br><span class="line">    #rint file</span><br><span class="line">    return file</span><br><span class="line"></span><br><span class="line">def mysql_status():</span><br><span class="line">    cmd = &quot;&quot;&quot; ps -ef|grep mysql|grep -Ev &apos;grep&apos; &quot;&quot;&quot;</span><br><span class="line">    mysql_status = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)</span><br><span class="line">    #print (mysql_status.stdout.read())</span><br><span class="line">    return mysql_status.stdout.read()</span><br><span class="line"></span><br><span class="line">def mysql_backup_file():</span><br><span class="line">    testdir = &quot;/data/mysql/backup/&quot;</span><br><span class="line">    #列出目录下所有的文件</span><br><span class="line">    list = os.listdir(testdir)</span><br><span class="line">    #对文件修改时间进行升序排列</span><br><span class="line">    list.sort(key=lambda fn: os.path.getmtime(testdir+fn) if not os.path.isdir(testdir+fn) else 0)</span><br><span class="line">    #获取最新修改时间的文件</span><br><span class="line">    filetime = datetime.datetime.fromtimestamp(os.path.getmtime(testdir+list[-1]))</span><br><span class="line">    #获取文件所在目录</span><br><span class="line">    filepath = os.path.join(testdir,list[-1])</span><br><span class="line">    #rint(&quot;最新修改的文件(夹)：&quot;+list[-1])</span><br><span class="line">    #rint(&quot;时间：&quot;+filetime.strftime(&apos;%Y-%m-%d %H-%M-%S&apos;))</span><br><span class="line">    #print filepath</span><br><span class="line">    return filepath</span><br><span class="line">    </span><br><span class="line">def mysql_backup():</span><br><span class="line">    testdir = &quot;/data/mysql/backup/&quot;</span><br><span class="line">    #列出目录下所有的文件</span><br><span class="line">    list = os.listdir(testdir)</span><br><span class="line">    #对文件修改时间进行升序排列</span><br><span class="line">    list.sort(key=lambda fn:os.path.getmtime(testdir + fn))</span><br><span class="line">    #获取最新修改时间的文件</span><br><span class="line">    filetime = datetime.datetime.fromtimestamp(os.path.getmtime(testdir+list[-1]))</span><br><span class="line">    #获取文件所在目录</span><br><span class="line">    filepath = os.path.join(testdir,list[-1])</span><br><span class="line">    #rint(&quot;最新修改的文件(夹)：&quot;+list[-1])</span><br><span class="line">    #rint(&quot;时间：&quot;+filetime.strftime(&apos;%Y-%m-%d %H-%M-%S&apos;))</span><br><span class="line">    #print filepath</span><br><span class="line">    return filepath</span><br><span class="line"></span><br><span class="line">def get_disk_info():</span><br><span class="line">    print &apos;磁盘信息：&apos;</span><br><span class="line">    for i in disk_io_counters(perdisk=True).items():</span><br><span class="line">        print i</span><br><span class="line"> </span><br><span class="line">def get_net_info():</span><br><span class="line">    print &apos;网络情况：&apos;</span><br><span class="line">    for i in net_io_counters(pernic=True).items():</span><br><span class="line">        print i</span><br><span class="line"></span><br><span class="line">def create_email(email_from, email_to, email_Subject, email_text, annex_path, annex_name):</span><br><span class="line">    # 输入发件人昵称、收件人昵称、主题，正文，附件地址,附件名称生成一封邮件</span><br><span class="line">    #生成一个空的带附件的邮件实例</span><br><span class="line">    message = MIMEMultipart()</span><br><span class="line">    #将正文以text的形式插入邮件中</span><br><span class="line">    message.attach(MIMEText(email_text, &apos;plain&apos;, &apos;utf-8&apos;))</span><br><span class="line">    #生成发件人名称（这个跟发送的邮件没有关系）</span><br><span class="line">    message[&apos;From&apos;] = Header(email_from, &apos;utf-8&apos;)</span><br><span class="line">    #生成收件人名称（这个跟接收的邮件也没有关系）</span><br><span class="line">    message[&apos;To&apos;] = Header(email_to, &apos;utf-8&apos;)</span><br><span class="line">    #生成邮件主题</span><br><span class="line">    message[&apos;Subject&apos;] = Header(email_Subject, &apos;utf-8&apos;)</span><br><span class="line">    #读取附件的内容</span><br><span class="line">    att1 = MIMEText(open(annex_path, &apos;rb&apos;).read(), &apos;base64&apos;, &apos;utf-8&apos;)</span><br><span class="line">    att1[&quot;Content-Type&quot;] = &apos;application/octet-stream&apos;</span><br><span class="line">    #生成附件的名称</span><br><span class="line">    att1.add_header(&apos;Content-Disposition&apos;, u&apos;attachment&apos;, filename = (&quot;utf-8&quot;, &quot;&quot;,annex_name))</span><br><span class="line">    #att1[&quot;Content-Disposition&quot;] = add_header(&apos;attachment; filename=&apos; + annex_name)</span><br><span class="line">    #att1[&quot;Content-Disposition&quot;] = &apos;attachment; filename=&apos; + annex_name</span><br><span class="line">    #将附件内容插入邮件中</span><br><span class="line">    message.attach(att1)</span><br><span class="line">    #返回邮件</span><br><span class="line">    return message</span><br><span class="line"></span><br><span class="line">def send_email(sender, password, receiver, msg):</span><br><span class="line">    # 一个输入邮箱、密码、收件人、邮件内容发送邮件的函数</span><br><span class="line">    try:</span><br><span class="line">        #找到你的发送邮箱的服务器地址，已加密的形式发送</span><br><span class="line">        server = smtplib.SMTP_SSL(&quot;smtp.exmail.qq.com&quot;, 465)  # 发件人邮箱中的SMTP服务器</span><br><span class="line">        server.ehlo()</span><br><span class="line">        #登录你的账号</span><br><span class="line">        server.login(sender, password)  # 括号中对应的是发件人邮箱账号、邮箱密码</span><br><span class="line">        #发送邮件</span><br><span class="line">        server.sendmail(sender, receiver, msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号（是一个列表）、邮件内容</span><br><span class="line">        print(&quot;邮件发送成功&quot;)</span><br><span class="line">        server.quit()  # 关闭连接</span><br><span class="line">    except Exception:</span><br><span class="line">        print(traceback.print_exc())</span><br><span class="line">        print(&quot;邮件发送失败&quot;)</span><br><span class="line"></span><br><span class="line">session000 = date_2()</span><br><span class="line">session001 = cpu_usage_rate()</span><br><span class="line">session002 = os_load_average()</span><br><span class="line">session003 = memory_usage_rate()</span><br><span class="line">session004 = disk_info()</span><br><span class="line">session005 = process_info()</span><br><span class="line">session006 = new_error_file()</span><br><span class="line">session007 = mysql_status()</span><br><span class="line">session008 = mysql_backup_file()</span><br><span class="line">session009 = date_1()</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    docx_into = &quot;/data/scripts/gbj_ls_checkos_template.docx&quot;</span><br><span class="line">    docx_out = open(&quot;gbj_ls_checkos_&quot; + session000 + &quot;.docx&quot;,&apos;w&apos;)</span><br><span class="line">    tpl=DocxTemplate(docx_into)</span><br><span class="line">    sd = tpl.new_subdoc()</span><br><span class="line">    context = &#123;</span><br><span class="line">        &apos;output001&apos; : &quot;%s&quot; % session001,</span><br><span class="line">  	&apos;output002&apos; : &quot;%s&quot; % session002,</span><br><span class="line">	&apos;output003&apos; : &quot;%s&quot; % session003,</span><br><span class="line">	&apos;output004&apos; : &quot;%s&quot; % session004,</span><br><span class="line">	&apos;output005&apos; : &quot;%s&quot; % session005,</span><br><span class="line">	&apos;output006&apos; : &quot;%s&quot; % session006,</span><br><span class="line">	&apos;output007&apos; : &quot;%s&quot; % session007,</span><br><span class="line">	&apos;output008&apos; : &quot;%s&quot; % session008,</span><br><span class="line">  	&apos;output009&apos; : &quot;%s&quot; % session009,</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    tpl.render(context)</span><br><span class="line">    tpl.save(docx_out)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    my_email_from = &apos;爱可生运维部&apos;</span><br><span class="line">    my_email_to = &apos;乐山工保金&apos;</span><br><span class="line">    # 邮件标题</span><br><span class="line">    my_email_Subject = &apos;巡检报告&apos;</span><br><span class="line">    # 邮件正文</span><br><span class="line">    my_email_text = &quot;Dear all,\n\t附件为乐山工保金系统巡检报告，请查收！\n\n爱可生运维部&quot;</span><br><span class="line">    #附件地址</span><br><span class="line">    my_annex_path = &quot;gbj_ls_checkos_&quot; + session000 + &quot;.docx&quot;</span><br><span class="line">    #附件名称</span><br><span class="line">    my_annex_name = &quot;gbj_ls_checkos__&quot; + session000 + &quot;.docx&quot;</span><br><span class="line">    # 生成邮件</span><br><span class="line">    my_msg = create_email(my_email_from, my_email_to, my_email_Subject,</span><br><span class="line">                          my_email_text, my_annex_path, my_annex_name)</span><br><span class="line">    my_sender = &apos;yunwei@actionsky.com&apos;</span><br><span class="line">    my_password = &apos;Action!23&apos;</span><br><span class="line">    #接收人邮箱列表</span><br><span class="line">    my_receiver = [&apos;fujinpeng@actionsky.com&apos;,&apos;dutingting@actionsky.com&apos;,&apos;meilei@actionsky.com&apos;]</span><br><span class="line">    #发送邮件</span><br><span class="line">    send_email(my_sender, my_password, my_receiver, my_msg)</span><br><span class="line">    print(datetime.datetime.now()) </span><br><span class="line"></span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">    print &apos;—&apos;*100</span><br><span class="line">    hostname()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    cpu_usage_rate()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    os_load_average()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    memory_usage_rate()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    disk_info()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    process_info()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    new_error_file()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    mysql_status()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    mysql_backup_file()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    mysql_backup()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    get_net_info()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    get_disk_info()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    print date_1()</span><br><span class="line">    print &apos;\n&apos;</span><br><span class="line">    print date_2()</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -704,10 +575,10 @@ hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/12/26/大数据离线-Hadoop入门/">大数据离线-Hadoop入门</a></p>
+  <p><span>本文标题:</span><a href="/2019/01/25/Python系统监控脚本/">Python系统监控脚本</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/2018/12/26/大数据离线-Hadoop入门/" title="大数据离线-Hadoop入门">http://www.cnops.com/2018/12/26/大数据离线-Hadoop入门/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2018/12/26/大数据离线-Hadoop入门/" aria-label="复制成功！"></i></span>
+  <p><span>原始链接:</span><a href="/2019/01/25/Python系统监控脚本/" title="Python系统监控脚本">http://www.cnops.com/2019/01/25/Python系统监控脚本/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/2019/01/25/Python系统监控脚本/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -770,9 +641,11 @@ hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
       
         <div class="post-tags">
           
-            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
           
-            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i> 大数据</a>
+            <a href="/tags/Word/" rel="tag"><i class="fa fa-tag"></i> Word</a>
+          
+            <a href="/tags/邮件/" rel="tag"><i class="fa fa-tag"></i> 邮件</a>
           
         </div>
       
@@ -785,8 +658,8 @@ hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/25/Docker容器进入的4种方式/" rel="next" title="Docker容器进入的4种方式">
-                <i class="fa fa-chevron-left"></i> Docker容器进入的4种方式
+              <a href="/2019/01/04/MongoDB定时备份/" rel="next" title="MongoDB定时备份">
+                <i class="fa fa-chevron-left"></i> MongoDB定时备份
               </a>
             
           </div>
@@ -794,10 +667,6 @@ hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/27/Hadoop2-9-2源码编译/" rel="prev" title="Hadoop2.9.2源码编译">
-                Hadoop2.9.2源码编译 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1155,7 +1024,7 @@ hadoop jar hadoop-mapreduce-examples-2.7.4.jar pi 20 50
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop介绍"><span class="nav-text">Hadoop介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#狭义上讲"><span class="nav-text">狭义上讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义上讲"><span class="nav-text">广义上讲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop发展历史"><span class="nav-text">Hadoop发展历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop的特点"><span class="nav-text">Hadoop的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-国内外应用"><span class="nav-text">Hadoop 国内外应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop集群搭建"><span class="nav-text">Hadoop集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发行版本"><span class="nav-text">发行版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群介绍"><span class="nav-text">集群介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群安装"><span class="nav-text">集群安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器准备"><span class="nav-text">服务器准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器系统设置"><span class="nav-text">服务器系统设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK环境安装"><span class="nav-text">JDK环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hadoop-安装"><span class="nav-text">Hadoop 安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hadoop配置文件修改"><span class="nav-text">Hadoop配置文件修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群启动"><span class="nav-text">集群启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop初体验"><span class="nav-text">Hadoop初体验</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#word模板主要信息定制如下"><span class="nav-text">word模板主要信息定制如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本内容如下"><span class="nav-text">脚本内容如下</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -120,14 +120,14 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="一、Kafka简介1、简介Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181214001.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181214002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181214003.png">
-<meta property="og:updated_time" content="2018-12-14T07:17:59.152Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214003.png">
+<meta property="og:updated_time" content="2019-02-19T03:21:38.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka基础文档">
 <meta name="twitter:description" content="一、Kafka简介1、简介Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181214001.png">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214001.png">
 
 
 
@@ -435,12 +435,24 @@
                 
               
 
-              <time title="创建时间：2018-12-14 14:40:13 / 修改时间：15:17:59" itemprop="dateCreated datePublished" datetime="2018-12-14T14:40:13+08:00">2018-12-14</time>
+              <time title="创建时间：2018-12-14 14:40:13" itemprop="dateCreated datePublished" datetime="2018-12-14T14:40:13+08:00">2018-12-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 11:21:38" itemprop="dateModified" datetime="2019-02-19T11:21:38+08:00">2019-02-19</time>
               
             
           </span>
@@ -498,10 +510,10 @@
       
 
       
-        <h2 id="一、Kafka简介"><a href="#一、Kafka简介" class="headerlink" title="一、Kafka简介"></a>一、Kafka简介</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。<br>kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。<br>Apache的Kafka™是一个分布式流平台(a distributed streaming platform)。这到底意味着什么？<br>我们认为，一个流处理平台应该具有三个关键能力：<br>（1）它可以让你发布和订阅记录流。在这方面，它类似于一个消息队列或企业消息系统。<br>（2）它可以让你持久化收到的记录流，从而具有容错能力。<br>（3）它可以让你处理收到的记录流。<br>Kafka擅长哪些方面？<br>它被用于两大类应用：<br>（1）建立实时流数据管道从而能够可靠地在系统或应用程序之间的共享数据<br>（2）构建实时流应用程序，能够变换或者对数据<br>（3）进行相应的处理。<br>想要了解Kafka如何具有这些能力，让我们从下往上深入探索Kafka的能力。<br>首先，明确几个概念：<br>（1）Kafka是运行在一个或多个服务器的集群(Cluster)上的。<br>（2）Kafka集群分类存储的记录流被称为主题(Topics)。<br>（3）每个消息记录包含一个键，一个值和时间戳。<br>Kafka有四个核心API：<br>（1）生产者 API 允许应用程序发布记录流至一个或多个Kafka的话题(Topics)。<br>（2）消费者API允许应用程序订阅一个或多个主题，并处理这些主题接收到的记录流。<br>（3）Streams API允许应用程序充当流处理器（stream processor），从一个或多个主题获取输入流，并生产一个输出流至一个或多个的主题，能够有效地变换输入流为输出流。<br>（4）Connector API允许构建和运行可重用的生产者或消费者，能够把 Kafka主题连接到现有的应用程序或数据系统。例如，一个连接到关系数据库的连接器(connector)可能会获取每个表的变化。<br><img src="http://pjakaipln.bkt.clouddn.com/20181214001.png" alt="Alt text"></p>
+        <h2 id="一、Kafka简介"><a href="#一、Kafka简介" class="headerlink" title="一、Kafka简介"></a>一、Kafka简介</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。<br>kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。<br>Apache的Kafka™是一个分布式流平台(a distributed streaming platform)。这到底意味着什么？<br>我们认为，一个流处理平台应该具有三个关键能力：<br>（1）它可以让你发布和订阅记录流。在这方面，它类似于一个消息队列或企业消息系统。<br>（2）它可以让你持久化收到的记录流，从而具有容错能力。<br>（3）它可以让你处理收到的记录流。<br>Kafka擅长哪些方面？<br>它被用于两大类应用：<br>（1）建立实时流数据管道从而能够可靠地在系统或应用程序之间的共享数据<br>（2）构建实时流应用程序，能够变换或者对数据<br>（3）进行相应的处理。<br>想要了解Kafka如何具有这些能力，让我们从下往上深入探索Kafka的能力。<br>首先，明确几个概念：<br>（1）Kafka是运行在一个或多个服务器的集群(Cluster)上的。<br>（2）Kafka集群分类存储的记录流被称为主题(Topics)。<br>（3）每个消息记录包含一个键，一个值和时间戳。<br>Kafka有四个核心API：<br>（1）生产者 API 允许应用程序发布记录流至一个或多个Kafka的话题(Topics)。<br>（2）消费者API允许应用程序订阅一个或多个主题，并处理这些主题接收到的记录流。<br>（3）Streams API允许应用程序充当流处理器（stream processor），从一个或多个主题获取输入流，并生产一个输出流至一个或多个的主题，能够有效地变换输入流为输出流。<br>（4）Connector API允许构建和运行可重用的生产者或消费者，能够把 Kafka主题连接到现有的应用程序或数据系统。例如，一个连接到关系数据库的连接器(connector)可能会获取每个表的变化。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214001.png" alt="Alt text"></p>
 <h3 id="2、应用场景"><a href="#2、应用场景" class="headerlink" title="2、应用场景"></a>2、应用场景</h3><p>主要应用场景是：<br>（1）构建实时的流数据管道，可靠地获取系统和应用程序之间的数据。<br>（2）构建实时流的应用程序，对数据流进行转换或反应。<br>Kafka主要设计目标如下：<br>（1）以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能。<br>（2）高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输。<br>（3）支持Kafka Server间的消息分区，及分布式消费，同时保证每个partition内的消息顺序传输。<br>（4）同时支持离线数据处理和实时数据处理。</p>
-<h3 id="3、Kafka的设计原理分析"><a href="#3、Kafka的设计原理分析" class="headerlink" title="3、Kafka的设计原理分析"></a>3、Kafka的设计原理分析</h3><p><img src="http://pjakaipln.bkt.clouddn.com/20181214002.png" alt="Alt text"><br>一个典型的kafka集群中包含若干producer，若干broker，若干consumer，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在consumer group发生变化时进行rebalance。producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息。<br>Kafka专用术语：<br>Broker：消息中间件处理结点，一个Kafka节点就是一个broker，多个broker可以组成一个Kafka集群。消费者可以订阅一个或多个主题(topic),并从Broker拉数据，从而消费这些已发布的消息。每个消息（也叫作record记录,也被称为消息）是由一个key，一个value和时间戳构成。<br>Topic：一类消息，Kafka集群能够同时负责多个topic的分发。<br>Partition：topic物理上的分组，一个topic可以分为多个partition，每个partition是一个有序的队列。<br>Segment：partition物理上由多个segment组成。<br>offset：每个partition都由一系列有序的、不可变的消息组成，这些消息被连续的追加到partition中。partition中的每个消息都有一个连续的序列号叫做offset，用于partition唯一标识一条消息。<br>Producer：负责发布消息到Kafka broker，可以理解为生产者。<br>Consumer：消息消费者，向Kafka broker读取消息的客户端，可以理解为生产者。<br>Consumer Group：每个Consumer属于一个特定的Consumer Group。<br>topic: 消息以topic为类别记录,Kafka将消息种子(Feed)分门别类,每一类的消息称之为一个主题(Topic)。</p>
-<h3 id="4、主题（Topic）和日志（Logs）"><a href="#4、主题（Topic）和日志（Logs）" class="headerlink" title="4、主题（Topic）和日志（Logs）"></a>4、主题（Topic）和日志（Logs）</h3><p>作为Kafka对数据提供的核心抽象，主题是发布的数据流的类别或名称。主题在Kafka中，总是支持多订阅者的; 也就是说，主题可以有零个，一个或多个消费者订阅写到相应主题的数据. 对应每一个主题，Kafka集群会维护像一个如下这样的分区的日志：<br><img src="http://pjakaipln.bkt.clouddn.com/20181214003.png" alt="Alt text"><br>每个分区都是是一个有序的，不可变的，并且不断被附加的记录序列，—也就是一个结构化提交日志（commit log）。为了保证唯一标性识分区中的每个数据记录，分区中的记录每个都会被分配一个一个叫做偏移（offset）顺序的ID号。通过一个可配置的保留期，Kafka集群会保留所有被发布的数据，不管它们是不是已经被消费者处理。例如，如果保留期设置为两天，则在发布记录后的两天内，数据都可以被消费，之后它将被丢弃以释放空间。 卡夫卡的性能是不为因为数据量大小而受影响的，因此长时间存储数据并不成问题。事实上，在每个消费者上保留的唯一元数据是消费者在日志中的偏移位置。这个偏移由消费者控制：通常消费者会在读取记录时线性地提高其偏移值（offset++），但实际上，由于偏移位置由消费者控制，它可以以任何顺序来处理数据记录。事实上，在每个消费者上保留的唯一元数据是消费者在日志中的偏移位置。这个偏移由消费者控制：通常消费者会在读取记录时线性地提高其偏移值（offset++），但实际上，由于偏移位置由消费者控制，它可以以任何顺序来处理数据记录。</p>
+<h3 id="3、Kafka的设计原理分析"><a href="#3、Kafka的设计原理分析" class="headerlink" title="3、Kafka的设计原理分析"></a>3、Kafka的设计原理分析</h3><p><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214002.png" alt="Alt text"><br>一个典型的kafka集群中包含若干producer，若干broker，若干consumer，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在consumer group发生变化时进行rebalance。producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息。<br>Kafka专用术语：<br>Broker：消息中间件处理结点，一个Kafka节点就是一个broker，多个broker可以组成一个Kafka集群。消费者可以订阅一个或多个主题(topic),并从Broker拉数据，从而消费这些已发布的消息。每个消息（也叫作record记录,也被称为消息）是由一个key，一个value和时间戳构成。<br>Topic：一类消息，Kafka集群能够同时负责多个topic的分发。<br>Partition：topic物理上的分组，一个topic可以分为多个partition，每个partition是一个有序的队列。<br>Segment：partition物理上由多个segment组成。<br>offset：每个partition都由一系列有序的、不可变的消息组成，这些消息被连续的追加到partition中。partition中的每个消息都有一个连续的序列号叫做offset，用于partition唯一标识一条消息。<br>Producer：负责发布消息到Kafka broker，可以理解为生产者。<br>Consumer：消息消费者，向Kafka broker读取消息的客户端，可以理解为生产者。<br>Consumer Group：每个Consumer属于一个特定的Consumer Group。<br>topic: 消息以topic为类别记录,Kafka将消息种子(Feed)分门别类,每一类的消息称之为一个主题(Topic)。</p>
+<h3 id="4、主题（Topic）和日志（Logs）"><a href="#4、主题（Topic）和日志（Logs）" class="headerlink" title="4、主题（Topic）和日志（Logs）"></a>4、主题（Topic）和日志（Logs）</h3><p>作为Kafka对数据提供的核心抽象，主题是发布的数据流的类别或名称。主题在Kafka中，总是支持多订阅者的; 也就是说，主题可以有零个，一个或多个消费者订阅写到相应主题的数据. 对应每一个主题，Kafka集群会维护像一个如下这样的分区的日志：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214003.png" alt="Alt text"><br>每个分区都是是一个有序的，不可变的，并且不断被附加的记录序列，—也就是一个结构化提交日志（commit log）。为了保证唯一标性识分区中的每个数据记录，分区中的记录每个都会被分配一个一个叫做偏移（offset）顺序的ID号。通过一个可配置的保留期，Kafka集群会保留所有被发布的数据，不管它们是不是已经被消费者处理。例如，如果保留期设置为两天，则在发布记录后的两天内，数据都可以被消费，之后它将被丢弃以释放空间。 卡夫卡的性能是不为因为数据量大小而受影响的，因此长时间存储数据并不成问题。事实上，在每个消费者上保留的唯一元数据是消费者在日志中的偏移位置。这个偏移由消费者控制：通常消费者会在读取记录时线性地提高其偏移值（offset++），但实际上，由于偏移位置由消费者控制，它可以以任何顺序来处理数据记录。事实上，在每个消费者上保留的唯一元数据是消费者在日志中的偏移位置。这个偏移由消费者控制：通常消费者会在读取记录时线性地提高其偏移值（offset++），但实际上，由于偏移位置由消费者控制，它可以以任何顺序来处理数据记录。</p>
 <h3 id="5、数据的分配（Distribution）"><a href="#5、数据的分配（Distribution）" class="headerlink" title="5、数据的分配（Distribution）"></a>5、数据的分配（Distribution）</h3><p>在Kafka集群中，不同分区日志的分布在相应的不同的服务器节点上，每个服务器节点处理自己分区对应的数据和请求。每个分区都会被复制备份到几个（可配置）服务器节点，以实现容错容灾。 分布在不同节点的同一个分区都会有一个服务器节点作为领导者（”leader”）和0个或者多个跟随者（”followers”），分区的领导者会处理所有的读和写请求，而跟随者只会被动的复制领导者。如果leader挂了, 一个follower会自动变成leader。每个服务器都会作为其一些分区的领导者，但同时也可能作为其他分分区的跟随者，Kafka以此来实现在集群内的负载平衡。</p>
 <h3 id="6、生产者"><a href="#6、生产者" class="headerlink" title="6、生产者"></a>6、生产者</h3><p>生产者将数据发布到他们选择的主题。 生产者负责选择要吧数据分配给主题中哪个分区。这可以通过循环方式（round-robin）简单地平衡负载，或者可以根据某些语义分区（例如基于数据中的某些关键字）来完成。</p>
 <h3 id="7、消费者"><a href="#7、消费者" class="headerlink" title="7、消费者"></a>7、消费者</h3><p>消费者们使用消费群组名称来标注自己，几个消费者共享一个组群名，每一个发布到主题的数据会被传递到每个消费者群组中的一个消费者实例。 消费者实例可以在不同的进程中或不同的机器上。 如果所有的消费者实例具有相同的消费者组，则记录将在所有的消费者实例上有效地负载平衡,每个数据只发到了一个消费者 如果所有的消费者实例都有不同的消费者群体，那么每个记录将被广播给所有的消费者进程，每个数据都发到了所有的消费者。</p>

@@ -120,17 +120,17 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="所有的Java开发人员和运维人员可能会遇到这样的困惑？我该为堆内存设置多大空间呢？OutOfMemoryError的异常到底涉及到运行时数据的哪块区域？该怎么解决呢？其实如果你经常解决服务器性能问题，那么这些问题就会变的非常常见，了解JVM内存也是为了服务器出现性能问题的时候可以快速的了解那块的内存区域出现问题，以便于快速的解决生产故障。 先看一张图，这张图能很清晰的说明JVM内存结构布局。JVM">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220001.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220003.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220004.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220005.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220006.png">
-<meta property="og:updated_time" content="2018-12-20T07:03:49.671Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220003.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220004.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220005.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220006.png">
+<meta property="og:updated_time" content="2019-02-19T03:21:22.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM内存结构">
 <meta name="twitter:description" content="所有的Java开发人员和运维人员可能会遇到这样的困惑？我该为堆内存设置多大空间呢？OutOfMemoryError的异常到底涉及到运行时数据的哪块区域？该怎么解决呢？其实如果你经常解决服务器性能问题，那么这些问题就会变的非常常见，了解JVM内存也是为了服务器出现性能问题的时候可以快速的了解那块的内存区域出现问题，以便于快速的解决生产故障。 先看一张图，这张图能很清晰的说明JVM内存结构布局。JVM">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181220001.png">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220001.png">
 
 
 
@@ -438,12 +438,24 @@
                 
               
 
-              <time title="创建时间：2018-12-20 10:10:31 / 修改时间：15:03:49" itemprop="dateCreated datePublished" datetime="2018-12-20T10:10:31+08:00">2018-12-20</time>
+              <time title="创建时间：2018-12-20 10:10:31" itemprop="dateCreated datePublished" datetime="2018-12-20T10:10:31+08:00">2018-12-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 11:21:22" itemprop="dateModified" datetime="2019-02-19T11:21:22+08:00">2019-02-19</time>
               
             
           </span>
@@ -502,9 +514,9 @@
 
       
         <p>所有的Java开发人员和运维人员可能会遇到这样的困惑？我该为堆内存设置多大空间呢？OutOfMemoryError的异常到底涉及到运行时数据的哪块区域？该怎么解决呢？其实如果你经常解决服务器性能问题，那么这些问题就会变的非常常见，了解JVM内存也是为了服务器出现性能问题的时候可以快速的了解那块的内存区域出现问题，以便于快速的解决生产故障。</p>
-<p>先看一张图，这张图能很清晰的说明JVM内存结构布局。<br><img src="http://pjakaipln.bkt.clouddn.com/20181220001.png" alt="Alt text" title="Francis&#39;Blog"><br>JVM内存结构主要有三大块：<code>堆内存</code>、<code>方法区</code>和<code>栈</code>。堆内存是JVM中最大的一块由年轻代和老年代组成，而年轻代内存又被分成三部分，<code>Eden空间</code>、<code>From Survivor空间</code>、<code>To Survivor空间</code>,默认情况下年轻代按照8:1:1的比例来分配；</p>
+<p>先看一张图，这张图能很清晰的说明JVM内存结构布局。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220001.png" alt="Alt text" title="Francis&#39;Blog"><br>JVM内存结构主要有三大块：<code>堆内存</code>、<code>方法区</code>和<code>栈</code>。堆内存是JVM中最大的一块由年轻代和老年代组成，而年轻代内存又被分成三部分，<code>Eden空间</code>、<code>From Survivor空间</code>、<code>To Survivor空间</code>,默认情况下年轻代按照8:1:1的比例来分配；</p>
 <p>方法区存储类信息、常量、静态变量等数据，是线程共享的区域，为与Java堆区分，方法区还有一个别名Non-Heap(非堆)；栈又分为java虚拟机栈和本地方法栈主要用于方法的执行。</p>
-<p>在通过一张图来了解如何通过参数来控制各区域的内存大小<br><img src="http://pjakaipln.bkt.clouddn.com/20181220002.png" alt="Alt text" title="Francis&#39;Blog"><br>控制参数  </p>
+<p>在通过一张图来了解如何通过参数来控制各区域的内存大小<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220002.png" alt="Alt text" title="Francis&#39;Blog"><br>控制参数  </p>
 <ul>
 <li>-Xms设置堆的最小空间大小。 </li>
 <li>-Xmx设置堆的最大空间大小。 </li>
@@ -516,7 +528,7 @@
 </ul>
 <p>没有直接设置老年代的参数，但是可以设置堆空间大小和新生代空间大小两个参数来间接控制。</p>
 <pre><code>老年代空间大小=堆空间大小-年轻代大空间大小
-</code></pre><p>从更高的一个维度再次来看JVM和系统调用之间的关系<br><img src="http://pjakaipln.bkt.clouddn.com/20181220003.png" alt="Alt text" title="Francis&#39;Blog"><br>方法区和对是所有线程共享的内存区域；而java栈、本地方法栈和程序员计数器是运行是线程私有的内存区域。</p>
+</code></pre><p>从更高的一个维度再次来看JVM和系统调用之间的关系<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220003.png" alt="Alt text" title="Francis&#39;Blog"><br>方法区和对是所有线程共享的内存区域；而java栈、本地方法栈和程序员计数器是运行是线程私有的内存区域。</p>
 <p>下面我们详细介绍每个区域的作用</p>
 <h2 id="Java堆（Heap）"><a href="#Java堆（Heap）" class="headerlink" title="Java堆（Heap）"></a>Java堆（Heap）</h2><p>对于大多数应用来说，Java堆（Java Heap）是Java虚拟机所管理的内存中<code>最大</code>的一块。Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。此内存区域的唯一目的就是存放对象实例，<code>几乎所有的对象实例都在这里分配内存</code>。</p>
 <p>Java堆是垃圾收集器管理的主要区域，因此很多时候也被称做“<code>GC堆</code>”。如果从内存回收的角度看，由于现在收集器基本都是采用的分代收集算法，所以Java堆中还可以细分为：<code>新生代和老年代</code>；再细致一点的有<code>Eden空间</code>、<code>From Survivor</code>空间、<code>To Survivor空间</code>等。</p>
@@ -526,9 +538,9 @@
 <p>对于习惯在HotSpot虚拟机上开发和部署程序的开发者来说，很多人愿意把方法区称为“永久代”（Permanent Generation），本质上两者并不等价，仅仅是因为HotSpot虚拟机的设计团队选择把GC分代收集扩展至方法区，或者说使用永久代来实现方法区而已。</p>
 <p>Java虚拟机规范对这个区域的限制非常宽松，除了和Java堆一样不需要连续的内存和可以选择固定大小或者可扩展外，还可以选择不实现垃圾收集。相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入了方法区就如永久代的名字一样“永久”存在了。这个区域的内存回收目标主要是针对常量池的回收和对类型的卸载，一般来说这个区域的回收“成绩”比较难以令人满意，尤其是类型的卸载，条件相当苛刻，但是这部分区域的回收确实是有必要的。</p>
 <p>根据Java虚拟机规范的规定，当方法区无法满足内存分配需求时，将抛出OutOfMemoryError异常。</p>
-<p>方法区有时被称为持久代（PermGen）。<br><img src="http://pjakaipln.bkt.clouddn.com/20181220004.png" alt="Alt text" title="Francis&#39;Blog"><br>所有的对象在实例化后的整个运行周期内，都被存放在堆内存中。堆内存又被划分成不同的部分：伊甸区(Eden)，幸存者区域(Survivor Sapce)，老年代（Old Generation Space）。</p>
+<p>方法区有时被称为持久代（PermGen）。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220004.png" alt="Alt text" title="Francis&#39;Blog"><br>所有的对象在实例化后的整个运行周期内，都被存放在堆内存中。堆内存又被划分成不同的部分：伊甸区(Eden)，幸存者区域(Survivor Sapce)，老年代（Old Generation Space）。</p>
 <p>方法的执行都是伴随着线程的。原始类型的本地变量以及引用都存放在线程栈中。而引用关联的对象比如String，都存在在堆中。为了更好的理解上面这段话，我们可以看一个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import java.text.SimpleDateFormat;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import org.apache.log4j.Logger;</span><br><span class="line"> </span><br><span class="line">public class HelloWorld &#123;</span><br><span class="line">    private static Logger LOGGER = Logger.getLogger(HelloWorld.class.getName());</span><br><span class="line">    public void sayHello(String message) &#123;</span><br><span class="line">        SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd.MM.YYYY&quot;);</span><br><span class="line">        String today = formatter.format(new Date());</span><br><span class="line">        LOGGER.info(today + &quot;: &quot; + message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段程序的数据在内存中的存放如下：<br><img src="http://pjakaipln.bkt.clouddn.com/20181220005.png" alt="Alt text" title="Francis&#39;Blog"><br>通过JConsole工具可以查看运行中的Java程序（比如Eclipse）的一些信息：堆内存的分配，线程的数量以及加载的类的个数；<br><img src="http://pjakaipln.bkt.clouddn.com/20181220006.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<p>这段程序的数据在内存中的存放如下：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220005.png" alt="Alt text" title="Francis&#39;Blog"><br>通过JConsole工具可以查看运行中的Java程序（比如Eclipse）的一些信息：堆内存的分配，线程的数量以及加载的类的个数；<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220006.png" alt="Alt text" title="Francis&#39;Blog"></p>
 <h2 id="程序计数器（Program-Counter-Register）"><a href="#程序计数器（Program-Counter-Register）" class="headerlink" title="程序计数器（Program Counter Register）"></a>程序计数器（Program Counter Register）</h2><p>程序计数器（Program Counter Register）是一块较小的内存空间，它的作用可以看做是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（仅是概念模型，各种虚拟机可能会通过一些更高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
 <p>由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器（对于多核处理器来说是一个内核）只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间的计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。</p>
 <p>如果线程正在执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果正在执行的是Natvie方法，这个计数器值则为空（Undefined）。</p>

@@ -120,13 +120,13 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="运用jvm自带的命令可以方便的在生产监控和打印堆栈的日志信息帮忙我们来定位问题！虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等，但是在生产环境出现问题的时候，一方面工具的使用会有所限制，另一方面喜欢装X的我们，总喜欢在出现问题的时候在终端输入一些命令来解决。所有的工具几乎都是依赖于jdk的接口和底层的这些命令，研究这些命">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220017.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181220018.png">
-<meta property="og:updated_time" content="2018-12-20T06:58:14.592Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220017.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220018.png">
+<meta property="og:updated_time" content="2019-02-19T03:21:29.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM调优命令">
 <meta name="twitter:description" content="运用jvm自带的命令可以方便的在生产监控和打印堆栈的日志信息帮忙我们来定位问题！虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等，但是在生产环境出现问题的时候，一方面工具的使用会有所限制，另一方面喜欢装X的我们，总喜欢在出现问题的时候在终端输入一些命令来解决。所有的工具几乎都是依赖于jdk的接口和底层的这些命令，研究这些命">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181220017.png">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220017.png">
 
 
 
@@ -434,12 +434,24 @@
                 
               
 
-              <time title="创建时间：2018-12-20 10:14:13 / 修改时间：14:58:14" itemprop="dateCreated datePublished" datetime="2018-12-20T10:14:13+08:00">2018-12-20</time>
+              <time title="创建时间：2018-12-20 10:14:13" itemprop="dateCreated datePublished" datetime="2018-12-20T10:14:13+08:00">2018-12-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 11:21:29" itemprop="dateModified" datetime="2019-02-19T11:21:29+08:00">2019-02-19</time>
               
             
           </span>
@@ -676,7 +688,7 @@ Z  boolean
 </ul>
 <h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ jhat -J-Xmx512m dump.hprof</span><br><span class="line">  eading from dump.hprof...</span><br><span class="line">  Dump file created Fri Mar 11 17:13:42 CST 2016</span><br><span class="line">  Snapshot <span class="built_in">read</span>, resolving...</span><br><span class="line">  Resolving 271678 objects...</span><br><span class="line">  Chasing references, expect 54 dots......................................................</span><br><span class="line">  Eliminating duplicate references......................................................</span><br><span class="line">  Snapshot resolved.</span><br><span class="line">  Started HTTP server on port 7000</span><br><span class="line">  Server is ready.</span><br></pre></td></tr></table></figure>
 <p>中间的-J-Xmx512m是在dump快照很大的情况下分配512M内存去启动HTTP服务器，运行完之后就可在浏览器打开Http://localhost:7000进行快照分析 堆快照分析主要在最后面的Heap Histogram里，里面根据class列出了dump的时候所有存活对象。<br><strong>分析同样一个dump快照，MAT需要的额外内存比jhat要小的多的多，所以建议使用MAT来进行分析，当然也看个人偏好。</strong><br><strong>分析</strong><br>打开浏览器Http://localhost:7000，该页面提供了几个查询功能可供使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">All classes including platform</span><br><span class="line">Show all members of the rootset</span><br><span class="line">Show instance counts for all classes (including platform)</span><br><span class="line">Show instance counts for all classes (excluding platform)</span><br><span class="line">Show heap histogram</span><br><span class="line">Show finalizer summary</span><br><span class="line">Execute Object Query Language (OQL) query</span><br></pre></td></tr></table></figure></p>
-<p>一般查看堆异常情况主要看这个两个部分： Show instance counts for all classes (excluding platform)，平台外的所有对象信息。如下图：<br><img src="http://pjakaipln.bkt.clouddn.com/20181220017.png" alt="Alt text" title="Francis&#39;Blog"><br>Show heap histogram 以树状图形式展示堆情况。如下图：<br><img src="http://pjakaipln.bkt.clouddn.com/20181220018.png" alt="Alt text" title="Francis&#39;Blog"><br>具体排查时需要结合代码，观察是否大量应该被回收的对象在一直被引用或者是否有占用内存特别大的对象无法被回收。<br><strong>一般情况，会down到客户端用工具来分析</strong></p>
+<p>一般查看堆异常情况主要看这个两个部分： Show instance counts for all classes (excluding platform)，平台外的所有对象信息。如下图：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220017.png" alt="Alt text" title="Francis&#39;Blog"><br>Show heap histogram 以树状图形式展示堆情况。如下图：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181220018.png" alt="Alt text" title="Francis&#39;Blog"><br>具体排查时需要结合代码，观察是否大量应该被回收的对象在一直被引用或者是否有占用内存特别大的对象无法被回收。<br><strong>一般情况，会down到客户端用工具来分析</strong></p>
 <h2 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h2><p>jstack用于生成java虚拟机当前时刻的线程快照。线程快照是当前java虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等。 线程出现停顿的时候通过jstack来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做什么事情，或者等待什么资源。 如果java程序崩溃生成core文件，jstack工具可以用来获得core文件的java stack和native stack的信息，从而可以轻松地知道java程序是如何崩溃和在程序何处发生问题。另外，jstack工具还可以附属到正在运行的java程序中，看到当时运行的java程序的java stack和native stack的信息, 如果现在运行的java程序呈现hung的状态，jstack是非常有用的。</p>
 <h3 id="命令格式-4"><a href="#命令格式-4" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack [option] LVMID</span><br></pre></td></tr></table></figure>
 <p>option参数</p>

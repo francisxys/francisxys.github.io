@@ -120,15 +120,15 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="SpringCloud微服务可以在Jenkins上配置Maven项目打包发布到Linux系统，打包后发布到远程系统上文件为jar包。需要Jenkins系统环境支持为：Git：用以从Gitlab&amp;amp;Github拉取代码。Maven：用以对代码进行打包，打包成jar格式的服务包。Jdk：用以运行Jar包所需的Java环境。SpringCloud架构中的微服务本质为可以独立运行的jar包。Jenk">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181219001.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181219002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181219003.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181219004.png">
-<meta property="og:updated_time" content="2018-12-19T07:36:22.076Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219003.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219004.png">
+<meta property="og:updated_time" content="2019-02-19T03:21:12.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins发布SpringCloud微服务到WindowsServer">
 <meta name="twitter:description" content="SpringCloud微服务可以在Jenkins上配置Maven项目打包发布到Linux系统，打包后发布到远程系统上文件为jar包。需要Jenkins系统环境支持为：Git：用以从Gitlab&amp;amp;Github拉取代码。Maven：用以对代码进行打包，打包成jar格式的服务包。Jdk：用以运行Jar包所需的Java环境。SpringCloud架构中的微服务本质为可以独立运行的jar包。Jenk">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181219001.png">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219001.png">
 
 
 
@@ -436,12 +436,24 @@
                 
               
 
-              <time title="创建时间：2018-12-19 14:24:58 / 修改时间：15:36:22" itemprop="dateCreated datePublished" datetime="2018-12-19T14:24:58+08:00">2018-12-19</time>
+              <time title="创建时间：2018-12-19 14:24:58" itemprop="dateCreated datePublished" datetime="2018-12-19T14:24:58+08:00">2018-12-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 11:21:12" itemprop="dateModified" datetime="2019-02-19T11:21:12+08:00">2019-02-19</time>
               
             
           </span>
@@ -500,7 +512,7 @@
 
       
         <p>SpringCloud微服务可以在Jenkins上配置Maven项目打包发布到Linux系统，打包后发布到远程系统上文件为jar包。<br>需要Jenkins系统环境支持为：<br>Git：用以从Gitlab&amp;Github拉取代码。<br>Maven：用以对代码进行打包，打包成jar格式的服务包。<br>Jdk：用以运行Jar包所需的Java环境。<br>SpringCloud架构中的微服务本质为可以独立运行的jar包。<br>Jenkins发布服务到WindosServer则需要以下步骤。</p>
-<h2 id="一、配置WindowsServer支持SSH"><a href="#一、配置WindowsServer支持SSH" class="headerlink" title="一、配置WindowsServer支持SSH"></a>一、配置WindowsServer支持SSH</h2><h3 id="1、配置SSH环境"><a href="#1、配置SSH环境" class="headerlink" title="1、配置SSH环境"></a>1、配置SSH环境</h3><p>当前系统为WindowsServer2012R2，实现SSH连接windows服务器，需要使用PowerShell Server。<br>从官网下载后安装，具体配置如下<br><img src="http://pjakaipln.bkt.clouddn.com/20181219001.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="http://pjakaipln.bkt.clouddn.com/20181219002.png" alt="Alt text" title="Francis&#39;Blog"><br>建议勾选<code>Run as a Windows Service</code>，然后启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[2018/12/19 14:46:02] [2808] [1] Starting (user initiated).</span><br><span class="line">[2018/12/19 14:46:02] [2808] [1] Starting PowerShell Server Win32 Service...</span><br><span class="line">[2018/12/19 14:46:03] [33576] [4] PowerShell Server Started. Version: 16.0.6801.</span><br><span class="line">[2018/12/19 14:46:03] [33576] [4] Max Connections: 5</span><br><span class="line">[2018/12/19 14:46:04] [2808] [8] PowerShell Server Win32 Service started.</span><br></pre></td></tr></table></figure></p>
+<h2 id="一、配置WindowsServer支持SSH"><a href="#一、配置WindowsServer支持SSH" class="headerlink" title="一、配置WindowsServer支持SSH"></a>一、配置WindowsServer支持SSH</h2><h3 id="1、配置SSH环境"><a href="#1、配置SSH环境" class="headerlink" title="1、配置SSH环境"></a>1、配置SSH环境</h3><p>当前系统为WindowsServer2012R2，实现SSH连接windows服务器，需要使用PowerShell Server。<br>从官网下载后安装，具体配置如下<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219001.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219002.png" alt="Alt text" title="Francis&#39;Blog"><br>建议勾选<code>Run as a Windows Service</code>，然后启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[2018/12/19 14:46:02] [2808] [1] Starting (user initiated).</span><br><span class="line">[2018/12/19 14:46:02] [2808] [1] Starting PowerShell Server Win32 Service...</span><br><span class="line">[2018/12/19 14:46:03] [33576] [4] PowerShell Server Started. Version: 16.0.6801.</span><br><span class="line">[2018/12/19 14:46:03] [33576] [4] Max Connections: 5</span><br><span class="line">[2018/12/19 14:46:04] [2808] [8] PowerShell Server Win32 Service started.</span><br></pre></td></tr></table></figure></p>
 <p>出现以上信息表示启动成功<br>关系客户端连接的日志信息、报错信息等都会出现在这个界面内，出现问题时候可以注意检查。<br>PowerShell Server支持如下客户端：</p>
 <pre><code>Putty on Windows 
 Connect-PowerShellServer, Invoke-PowerShellServer, and Disconnect-PowerShellServer Cmdlets included in NetCmdlets. 
@@ -509,7 +521,7 @@ Any SSH client on a mobile device.
 OpenSSH with XTerm, gnome-terminal, Konsole.
 </code></pre><p>具体链接过程不再演示<br>系统用户名为administrator 远程端口为22 IP不变 密码不变</p>
 <h3 id="2、配置Java环境"><a href="#2、配置Java环境" class="headerlink" title="2、配置Java环境"></a>2、配置Java环境</h3><p>Java环境配置直接官网下载，默认安装即可，不再详细描述。<br>只是要注意JAVA_HOME的路径即好。</p>
-<h2 id="二、Jenkins相关配置"><a href="#二、Jenkins相关配置" class="headerlink" title="二、Jenkins相关配置"></a>二、Jenkins相关配置</h2><p>首先将WindowsServer的的远程密码配置进Jenkisn的全局凭据中。<br>在配置中的SSH sites中和SSH Servers中添加WindowsServer，如下图所示：<br><img src="http://pjakaipln.bkt.clouddn.com/20181219003.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="http://pjakaipln.bkt.clouddn.com/20181219004.png" alt="Alt text" title="Francis&#39;Blog"><br>test显示成功则可以继续进行Jenkins Job的配置，Jenkins Job的配置和LinuxServer区别不大，不再详细描述。</p>
+<h2 id="二、Jenkins相关配置"><a href="#二、Jenkins相关配置" class="headerlink" title="二、Jenkins相关配置"></a>二、Jenkins相关配置</h2><p>首先将WindowsServer的的远程密码配置进Jenkisn的全局凭据中。<br>在配置中的SSH sites中和SSH Servers中添加WindowsServer，如下图所示：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219003.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181219004.png" alt="Alt text" title="Francis&#39;Blog"><br>test显示成功则可以继续进行Jenkins Job的配置，Jenkins Job的配置和LinuxServer区别不大，不再详细描述。</p>
 <h2 id="三、WindowsServer相关脚本配置"><a href="#三、WindowsServer相关脚本配置" class="headerlink" title="三、WindowsServer相关脚本配置"></a>三、WindowsServer相关脚本配置</h2><p>首先Jenkins发布的jar包会上传到上图二中所示，目录C:\work\service_jar下。</p>
 <h3 id="1、启动脚本"><a href="#1、启动脚本" class="headerlink" title="1、启动脚本"></a>1、启动脚本</h3><p>关于启动脚本使用bat脚本<br>jar包启动需要特殊权限，所以需要先获取管理员权限。<br>脚本执行完成以后需要返回给Jenkins状态码<code>0</code>，不然Jenkins会提示报错，提示发布不稳定。<br>完整脚本如下：<br><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> Get Administrator privileges</span><br><span class="line"><span class="built_in">cacls</span>.exe "<span class="variable">%SystemDrive%</span>\System Volume Information" &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">if</span> <span class="variable">%errorlevel%</span>==<span class="number">0</span> <span class="keyword">goto</span> Admin</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> "<span class="variable">%temp%</span>\getadmin.vbs" <span class="built_in">del</span> /f /q "<span class="variable">%temp%</span>\getadmin.vbs"</span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">Set</span> RequestUAC = CreateObject^("Shell.Application"^)&gt;"<span class="variable">%temp%</span>\getadmin.vbs"</span><br><span class="line"><span class="built_in">echo</span> RequestUAC.ShellExecute "%~s0","","","runas",<span class="number">1</span> &gt;&gt;"<span class="variable">%temp%</span>\getadmin.vbs"</span><br><span class="line"><span class="built_in">echo</span> WScript.Quit &gt;&gt;"<span class="variable">%temp%</span>\getadmin.vbs"</span><br><span class="line">"<span class="variable">%temp%</span>\getadmin.vbs" /f</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> "<span class="variable">%temp%</span>\getadmin.vbs" <span class="built_in">del</span> /f /q "<span class="variable">%temp%</span>\getadmin.vbs"</span><br><span class="line"><span class="keyword">exit</span></span><br><span class="line"></span><br><span class="line">:Admin</span><br><span class="line"><span class="built_in">echo</span> Get Administrator privileges Successfully</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> YYYYmmdd=<span class="variable">%date:~0,4%</span><span class="variable">%date:~5,2%</span><span class="variable">%date:~8,2%</span></span><br><span class="line"><span class="built_in">set</span> t=<span class="variable">%time:~,8%</span></span><br><span class="line"><span class="built_in">set</span> t=<span class="variable">%t::=%</span></span><br><span class="line"><span class="built_in">set</span> t=%t: =<span class="number">0</span>%</span><br><span class="line"></span><br><span class="line"><span class="built_in">SET</span> JAVA_HOME="C:\jdk1.<span class="number">8</span>"</span><br><span class="line"><span class="built_in">copy</span> "<span class="variable">%JAVA_HOME%</span>\bin\java.exe" "<span class="variable">%JAVA_HOME%</span>\bin\riskArchiveService.exe"</span><br><span class="line">"<span class="variable">%JAVA_HOME%</span>\bin\riskArchiveService.exe" -Xms1024M -Xmx1024M -Xmn385M -XX:+PrintGCDetails -jar C:\work\service_jar\riskArchiveService.jar --server.port=<span class="number">28000</span> --management.port=<span class="number">28001</span> --config.profile=pro --config.ip=http://<span class="number">172</span>.<span class="number">16</span>.<span class="number">109</span>.<span class="number">142</span>:<span class="number">17001</span>/ &gt; C:\work\logs\riskArchiveService_<span class="variable">%YYYYmmdd%</span>_<span class="variable">%t%</span>.log <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"><span class="keyword">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <p>脚本中讲<code>java.exe</code>copy为<code>servicename.exe</code>，以此种方式启动后，则服务名为独立的，可以启动多个jar服务。<br>如果进行此操作也可以启动，但是服务名为<code>java.exe</code>，则整个系统只能启动一个服务，不利于系统资源利用。<br>可以从任务管理器和系统信息中查看启动的服务。</p>

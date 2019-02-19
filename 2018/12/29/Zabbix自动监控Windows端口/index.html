@@ -120,16 +120,16 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="Windows服务端有需要监控的端口，主要监控处于LISTEN状态、协议为TCP的端口。 脚本首先编写脚本，脚本名为discovertcpport.bat，脚本内容如下1234567@echo offecho &amp;#123;echo         &quot;data&quot;:[for /F &quot;tokens=2 delims= &quot; %%i IN (&apos;netstat -anp tcp^|find /i &quot;LISTE">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181229001.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181229002.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181229003.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181229004.png">
-<meta property="og:image" content="http://pjakaipln.bkt.clouddn.com/20181229005.png">
-<meta property="og:updated_time" content="2018-12-29T10:34:09.859Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229003.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229004.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229005.png">
+<meta property="og:updated_time" content="2019-02-19T03:23:52.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zabbix自动监控Windows端口">
 <meta name="twitter:description" content="Windows服务端有需要监控的端口，主要监控处于LISTEN状态、协议为TCP的端口。 脚本首先编写脚本，脚本名为discovertcpport.bat，脚本内容如下1234567@echo offecho &amp;#123;echo         &quot;data&quot;:[for /F &quot;tokens=2 delims= &quot; %%i IN (&apos;netstat -anp tcp^|find /i &quot;LISTE">
-<meta name="twitter:image" content="http://pjakaipln.bkt.clouddn.com/20181229001.png">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229001.png">
 
 
 
@@ -437,12 +437,24 @@
                 
               
 
-              <time title="创建时间：2018-12-29 17:52:40 / 修改时间：18:34:09" itemprop="dateCreated datePublished" datetime="2018-12-29T17:52:40+08:00">2018-12-29</time>
+              <time title="创建时间：2018-12-29 17:52:40" itemprop="dateCreated datePublished" datetime="2018-12-29T17:52:40+08:00">2018-12-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 11:23:52" itemprop="dateModified" datetime="2019-02-19T11:23:52+08:00">2019-02-19</time>
               
             
           </span>
@@ -508,7 +520,7 @@
 <p>说明：<br>一条表示允许使用用户自定义参数，第二条设置用户参数，名称tcpportlisten是自定义的KEY名，后接KEY要执行的命令或脚本文件。</p>
 <p>重新启动zabbix agentd服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -x</span><br><span class="line">C:\zabbix_agents_3.0.10.win\bin\win64\zabbix_agentd.exe -c C:\zabbix_agents_3.0.10.win\conf\zabbix_agentd.win.conf -s</span><br></pre></td></tr></table></figure></p>
 <h2 id="server端"><a href="#server端" class="headerlink" title="server端"></a>server端</h2><p>从server端尝试获取数据<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /data/zabbix/bin/zabbix_get -s 172.16.92.251 -k Port_Low_Discovery</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"data"</span>:[</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"22"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"80"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"135"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"443"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"445"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"593"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"3388"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"3389"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"5504"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"8122"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"10050"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"28000"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"28001"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"47001"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"49152"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"49153"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"49154"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"49155"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"139"</span>&#125;,</span><br><span class="line">                &#123;<span class="string">"&#123;#LISTEN_PORT&#125;"</span>:<span class="string">"10050"</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到获取了很多端口，这些端口有些是我们要监控的服务的端口，有些是系统主服务的端口，所以我们要过滤我们需要监控的端口。<br>在zabbixserver的web界面去配置正则表达式。<br>正则表达式如下图所示<br><img src="http://pjakaipln.bkt.clouddn.com/20181229001.png" alt="Alt text" title="Francis&#39;Blog"><br>可以换个理解方式，只有在正则表达式中填写的端口号，zabbix才能去discovery。<br>接下来配置模板和自发现准则，如下图所示<br><img src="http://pjakaipln.bkt.clouddn.com/20181229002.png" alt="Alt text" title="Francis&#39;Blog"><br>下图为配置使用正则表达式来过滤获取到的端口<br><img src="http://pjakaipln.bkt.clouddn.com/20181229003.png" alt="Alt text" title="Francis&#39;Blog"><br>Item prototypes配置如下<br><img src="http://pjakaipln.bkt.clouddn.com/20181229004.png" alt="Alt text" title="Francis&#39;Blog"><br>Trigger prototypes配置如下<br><img src="http://pjakaipln.bkt.clouddn.com/20181229005.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<p>可以看到获取了很多端口，这些端口有些是我们要监控的服务的端口，有些是系统主服务的端口，所以我们要过滤我们需要监控的端口。<br>在zabbixserver的web界面去配置正则表达式。<br>正则表达式如下图所示<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229001.png" alt="Alt text" title="Francis&#39;Blog"><br>可以换个理解方式，只有在正则表达式中填写的端口号，zabbix才能去discovery。<br>接下来配置模板和自发现准则，如下图所示<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229002.png" alt="Alt text" title="Francis&#39;Blog"><br>下图为配置使用正则表达式来过滤获取到的端口<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229003.png" alt="Alt text" title="Francis&#39;Blog"><br>Item prototypes配置如下<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229004.png" alt="Alt text" title="Francis&#39;Blog"><br>Trigger prototypes配置如下<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181229005.png" alt="Alt text" title="Francis&#39;Blog"></p>
 <pre><code>{Template OS Windows Port:net.tcp.listen[{#LISTEN_PORT}].count(#3,0,&quot;eq&quot;)}=3
 </code></pre><p>表示三次获取信息为0即触发报警，Item prototypes配置时间为30秒，即90秒没有回应触发报警。<br>这样配置是为了防止zabbixserver端和agent端通讯质量不好。</p>
 

@@ -11,6 +11,8 @@ hexo init
 npm install hexo-generator-searchdb --save
 #上传deploy插件
 npm install hexo-deployer-git --save
+#永久链接插件
+npm install hexo-abbrlink --save
 ```
 ## 三、hexo命令
 ``` bash
@@ -31,10 +33,10 @@ hexo d -g
 ## 四、markdown语法
 ### 插入图片
 图片链接后跟图片提示
-![Alt text](http://pjakaipln.bkt.clouddn.com/20181210019.png "Francis'Blog")
+![Alt text](https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181205001.png "Francis'Blog")
 同样支持html语法，居中显示
 <center>
-<img src="http://pjakaipln.bkt.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%AB%E7%A0%81%E9%A2%86%E7%BA%A2%E5%8C%85.jpg" width="25%" height="25%" />
+<img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/zfb001.jpg" width="25%" height="25%" />
 </center>
 
 ### 添加链接格式

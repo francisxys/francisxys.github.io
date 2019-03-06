@@ -113,7 +113,7 @@
 
 
   <meta name="description" content="一、Kafka简介1、简介Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作">
-<meta name="keywords" content="Kafka,Message">
+<meta name="keywords" content="Kafka,Message,Zookeeper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka基础文档">
 <meta property="og:url" content="http://www.cnops.com/posts/ce9c4656.html">
@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214001.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214002.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20181214003.png">
-<meta property="og:updated_time" content="2019-02-25T03:00:45.534Z">
+<meta property="og:updated_time" content="2019-03-04T09:41:00.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka基础文档">
 <meta name="twitter:description" content="一、Kafka简介1、简介Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作">
@@ -452,7 +452,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-25 11:00:45" itemprop="dateModified" datetime="2019-02-25T11:00:45+08:00">2019-02-25</time>
+                <time title="修改时间：2019-03-04 17:41:00" itemprop="dateModified" datetime="2019-03-04T17:41:00+08:00">2019-03-04</time>
               
             
           </span>
@@ -534,7 +534,9 @@
 <p>修改关于zookeeper的配置文件zookeeper.properties<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config/zookeeper.properties</span><br></pre></td></tr></table></figure></p>
 <p>zookeeper.properties修改后为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/data/kafka/zkdata</span><br><span class="line">clientPort=2181</span><br><span class="line">maxClientCnxns=0</span><br></pre></td></tr></table></figure></p>
 <p>在kafka目录启动zookeeper<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/kafka</span><br><span class="line">bin/zookeeper-server-start.sh config/zookeeper.properties &amp;</span><br></pre></td></tr></table></figure></p>
-<p>启动kafka<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-streams-application-reset.sh config/server.properties &amp;</span><br></pre></td></tr></table></figure></p>
+<p>启动kafka<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-start.sh config/server.properties &amp;</span><br></pre></td></tr></table></figure></p>
+<p>以后台方式启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#zookeeper</span></span><br><span class="line">nohup zookeeper-server-start.sh /data/kafka/config/zookeeper.properties 1&gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="comment">#kafka</span></span><br><span class="line">nohup kafka-server-start.sh /data/kafka/config/server.properties 1&gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<p>kafka启动时候需要zookeeper，可以使用单独的zookeeper，也可以启动kafka中已集成的zookeeper。</p>
 
       
     </div>
@@ -623,6 +625,8 @@
             <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
           
             <a href="/tags/Message/" rel="tag"><i class="fa fa-tag"></i> Message</a>
+          
+            <a href="/tags/Zookeeper/" rel="tag"><i class="fa fa-tag"></i> Zookeeper</a>
           
         </div>
       
@@ -717,7 +721,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -776,7 +780,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -941,7 +945,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">75</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1062,6 +1070,7 @@
   
 </div>
 
+<!--
 
   <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
 
@@ -1073,6 +1082,7 @@
 
   <div class="theme-info">博客</div>
 
+-->
 
 <div class="BbeiAn-info">
     <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41042202000126" style="color:#000000;text-decoration:none;padding-left:30px;background:url(https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/batb.png) no-repeat left center" rel="nofollow">豫公网安备 41042202000126号</a>    <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->

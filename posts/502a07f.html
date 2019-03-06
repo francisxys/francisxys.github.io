@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="_1iFxvEkIImQlyvWe4Y4gLh85rLCe9HPYV56NcoolIE">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="RZoFTJvjGp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="confluent简介LinkedIn有个三人小组出来创业了—正是当时开发出Apache Kafka实时信息列队技术的团队成员，基于这项技术Jay Kreps带头创立了新公司Confluent。Confluent的产品围绕着Kafka做的。 Confluent PlatformConfluent Platform 是一个流数据平台，能够组织管理来自不同数据源的数据，拥有稳定高效的系统。Conflu">
+<meta name="keywords" content="Java,Confluent,Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Confluent安装部署">
+<meta property="og:url" content="http://www.cnops.com/posts/502a07f.html">
+<meta property="og:site_name" content="Francis&#39;Blog">
+<meta property="og:description" content="confluent简介LinkedIn有个三人小组出来创业了—正是当时开发出Apache Kafka实时信息列队技术的团队成员，基于这项技术Jay Kreps带头创立了新公司Confluent。Confluent的产品围绕着Kafka做的。 Confluent PlatformConfluent Platform 是一个流数据平台，能够组织管理来自不同数据源的数据，拥有稳定高效的系统。Conflu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306003.png">
+<meta property="og:updated_time" content="2019-03-06T05:31:27.186Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Confluent安装部署">
+<meta name="twitter:description" content="confluent简介LinkedIn有个三人小组出来创业了—正是当时开发出Apache Kafka实时信息列队技术的团队成员，基于这项技术Jay Kreps带头创立了新公司Confluent。Confluent的产品围绕着Kafka做的。 Confluent PlatformConfluent Platform 是一个流数据平台，能够组织管理来自不同数据源的数据，拥有稳定高效的系统。Conflu">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306001.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.cnops.com/posts/502a07f.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Confluent安装部署 | Francis'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Francis'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Francis'Blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/posts/502a07f.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Confluent安装部署
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-06 09:48:31 / 修改时间：13:31:27" itemprop="dateCreated datePublished" datetime="2019-03-06T09:48:31+08:00">2019-03-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/Confluent/" itemprop="url" rel="index"><span itemprop="name">Confluent</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="confluent简介"><a href="#confluent简介" class="headerlink" title="confluent简介"></a>confluent简介</h2><p>LinkedIn有个三人小组出来创业了—正是当时开发出Apache Kafka实时信息列队技术的团队成员，基于这项技术Jay Kreps带头创立了新公司Confluent。Confluent的产品围绕着Kafka做的。</p>
+<h3 id="Confluent-Platform"><a href="#Confluent-Platform" class="headerlink" title="Confluent Platform"></a>Confluent Platform</h3><p>Confluent Platform 是一个流数据平台，能够组织管理来自不同数据源的数据，拥有稳定高效的系统。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306001.png" alt="Alt text" title="Francis&#39;Blog"><br>Confluent Platform不仅提供数据传输的系统，还提供所有的工具：连接数据源的工具，应用，以及数据接收。</p>
+<h3 id="Confluent-Platform组件"><a href="#Confluent-Platform组件" class="headerlink" title="Confluent Platform组件"></a>Confluent Platform组件</h3><p>Confluent Platform 很容易的建立实时数据管道和流应用。通过将多个来源和位置的数据集成到公司一个中央数据流平台，Confluent Platform使您可以专注于如何从数据中获得商业价值而不是担心底层机制，如数据是如何被运输或不同系统间摩擦。具体来说，Confluent Platform简化了连接数据源到Kafka，用Kafka构建应用程序，以及安全，监控和管理您的Kafka的基础设施。<br>Kafka 是最流行的开源即时通讯系统，Confluent Platform 基于Kafka. Kafka 是低延迟，高可扩展，分布式消息系统。它被数百家企业用于许多不同的场景，包括收集用户活动数据，系统日志，应用程序指标，股票行情数据和设备仪器的信号。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306002.png" alt="Alt text" title="Francis&#39;Blog"><br>Kafka开源项目包括一些关键组件：</p>
+<pre><code>Kafka Brokers(开源）。构成Kafka的消息，数据持久性和存储层。
+Kafka Java Clients(开源)。Java 库，写消息到kafka 或者从kafka 读消息。
+Kafka Streams（开源）。Kafka Streams是一个库使kafka转换成功能齐全的流处理系统。
+Kafka Connect（开源）。一种可扩展的和可靠的连接Kafka框架与外部系统（如数据库，键值存储，搜索索引和文件系统）的框架。
+</code></pre><p>除了Kafka以外， Confluent Platform 包括更多的工具和服务，使构建和管理数据流平台更加容易。</p>
+<pre><code>Confluent Control Center（闭源）。管理和监控Kafka最全面的GUI驱动系统。
+Confluent Kafka Connectors（开源）。连接SQL数据库/Hadoop/Hive
+Confluent Kafka Clients（开源）。对于其他编程语言，包括C/C++,Python
+Confluent Kafka REST Proxy（开源）。允许一些系统通过HTTP和kafka之间发送和接收消息。
+Confluent Schema Registry（开源）。帮助确定每一个应用使用正确的schema当写数据或者读数据到kafka中。
+</code></pre><p>总的来说，Confluent Platform平台的组件给你的团队朝着建立统一而灵活的方式建立一个企业范围的数据流平台。</p>
+<h2 id="confluent单节点安装部署"><a href="#confluent单节点安装部署" class="headerlink" title="confluent单节点安装部署"></a>confluent单节点安装部署</h2><p>confluent的安装部署相对比较简单，confluent为我们提供了Confluent Platform,我们即可以快速启动整个confluent平台，也可以单独启动想要的组件。</p>
+<h3 id="java环境安装"><a href="#java环境安装" class="headerlink" title="java环境安装"></a>java环境安装</h3><p>confluent启动需要java环境，java环境安装参考：<a href="https://www.cnops.top/posts/a4e9a4f1.html" target="_blank" rel="noopener">CentOS上安装Java环境</a></p>
+<h3 id="confluent-platform下载"><a href="#confluent-platform下载" class="headerlink" title="confluent platform下载"></a>confluent platform下载</h3><p><a href="www.confluent.io/download/">下载地址</a>，下载最新版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://packages.confluent.io/archive/5.1/confluent-5.1.2-2.11.tar.gz</span><br><span class="line">tar -zxvf confluent-5.1.2-2.11.tar.gz</span><br><span class="line">mv confluent-5.1.2 /data/confluent</span><br><span class="line"><span class="built_in">cd</span> /data/confluent</span><br><span class="line">ll</span><br><span class="line">	total 12</span><br><span class="line">	drwxr-xr-x  3 1000 1000 4096 Feb 18 19:49 bin</span><br><span class="line">	drwxr-xr-x 23 1000 1000 4096 Feb 18 19:49 etc</span><br><span class="line">	drwxr-xr-x  3 1000 1000   21 Feb 18 19:26 lib</span><br><span class="line">    -rw-r--r--  1 1000 1000  871 Feb 18 20:24 README</span><br><span class="line">	drwxr-xr-x  7 1000 1000  106 Feb 18 19:49 share</span><br><span class="line">	drwxr-xr-x  2 1000 1000  179 Feb 18 20:24 src</span><br></pre></td></tr></table></figure></p>
+<p>添加环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/profile</span></span><br><span class="line">	<span class="comment">#末尾添加以下内容</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">#set confluent environment</span></span><br><span class="line">	PATH=/data/confluent/bin:<span class="variable">$PATH</span></span><br><span class="line">	<span class="built_in">export</span> PATH</span><br><span class="line"><span class="comment"># source /etc/profile	#使环境变量生效</span></span><br></pre></td></tr></table></figure></p>
+<p>现在bin目录下的所有命令我们可以直接使用。<br>首先看看如何快速启动confluent platform全家桶ZooKeeper,Kafka,Schema Registry,Control Center,Kafka Connect,Kafka REST Proxy,KSQL。</p>
+<h3 id="快速启动"><a href="#快速启动" class="headerlink" title="快速启动"></a>快速启动</h3><p>特别说明：我们的命令执行目录都是在confluent目录下。<br>启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># confluent start</span></span><br><span class="line">Starting zookeeper</span><br><span class="line">zookeeper is [UP]</span><br><span class="line">Starting kafka</span><br><span class="line">kafka is [UP]</span><br><span class="line">Starting schema-registry</span><br><span class="line">schema-registry is [UP]</span><br><span class="line">Starting kafka-rest</span><br><span class="line">kafka-rest is [UP]</span><br><span class="line">Starting connect</span><br><span class="line">connect is [UP]</span><br><span class="line">Starting ksql-server</span><br><span class="line">ksql-server is [UP]</span><br><span class="line">Starting control-center</span><br><span class="line">control-center is [UP]</span><br></pre></td></tr></table></figure></p>
+<p>看到如下信息，说明我们的confluent platform中的多个组件都启动成功。<br>confluent平台各组件的默认端口号</p>
+<table>
+<thead>
+<tr>
+<th><strong>Component</strong></th>
+<th style="text-align:left"><strong>Default Port</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zookeeper</td>
+<td style="text-align:left">2181</td>
+</tr>
+<tr>
+<td>Apache Kafka brokers (plain text)</td>
+<td style="text-align:left">9092</td>
+</tr>
+<tr>
+<td>Schema Registry REST API</td>
+<td style="text-align:left">8081</td>
+</tr>
+<tr>
+<td>REST Proxy</td>
+<td style="text-align:left">8082</td>
+</tr>
+<tr>
+<td>Kafka Connect REST API</td>
+<td style="text-align:left">8083</td>
+</tr>
+<tr>
+<td>Confluent Control Center</td>
+<td style="text-align:left">9021</td>
+</tr>
+</tbody>
+</table>
+<h3 id="访问测试"><a href="#访问测试" class="headerlink" title="访问测试"></a>访问测试</h3><p>通过使用<a href="http://ip:9021来访问Control" target="_blank" rel="noopener">http://ip:9021来访问Control</a> Center，如图：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306003.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h2 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h2><p>这里我们使用两台机器模拟集群10.186.61.103,10.186.60.60,10.186.65.43分别编排为node01,node02,node03。修改三台机器对应的hosts文件。分别添加如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">0.0.0.0        localhost  node01</span><br><span class="line">10.186.60.60   localhost  node02</span><br><span class="line">10.186.65.43   localhost  node03</span><br><span class="line"></span><br><span class="line">10.186.61.103  localhost  node01</span><br><span class="line">0.0.0.0        localhost  node02</span><br><span class="line">10.186.65.43   localhost  node03</span><br><span class="line"></span><br><span class="line">10.186.61.103  localhost  node01</span><br><span class="line">10.186.60.60   localhost  node02</span><br><span class="line">0.0.0.0        localhost  node03</span><br></pre></td></tr></table></figure></p>
+<p>分别为每台机器创建myid文件,没个myid保存要给唯一的数字即可，我这里三个host分别指定为1，2，3。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/lib/zookeeper</span><br><span class="line">vim /var/lib/zookeeper/myid</span><br></pre></td></tr></table></figure></p>
+<p>每台机器分别指定如下配置</p>
+<h3 id="zookeeper配置和启动"><a href="#zookeeper配置和启动" class="headerlink" title="zookeeper配置和启动"></a>zookeeper配置和启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim etc/kafka/zookeeper.properties  #添加如下配置</span></span><br><span class="line">tickTime=2000</span><br><span class="line">dataDir=/var/lib/zookeeper/</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=node01:2888:3888</span><br><span class="line">server.2=node02:2888:3888</span><br><span class="line">server.3=node03:2888:3888</span><br><span class="line">autopurge.snapRetainCount=3</span><br><span class="line">autopurge.purgeInterval=24</span><br></pre></td></tr></table></figure>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zookeeper-server-start etc/kafka/zookeeper.properties</span><br></pre></td></tr></table></figure></p>
+<h3 id="kafka配置和启动"><a href="#kafka配置和启动" class="headerlink" title="kafka配置和启动"></a>kafka配置和启动</h3><p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/kafka/server.properties</span><br><span class="line">zookeeper.connect=node01:2181,node02:2181,node03:2181</span><br></pre></td></tr></table></figure></p>
+<p>设置broker.id=0<br>这里我们可以使用broker.id.generation.enable=true自动生成替代。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#broker.id=0</span><br><span class="line">broker.id.generation.enable=true</span><br><span class="line">advertised.listeners=PLAINTEXT://本机IP:9092</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start  etc/kafka/server.properties</span><br></pre></td></tr></table></figure></p>
+<h3 id="Schema-Registry配置和启动-可选"><a href="#Schema-Registry配置和启动-可选" class="headerlink" title="Schema Registry配置和启动(可选)"></a>Schema Registry配置和启动(可选)</h3><p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/schema-registry/schema-registry.properties</span><br><span class="line">kafkastore.connection.url=node01:2181,node02:2181,node03:2181</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/schema-registry-start etc/schema-registry/schema-registry.properties</span><br></pre></td></tr></table></figure></p>
+<h3 id="kafka-connect配置和启动"><a href="#kafka-connect配置和启动" class="headerlink" title="kafka connect配置和启动"></a>kafka connect配置和启动</h3><p>这里我们不使用官方模式的avro序列化方式，所有不启动组件schema-registry。<br>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp etc/schema-registry/connect-avro-distributed.properties  etc/schema-registry/connect-distributed.properties</span><br></pre></td></tr></table></figure></p>
+<p>修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/schema-registry/connect-distributed.properties</span><br><span class="line">bootstrap.servers=node01:9092,node02:9092,node03:9092</span><br><span class="line">key.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">#key.converter.schema.registry.url=http://node01:8081</span><br><span class="line">value.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">#value.converter.schema.registry.url=http://node01:8081</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/connect-distributed etc/schema-registry/connect-distributed.properties</span><br></pre></td></tr></table></figure></p>
+<h3 id="Control-Center配置和启动"><a href="#Control-Center配置和启动" class="headerlink" title="Control Center配置和启动"></a>Control Center配置和启动</h3><p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/confluent-control-center/control-center-dev.properties</span><br><span class="line">bootstrap.servers=node01:9092,node02:9092,node03:9092</span><br><span class="line">zookeeper.connect=node01:2181,node02:2181:node03:2181</span><br><span class="line">#confluent.controlcenter.schema.registry.url=http://node01:8081,http://node02:8081,http://node03:8081</span><br><span class="line">confluent.controlcenter.connect.cluster=http://node01:8083</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/control-center-start etc/confluent-control-center/control-center-dev.properties</span><br></pre></td></tr></table></figure></p>
+<p>到此为止kafka connect集群搭建成功。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/posts/502a07f.html">Confluent安装部署</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/posts/502a07f.html" title="Confluent安装部署">http://www.cnops.com/posts/502a07f.html</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/502a07f.html" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Confluent/" rel="tag"><i class="fa fa-tag"></i> Confluent</a>
+          
+            <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/d9660bea.html" rel="next" title="Puppet部署与使用">
+                <i class="fa fa-chevron-left"></i> Puppet部署与使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/e7a3462e.html" rel="prev" title="Confluent捕获Mysql事实数据变更事件">
+                Confluent捕获Mysql事实数据变更事件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Francis</p>
+              <p class="site-description motion-element" itemprop="description">云在青天水在瓶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/francisxys" title="GitHub &rarr; https://github.com/francisxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:824014778@qq.com" title="E-Mail &rarr; mailto:824014778@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/Teotihuacanxys" title="Weibo &rarr; https://weibo.com/Teotihuacanxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tiejiang.org" title="http://www.tiejiang.org" rel="noopener" target="_blank">铁匠运维网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="http://www.ityouknow.com/" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#confluent简介"><span class="nav-text">confluent简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Confluent-Platform"><span class="nav-text">Confluent Platform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Confluent-Platform组件"><span class="nav-text">Confluent Platform组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#confluent单节点安装部署"><span class="nav-text">confluent单节点安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java环境安装"><span class="nav-text">java环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#confluent-platform下载"><span class="nav-text">confluent platform下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速启动"><span class="nav-text">快速启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问测试"><span class="nav-text">访问测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群搭建"><span class="nav-text">集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper配置和启动"><span class="nav-text">zookeeper配置和启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka配置和启动"><span class="nav-text">kafka配置和启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Schema-Registry配置和启动-可选"><span class="nav-text">Schema Registry配置和启动(可选)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-connect配置和启动"><span class="nav-text">kafka connect配置和启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Center配置和启动"><span class="nav-text">Control Center配置和启动</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客</div>
+
+-->
+
+<div class="BbeiAn-info">
+    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41042202000126" style="color:#000000;text-decoration:none;padding-left:30px;background:url(https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/batb.png) no-repeat left center" rel="nofollow">豫公网安备 41042202000126号</a>    <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

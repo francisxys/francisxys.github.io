@@ -115,15 +115,21 @@
   <meta name="description" content="puppet简介puppet是一种基于ruby语言开发的Lnux、Unix、windows平台的集中配置管理系统。它使用自有的puppet描述语言，可管理配置文件file、用户user、cron任务、软件包、系统服务等系统实体。 puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet服务器上安装puppet-server软件包（以下简称master），在需要管理的目标主机上安装">
 <meta name="keywords" content="Puppet">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Puppet部署">
+<meta property="og:title" content="Puppet部署与使用">
 <meta property="og:url" content="http://www.cnops.com/posts/d9660bea.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="puppet简介puppet是一种基于ruby语言开发的Lnux、Unix、windows平台的集中配置管理系统。它使用自有的puppet描述语言，可管理配置文件file、用户user、cron任务、软件包、系统服务等系统实体。 puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet服务器上安装puppet-server软件包（以下简称master），在需要管理的目标主机上安装">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-27T08:17:55.634Z">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227003.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227004.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227005.png">
+<meta property="og:updated_time" content="2019-03-01T09:26:48.439Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Puppet部署">
+<meta name="twitter:title" content="Puppet部署与使用">
 <meta name="twitter:description" content="puppet简介puppet是一种基于ruby语言开发的Lnux、Unix、windows平台的集中配置管理系统。它使用自有的puppet描述语言，可管理配置文件file、用户user、cron任务、软件包、系统服务等系统实体。 puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet服务器上安装puppet-server软件包（以下简称master），在需要管理的目标主机上安装">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227001.png">
 
 
 
@@ -140,7 +146,7 @@
   };
 </script>
 
-  <title>Puppet部署 | Francis'Blog</title>
+  <title>Puppet部署与使用 | Francis'Blog</title>
   
 
 
@@ -406,7 +412,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Puppet部署
+          <h1 class="post-title" itemprop="name headline">Puppet部署与使用
               
             
           </h1>
@@ -431,12 +437,24 @@
                 
               
 
-              <time title="创建时间：2019-02-27 10:17:06 / 修改时间：16:17:55" itemprop="dateCreated datePublished" datetime="2019-02-27T10:17:06+08:00">2019-02-27</time>
+              <time title="创建时间：2019-02-27 10:17:06" itemprop="dateCreated datePublished" datetime="2019-02-27T10:17:06+08:00">2019-02-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-01 17:26:48" itemprop="dateModified" datetime="2019-03-01T17:26:48+08:00">2019-03-01</time>
               
             
           </span>
@@ -497,11 +515,28 @@
         <h2 id="puppet简介"><a href="#puppet简介" class="headerlink" title="puppet简介"></a>puppet简介</h2><pre><code>puppet是一种基于ruby语言开发的Lnux、Unix、windows平台的集中配置管理系统。它使用自有的puppet描述语言，可管理配置文件file、用户user、cron任务、软件包、系统服务等系统实体。
 puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet服务器上安装puppet-server软件包（以下简称master），在需要管理的目标主机上安装puppet客户端软件（以下简称client）。
 为了保证安全，master和client之间是基于SSL和证书的，只有经过master证书认证的client才可以与master通信。
-</code></pre><h2 id="puppet工作原理"><a href="#puppet工作原理" class="headerlink" title="puppet工作原理"></a>puppet工作原理</h2><pre><code>1、客户端puppet调用fast探测出主机的一些变量，如主机名、内存大小、IP地址等。Puppet把这些信息使用SSL连接发送给服务器端;
+puppet是一个IT基础设施自动化管理工具，它能够帮助系统管理员管理基础设施的整个生命周期： 供应(provisioning)、配置(configuration)、联动(orchestration)及报告(reporting)。
+基于puppet ，可实现自动化重复任务、快速部署关键性应用以及在本地或云端完成主动管理变更和快速扩展架构规模等。
+遵循GPL 协议(2.7.0-), 基于ruby语言开发。
+2.7.0 以后使用(Apache 2.0 license)
+对于系统管理员是抽象的，只依赖于ruby与facter。
+能管理多达40 多种资源，例如：file、user、group、host、package、service、cron、exec、yum repo等。
+</code></pre><h2 id="puppet工作机制"><a href="#puppet工作机制" class="headerlink" title="puppet工作机制"></a>puppet工作机制</h2><h3 id="工作模型"><a href="#工作模型" class="headerlink" title="工作模型"></a>工作模型</h3><p>puppet 通过声明性、基于模型的方法进行IT自动化管理。</p>
+<pre><code>定义：通过puppet 的声明性配置语言定义基础设置配置的目标状态；
+模拟：强制应用改变的配置之前先进行模拟性应用；
+强制：自动、强制部署达成目标状态，纠正任何偏离的配置；
+报告：报告当下状态及目标状态的不同，以及达成目标状态所进行的任何强制性改变；
+</code></pre><p>puppet三层模型如下：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227001.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227002.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h3 id="使用模型"><a href="#使用模型" class="headerlink" title="使用模型"></a>使用模型</h3><p>puppet的使用模型分为单机使用模型和master/agent模型，下面我们来看看这两个模型的原理图。</p>
+<h4 id="单机使用模型"><a href="#单机使用模型" class="headerlink" title="单机使用模型"></a>单机使用模型</h4><p>实现定义多个manifests –&gt; complier –&gt; catalog –&gt; apply<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227003.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h4 id="master-agent模型"><a href="#master-agent模型" class="headerlink" title="master/agent模型"></a>master/agent模型</h4><p>master/agent模型实现的是集中式管理，即 agent 端周期性向 master 端发起请求，请求自己需要的数据。然后在自己的机器上运行，并将结果返回给 master 端。<br>架构和工作原理如下：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227004.png" alt="Alt text" title="Francis&#39;Blog"><br><strong>工作原理</strong><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190227005.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<pre><code>1、客户端puppet调用fast探测出主机的一些变量，如主机名、内存大小、IP地址等。Puppet把这些信息使用SSL连接发送给服务器端;
 2、服务器端的puppetmaster通过fast工具分析检测客户端的主机名，然后找到项目的主配置文件manifest里面对应的node配置，并对该部分内容进行解析，fast发送过来的信息可以作为变量处理，node牵扯到的代码才被解析，没牵扯到的不解析，解析分为语法检查，如果语法没错，继续解析，解析结果生成一个结果‘伪代码’，然后把‘伪代码’发给客户端;
 3、客户端收到‘伪代码’并且执行，客户端把执行结果发给服务器;
 4、服务器端把客户端的执行结果写入日志。
-</code></pre><h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>配置4台服务器在同一局域网中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.186.61.39     ntpserver</span><br><span class="line">10.186.61.103    master</span><br><span class="line">10.186.60.60     node01</span><br><span class="line">10.186.65.43     node01</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>在实际使用中多使用master/agent模型。</p>
+<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>配置4台服务器在同一局域网中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.186.61.39     ntpserver</span><br><span class="line">10.186.61.103    master</span><br><span class="line">10.186.60.60     node01</span><br><span class="line">10.186.65.43     node01</span><br></pre></td></tr></table></figure></p>
 <p>并修改相应的主机名</p>
 <h3 id="安装NTP-Server"><a href="#安装NTP-Server" class="headerlink" title="安装NTP Server"></a>安装NTP Server</h3><p>由于Puppet需要使用SSL证书，依赖时间同步，所有需要搭建NTP服务器。<br>关闭所有服务器的防火墙和安全性策略<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service </span><br><span class="line">systemctl disable firewalld.service </span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure></p>
 <p>安装NTP Server参考：<a href="http://www.cnops.top/posts/aec0db0.html" target="_blank" rel="noopener">搭建内网NTP时间服务器</a><br>然后master、node01、node02进行时间同步操作</p>
@@ -510,12 +545,209 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
 <p>启动master程序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable puppetmaster.service</span><br><span class="line">systemctl start puppetmaster.service</span><br></pre></td></tr></table></figure></p>
 <h3 id="安装client端"><a href="#安装client端" class="headerlink" title="安装client端"></a>安装client端</h3><p>node01、node02进行一样的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-replease  #安装epel源</span><br><span class="line">yum install -y puppet   #yum安装puppet控制端</span><br></pre></td></tr></table></figure></p>
 <p>编辑puppet配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/puppet/puppet.conf</span><br><span class="line">[main]</span><br><span class="line">server = master		#main中添加</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
-<p>client端申请证书<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">puppet agent --server=master.test.cn --no-daemonize --verbose     <span class="comment">#两个client端执行命令一样 </span></span><br><span class="line"><span class="comment">#执行完会有如下提示：</span></span><br><span class="line">Info: Creating a new SSL key <span class="keyword">for</span> client2.test.cn</span><br><span class="line">Info: Caching certificate <span class="keyword">for</span> ca</span><br><span class="line">Info: csr_attributes file loading from /etc/puppet/csr_attributes.yaml</span><br><span class="line">Info: Creating a new SSL certificate request <span class="keyword">for</span> client2.test.cn</span><br><span class="line">Info: Certificate Request fingerprint (SHA256): 9E:E6:4D:3F:5B:03:D2:72:08:FF:0B:E7:92:48:45:FA:B7:2C:89:B5:12:CB:EC:8F:2E:50:B4:02:5F:4C:DF:17</span><br><span class="line">Info: Caching certificate <span class="keyword">for</span> ca</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> puppet</span><br><span class="line">systemctl start puppet</span><br><span class="line">systemctl status puppet</span><br></pre></td></tr></table></figure></p>
+<p>client端申请证书<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">puppet agent --server=master --no-daemonize --verbose     <span class="comment">#两个client端执行命令一样 </span></span><br><span class="line"><span class="comment">#执行完会有如下提示：</span></span><br><span class="line">Info: Creating a new SSL key <span class="keyword">for</span> nide01</span><br><span class="line">Info: Caching certificate <span class="keyword">for</span> ca</span><br><span class="line">Info: csr_attributes file loading from /etc/puppet/csr_attributes.yaml</span><br><span class="line">Info: Creating a new SSL certificate request <span class="keyword">for</span> node01</span><br><span class="line">Info: Certificate Request fingerprint (SHA256): 9E:E6:4D:3F:5B:03:D2:72:08:FF:0B:E7:92:48:45:FA:B7:2C:89:B5:12:CB:EC:8F:2E:50:B4:02:5F:4C:DF:17</span><br><span class="line">Info: Caching certificate <span class="keyword">for</span> ca</span><br></pre></td></tr></table></figure></p>
 <p>等待一会儿按ctrl+c组合键结束</p>
 <h3 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h3><p>在master段查看申请证书的客户端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet cert list</span></span><br><span class="line">  <span class="string">"node01"</span> (SHA256) 19:C7:34:73:78:4C:6E:FA:5D:1D:BE:84:05:50:2F:B4:F1:13:8C:75:E2:DA:0C:3A:9D:46:89:2F:53:86:AB:BC</span><br><span class="line">  <span class="string">"node02"</span> (SHA256) 07:48:B5:06:53:D7:A5:70:EF:06:A0:0D:D5:FA:8A:53:94:FB:69:07:E1:C2:59:18:8E:52:80:4D:B5:66:FC:90</span><br></pre></td></tr></table></figure></p>
-<p>将未申请的客户端进行授权<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet cert sign --all</span></span><br><span class="line">Notice: Signed certificate request <span class="keyword">for</span> node01</span><br><span class="line">Notice: Removing file Puppet::SSL::CertificateRequest node01 at <span class="string">'/var/lib/puppet/ssl/ca/requests/node01.pem'</span></span><br><span class="line">Notice: Signed certificate request <span class="keyword">for</span> node02</span><br><span class="line">Notice: Removing file Puppet::SSL::CertificateRequest node02 at <span class="string">'/var/lib/puppet/ssl/ca/requests/node02.pem'</span></span><br></pre></td></tr></table></figure></p>
+<p>将未申请的客户端进行授权<br>单个签署<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet cert sign clientname</span><br></pre></td></tr></table></figure></p>
+<p>全部签署<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet cert sign --all</span></span><br><span class="line">Notice: Signed certificate request <span class="keyword">for</span> node01</span><br><span class="line">Notice: Removing file Puppet::SSL::CertificateRequest node01 at <span class="string">'/var/lib/puppet/ssl/ca/requests/node01.pem'</span></span><br><span class="line">Notice: Signed certificate request <span class="keyword">for</span> node02</span><br><span class="line">Notice: Removing file Puppet::SSL::CertificateRequest node02 at <span class="string">'/var/lib/puppet/ssl/ca/requests/node02.pem'</span></span><br></pre></td></tr></table></figure></p>
 <p>查看已经申请注册的客户端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ll /var/lib/puppet/ssl/ca/signed/ </span></span><br><span class="line">total 12</span><br><span class="line">-rw-r--r-- 1 puppet puppet 1927 Feb 27 15:31 master.pem</span><br><span class="line">-rw-r--r-- 1 puppet puppet 1927 Feb 27 15:41 node01.pem</span><br><span class="line">-rw-r--r-- 1 puppet puppet 1927 Feb 27 15:41 node02.pem</span><br></pre></td></tr></table></figure></p>
-<p>可以看到已注册的包括master本身，一共三台服务器</p>
+<p>可以看到已注册的包括master本身，一共三台服务器<br>至此Puppet部署已完成。</p>
+<h2 id="puppet使用方法"><a href="#puppet使用方法" class="headerlink" title="puppet使用方法"></a>puppet使用方法</h2><h3 id="puppet-名词解释"><a href="#puppet-名词解释" class="headerlink" title="puppet 名词解释"></a>puppet 名词解释</h3><ul>
+<li>资源：是puppet的核心，通过资源申报，定义在资源清单中。相当于ansible中的模块，只是抽象的更加彻底。</li>
+<li>类：一组资源清单。</li>
+<li>模块：包含多个类。相当于ansible中的角色。</li>
+<li>站点清单：以主机为核心，应用哪些模块。</li>
+</ul>
+<h3 id="定义资源"><a href="#定义资源" class="headerlink" title="定义资源"></a>定义资源</h3><p>puppet从以下三个维度来都资源完成抽象:</p>
+<pre><code>1、相似的资源被抽象成同一种资源“类型，”如程序包资源、用户资源及服务资源等
+2、将资源属性或状态的描述与其实现方式剥离开来，如仅说明安装一个程序包而不用关系其具体是yum、pkgadd、prots或其他方式实现
+3、仅描述资源的目标状态，也即期望其实现的结果，而不是其具体过程，如“确定nginx运行起来”，而不是具体描述为“运行nginx命令将启动起来”
+</code></pre><p>这三个也被称为puppet的资源抽象层（RAL）。RAL由type（类型）和provide（提供者，即不同的OS上的特定实现）组成。<br>资源是puppet用于模型化系统配置的基础单元，每个资源都从某个角度描述了系统属性，如某程序包必须安装或某用户必须移除等，在puppet，用于完成此类功能的代码也即“资源申报”<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> &#123; ‘title’：</span><br><span class="line">    atttibue1 =&gt; value1,</span><br><span class="line">    atttibue2 =&gt; value2,</span><br><span class="line">    ...... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：</p>
+<pre><code>资源的文件统一以.pp结尾。
+type必须使用小写字符；title是一个字符串，在同一类型中必须惟一；每一个属性之间需要用“,”隔开，最后一个“,”可省略。
+</code></pre><p>例如，可以同时有名为nginx 的“service”资源和“package”资源，但在“package” 类型的资源中只能有一个名为“nginx”的资源。<br>资源属性中的三个特殊属性</p>
+<ul>
+<li>Namevar：可简称为name；</li>
+<li>ensure：资源的目标状态；</li>
+<li>Provider：指明资源的管理接口；</li>
+</ul>
+<h3 id="常见资源介绍"><a href="#常见资源介绍" class="headerlink" title="常见资源介绍"></a>常见资源介绍</h3><h4 id="查看资源"><a href="#查看资源" class="headerlink" title="查看资源"></a>查看资源</h4><p>我们可以使用puppet describe来打印有关Puppet资源类型，提供者和元参数的帮助。使用语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USAGE</span><br><span class="line">-----</span><br><span class="line">puppet describe [-h|--help] [-s|--short] [-p|--providers] [-l|--list] [-m|--meta]</span><br></pre></td></tr></table></figure></p>
+<h4 id="group：管理系统上的用户组。"><a href="#group：管理系统上的用户组。" class="headerlink" title="group：管理系统上的用户组。"></a>group：管理系统上的用户组。</h4><p>查看使用帮助信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe group -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>name：组名，可以省略，如果省略，将继承title的值；
+gid：GID；
+system：是否为系统组，true OR false；
+ensure：目标状态，present/absent；
+members：成员用户;
+</code></pre><p>简单举例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim group.pp</span><br><span class="line">	group&#123;&apos;mygrp&apos;:</span><br><span class="line">        name =&gt; &apos;mygrp&apos;,</span><br><span class="line">        ensure =&gt; present,</span><br><span class="line">        gid =&gt; 2000,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet apply -v --noop group.pp    ##试运行</span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.13 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551340533'</span></span><br><span class="line">Notice: /Stage[main]/Main/Group[mygrp]/ensure: current_value absent, should be present (noop)</span><br><span class="line">Notice: Class[Main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Notice: Stage[main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Info: Creating state file /var/lib/puppet/state/state.yaml</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.04 seconds</span><br><span class="line"><span class="comment"># puppet apply -v group.pp    ##运行</span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.12 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551340577'</span></span><br><span class="line">Notice: /Stage[main]/Main/Group[mygrp]/ensure: created</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.08 seconds</span><br></pre></td></tr></table></figure></p>
+<h4 id="user：管理系统上的用户。"><a href="#user：管理系统上的用户。" class="headerlink" title="user：管理系统上的用户。"></a>user：管理系统上的用户。</h4><p>查看使用帮助信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe user -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>name：用户名，可以省略，如果省略，将继承title的值；
+uid: UID;
+gid：基本组ID；
+groups：附加组，不能包含基本组；
+comment：注释； 
+expiry：过期时间 ；
+home：用户的家目录； 
+shell：默认shell类型；
+system：是否为系统用户 ；
+ensure：present/absent；
+password：加密后的密码串； 
+</code></pre><p>简单举例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vim user.pp</span><br><span class="line">	user&#123;&apos;francis&apos;:</span><br><span class="line">        ensure =&gt; present,</span><br><span class="line">        system =&gt; false,</span><br><span class="line">        comment =&gt; &apos;Test User&apos;,</span><br><span class="line">        shell =&gt; &apos;/bin/bash&apos;,</span><br><span class="line">        home =&gt; &apos;/data/francis&apos;,</span><br><span class="line">        managehome =&gt; true,</span><br><span class="line">        groups =&gt; &apos;mygrp&apos;,</span><br><span class="line">        uid =&gt; 3000,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet apply -v --noop user.pp </span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.17 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551341447'</span></span><br><span class="line">Notice: /Stage[main]/Main/User[francis]/ensure: current_value absent, should be present (noop)</span><br><span class="line">Notice: Class[Main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Notice: Stage[main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.04 seconds</span><br><span class="line"><span class="comment"># puppet apply -v user.pp </span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.18 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551341455'</span></span><br><span class="line">Notice: /Stage[main]/Main/User[francis]/ensure: created</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.09 seconds</span><br></pre></td></tr></table></figure></p>
+<h4 id="package：puppet管理软件包"><a href="#package：puppet管理软件包" class="headerlink" title="package：puppet管理软件包"></a>package：puppet管理软件包</h4><p>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe package -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>ensure：installed, present, latest, absent, any version string (implies present)
+name：包名，可以省略，如果省略，将继承title的值；
+source：程序包来源，仅对不会自动下载相关程序包的provider有用，例如rpm或dpkg；
+provider:指明安装方式；
+</code></pre><p>简单举例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim package.pp</span><br><span class="line">	package&#123;&apos;httpd&apos;:</span><br><span class="line">   		ensure =&gt; installed,</span><br><span class="line">	   	procider =&gt; yum</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="service：定义服务的状态"><a href="#service：定义服务的状态" class="headerlink" title="service：定义服务的状态"></a>service：定义服务的状态</h4><p>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe service -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>ensure：服务的目标状态，值有true（running）和false（stopped） 
+enable：是否开机自动启动，值有true和false
+name：服务名称，可以省略，如果省略，将继承title的值
+path：服务脚本路径，默认为/etc/init.d/下
+start：定制启动命令
+stop：定制关闭命令
+restart：定制重启命令
+status：定制状态
+</code></pre><h4 id="file：管理文件、目录、软链接"><a href="#file：管理文件、目录、软链接" class="headerlink" title="file：管理文件、目录、软链接"></a>file：管理文件、目录、软链接</h4><p>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe file -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>ensure：目标状态，值有absent,present,file,directory和link
+file：类型为普通文件，其内容由content属性生成或复制由source属性指向的文件路径来创建；
+link：类型为符号链接文件，必须由target属性指明其链接的目标文件；
+directory：类型为目录，可通过source指向的路径复制生成，recurse属性指明是否递归复制；
+path：文件路径；
+source：源文件；
+content：文件内容；
+target：符号链接的目标文件； 
+owner：定义文件的属主；
+group：定义文件的属组；
+mode：定义文件的权限；
+atime/ctime/mtime：时间戳；
+</code></pre><h4 id="exec：执行命令"><a href="#exec：执行命令" class="headerlink" title="exec：执行命令"></a>exec：执行命令</h4><p><strong>慎用，通常用来执行外部命令</strong><br>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe exec -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>command(namevar)：要运行的命令；
+cwd：指定运行该命令的目录；
+creates：文件路径，仅此路径表示的文件不存在时，command方才执行；
+user/group：运行命令的用户身份；
+path：指定命令执行的搜索路径；
+onlyif：此属性指定一个命令，此命令正常（退出码为0）运行时，当前command才会运行；
+unless：此属性指定一个命令，此命令非正常（退出码为非0）运行时，当前command才会运行；
+refresh：重新执行当前command的替代命令；
+refreshonly：仅接收到订阅的资源的通知时方才运行；
+</code></pre><p>简单举例如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim exec.pp</span><br><span class="line">	<span class="built_in">exec</span>&#123;<span class="string">'cmd'</span>:</span><br><span class="line">   	 	<span class="built_in">command</span> =&gt; <span class="string">'mkdir /data/testdir'</span>,</span><br><span class="line">    	path =&gt; [<span class="string">'/bin'</span>,<span class="string">'/sbin'</span>,<span class="string">'/usr/bin'</span>,<span class="string">'/usr/sbin'</span>],</span><br><span class="line">	<span class="comment">#   path =&gt; '/bin:/sbin:/usr/bin:/usr/sbin',</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="cron：定义周期性任务"><a href="#cron：定义周期性任务" class="headerlink" title="cron：定义周期性任务"></a>cron：定义周期性任务</h4><p>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe cron -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>command：要执行的任务（命令或脚本）；
+ensure：目标状态，present/absent；
+hour：时；
+minute：分；
+monthday：日；
+month：月；
+weekday：周；
+user：以哪个用户的身份运行命令（默认为root）；
+target：添加为哪个用户的任务；
+name：cron job的名称；
+</code></pre><p>简单举例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim cron.pp</span><br><span class="line">	cron&#123;&apos;timesync&apos;:</span><br><span class="line">    	command =&gt; &apos;/usr/sbin/ntpdata 10.186.61.39&apos;,</span><br><span class="line">    	ensure  =&gt; present,</span><br><span class="line">    	minute  =&gt; &apos;*/3&apos;,</span><br><span class="line">    	user    =&gt; &apos;root&apos;,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet apply -v --noop cron.pp </span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.08 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551344167'</span></span><br><span class="line">Notice: /Stage[main]/Main/Cron[timesync]/ensure: current_value absent, should be present (noop)</span><br><span class="line">Notice: Class[Main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Notice: Stage[main]: Would have triggered <span class="string">'refresh'</span> from 1 events</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.10 seconds</span><br><span class="line"><span class="comment"># puppet apply -v cron.pp </span></span><br><span class="line">Notice: Compiled catalog <span class="keyword">for</span> master <span class="keyword">in</span> environment production <span class="keyword">in</span> 0.08 seconds</span><br><span class="line">Info: Applying configuration version <span class="string">'1551344175'</span></span><br><span class="line">Notice: /Stage[main]/Main/Cron[timesync]/ensure: created</span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.08 seconds</span><br><span class="line">[root@master manifests]<span class="comment"># crontab -l</span></span><br><span class="line">*/3 * * * * /usr/sbin/ntpdata 10.186.61.39</span><br></pre></td></tr></table></figure></p>
+<h4 id="notify：调试输出"><a href="#notify：调试输出" class="headerlink" title="notify：调试输出"></a>notify：调试输出</h4><p>查看使用帮助信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet describe notify -s -m</span><br></pre></td></tr></table></figure></p>
+<p>属性：</p>
+<pre><code>message：记录的信息
+name：信息名称
+</code></pre><p>该选项一般用于master/agent模式中，来记录一些操作的时间，比如重新安装了一个程序呀，或者重启了应用等等。会直接输出到代理机的运行日志中。</p>
+<h3 id="资源的特殊属性"><a href="#资源的特殊属性" class="headerlink" title="资源的特殊属性"></a>资源的特殊属性</h3><p>puppet中也提供了before、require、notify和subscribe四个参数来定义资源之间的依赖关系和通知关系。</p>
+<pre><code>before：表示需要依赖于某个资源
+require：表示应该先执行本资源，在执行别的资源
+notify：A notify B：B依赖于A，且A发生改变后会通知B；
+subscribe：B subscribe A：B依赖于A，且B监控A资源的变化产生的事件；
+</code></pre><p>同时，依赖关系还可以使用-&gt;和～&gt;来表示：</p>
+<pre><code>-&gt; 表示后资源需要依赖前资源
+~&gt; 表示前资源变动通知后资源调用tag 标签
+</code></pre><p>如同 ansible 一样，puppet 也可以定义“标签”——tag，打了标签以后，我们在运行资源的时候就可以只运行某个打过标签的部分，而非全部。这样就更方便于我们的操作。<br>一个资源中，可以有一个tag也可以有多个。具体使用语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type&#123;&apos;title&apos;:</span><br><span class="line">	...</span><br><span class="line">    tag =&gt; &apos;TAG1&apos;,</span><br><span class="line">&#125;</span><br><span class="line">            </span><br><span class="line">type&#123;&apos;title&apos;:</span><br><span class="line">    ...</span><br><span class="line">    tag =&gt; [&apos;TAG1&apos;,&apos;TAG2&apos;,...],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用时的语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet apply --tags TAG1,TAG2,...</span><br></pre></td></tr></table></figure></p>
+<h3 id="puppet-变量"><a href="#puppet-变量" class="headerlink" title="puppet 变量"></a>puppet 变量</h3><p>puppet 变量以“$”开头，赋值操作符为“=”，语法为$variable_name=value。<br>数据类型：</p>
+<pre><code>字符型：引号可有可无；但单引号为强引用，双引号为弱引用；支持转义符；
+数值型：默认均识别为字符串，仅在数值上下文才以数值对待；
+数组：[]中以逗号分隔元素列表；
+布尔型值：true, false；不能加引号；
+hash：{}中以逗号分隔k/v数据列表； 键为字符型，值为任意puppet支持的类型；{ ‘mon’ =&gt; ‘Monday’, ‘tue’ =&gt; ‘Tuesday’, }；
+undef：从未被声明的变量的值类型；
+</code></pre><p>正则表达式：</p>
+<pre><code>(?&lt;ENABLED OPTION&gt;:&lt;PATTERN&gt;)
+(?-&lt;DISABLED OPTION&gt;:&lt;PATTERN&gt;)
+OPTIONS：
+    i：忽略字符大小写；
+    m：把.当换行符；
+    x：忽略&lt;PATTERN&gt;中的空白字符；
+(?i-mx:PATTERN）
+</code></pre><p>注意：不能赋值给变量，仅能用在接受=~或!~操作符的位置；</p>
+<h4 id="puppet的变量种类"><a href="#puppet的变量种类" class="headerlink" title="puppet的变量种类"></a>puppet的变量种类</h4><p>puppet 种类有三种，为facts，内建变量和用户自定义变量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">facts：</span><br><span class="line">　　由facter提供；top scope；</span><br><span class="line">内建变量：</span><br><span class="line">　　master端变量</span><br><span class="line">　　　　$servername, $serverip, $serverversion</span><br><span class="line">　　agent端变量</span><br><span class="line">　　　　$clientcert, $clientversion, $environment</span><br><span class="line">　　parser变量</span><br><span class="line">　　　　$module_name</span><br><span class="line">用户自定义变量</span><br></pre></td></tr></table></figure></p>
+<h4 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h4><p>不同的变量也有其不同的作用域。我们称之为Scope。<br>作用域有三种，top scope，node scope，class scope。<br>其生效范围排序为：top scope &gt; node scope &gt; class scope<br>其优先级排序为：top scope &lt; node scope &lt; class scope</p>
+<h3 id="puppet-流程控制语句"><a href="#puppet-流程控制语句" class="headerlink" title="puppet 流程控制语句"></a>puppet 流程控制语句</h3><p>puppet 支持if 语句，case 语句和selector 语句。</p>
+<h4 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h4><p>if语句支持单分支，双分支和多分支。具体语法如下：<br>单分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if CONDITION &#123;</span><br><span class="line">	statement</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>双分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if CONDITION &#123;</span><br><span class="line">	statement</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">	statement</span><br><span class="line">	……		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>多分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if CONDITION &#123;</span><br><span class="line">	statement</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br><span class="line">elsif CONDITION&#123;</span><br><span class="line">	statement</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">	statement</span><br><span class="line">	……		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，CONDITION的给定方式有如下三种：</p>
+<ul>
+<li>变量</li>
+<li>比较表达式</li>
+<li>有返回值的函数</li>
+</ul>
+<h4 id="case-语句"><a href="#case-语句" class="headerlink" title="case 语句"></a>case 语句</h4><p>类似 if 语句，case 语句会从多个代码块中选择一个分支执行，这跟其它编程语言中的 case 语句功能一致。<br>case 语句会接受一个控制表达式和一组 case 代码块，并执行第一个匹配到控制表达式的块。<br>使用语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">case CONTROL_EXPRESSION &#123;</span><br><span class="line">	case1: &#123; ... &#125;</span><br><span class="line">	case2: &#123; ... &#125;</span><br><span class="line">	case3: &#123; ... &#125;</span><br><span class="line">	……</span><br><span class="line">	default: &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，CONTROL_EXPRESSION的给定方式有如下三种:</p>
+<ul>
+<li>变量</li>
+<li>表达式</li>
+<li>有返回值的函数</li>
+</ul>
+<p>各case的给定方式有如下五种：</p>
+<ul>
+<li>直接字串；</li>
+<li>变量</li>
+<li>有返回值的函数</li>
+<li>正则表达式模式；</li>
+<li>default</li>
+</ul>
+<h4 id="selector语句"><a href="#selector语句" class="headerlink" title="selector语句"></a>selector语句</h4><p>Selector 只能用于期望出现直接值(plain value) 的地方，这包括变量赋值、资源属性、函数参数、资源标题、其它 selector。<br>selector 不能用于一个已经嵌套于于selector 的case 中，也不能用于一个已经嵌套于case 的case 语句中。<br>具体语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CONTROL_VARIABLE ? &#123;</span><br><span class="line">	case1 =&gt; value1,</span><br><span class="line">	case2 =&gt; value2,</span><br><span class="line">	...</span><br><span class="line">	default =&gt; valueN,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，CONTROL_EXPRESSION的给定方式有如下三种:</p>
+<ul>
+<li>变量</li>
+<li>表达式</li>
+<li>有返回值的函数</li>
+</ul>
+<p>各case的给定方式有如下五种：</p>
+<ul>
+<li>直接子串；</li>
+<li>变量；</li>
+<li>有返回值的函数；</li>
+<li>正则表达式模式；</li>
+<li>default</li>
+</ul>
+<p>selectors 使用要点：</p>
+<ul>
+<li>整个selector 语句会被当作一个单独的值，puppet 会将控制变量按列出的次序与每个case 进行比较，并在遇到一个匹配的 case 后，将其值作为整个语句的值进行返回，并忽略后面的其它 case。</li>
+<li>控制变量与各 case 比较的方式与 case 语句相同，但如果没有任何一个 case 与控制变量匹配时，puppet 在编译时将会返回一个错误，因此，实践中，其必须提供default case。</li>
+<li>selector 的控制变量只能是变量或有返回值的函数，切记不能使用表达式。</li>
+<li>其各 case 可以是直接值(需要加引号) 、变量、能调用返回值的函数、正则表达式模式或 default。</li>
+<li>但与 case 语句所不同的是，selector 的各 case 不能使用列表。</li>
+<li>selector 的各 case 的值可以是一个除了 hash 以外的直接值、变量、能调用返回值的函数或其它的 selector。</li>
+</ul>
+<h3 id="puppet的类"><a href="#puppet的类" class="headerlink" title="puppet的类"></a>puppet的类</h3><p>Class是用于通用目标或目的的一组资源，因此，它是命令的代码块，在某位置创建之后可在puppet全局使用。类似于其他编程语言中的类的功能，puppet的类可以继承，也可以包含子类，定义类的语法如下所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class my_class &#123;</span><br><span class="line">   ...puppet code ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>例如：定义一个名为nginx的类牟其中包含两类资源，一个是package类型的nginx，一个是service的nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class nginx &#123;</span><br><span class="line">    package &#123; &apos;nginx&apos;:</span><br><span class="line">        ensure =&gt; installed,</span><br><span class="line">        name   =&gt; nginx,</span><br><span class="line">    &#125;</span><br><span class="line">    service &#123; &apos;nginx&apos;:</span><br><span class="line">        ensure =&gt; true,</span><br><span class="line">        enable =&gt; true,</span><br><span class="line">        subscribe =&gt; Package[&apos;nginx&apos;],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上是类的定义，类似于函数。需要使用的话，要调用。调用时，使用关键在include即可。<br>类的继承：<br>类可以基于父类调用，在调用时，应该指定通过inherits关键字调用父类。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class nginx &#123;</span><br><span class="line">    package &#123; &apos;nginx&apos;:</span><br><span class="line">        ensure =&gt; installed,</span><br><span class="line">        name   =&gt; nginx,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class nignx::web inherits nginx &#123;</span><br><span class="line">    service &#123; &apos;nginx&apos;:</span><br><span class="line">    ensure =&gt; true,</span><br><span class="line">    enable =&gt; true,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">include nignx::web</span><br></pre></td></tr></table></figure></p>
+<p>也支持类的覆盖和重写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt;:在子类中覆盖父类中的资源</span><br><span class="line">+&gt;:在子类中为父类中的资源新增额外的属性</span><br></pre></td></tr></table></figure></p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>puppet模块：为了实现某种完备功能而组织成的一个独立的、自我包含的目录结构<br>模块名：目录名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">目录结构：</span><br><span class="line">Module_name:</span><br><span class="line">    manifests</span><br><span class="line">        init.pp: 必须声明一个类，类名与模块名相同;                     </span><br><span class="line">        *.pp:</span><br><span class="line">            MODULE_NAME::[SUBDIR_NAME]::MANIFESTS_FILE_NAME</span><br><span class="line">    files:静态文件</span><br><span class="line">        puppet url:puppet:///modules/MODULE_NAME/[SUBDIR_NAME]/FILE_NAME </span><br><span class="line">        file&#123;&apos;nginx.conf&apos;:</span><br><span class="line">            source     =&gt; puppet:///modules/nginx/nginx.conf</span><br><span class="line">        &#125;</span><br><span class="line">    templates: 模板文件：*.erb</span><br><span class="line">        template(&apos;MODULE_NAME/TEMPLATE_FILE_NAME&apos;); </span><br><span class="line"> </span><br><span class="line">        file&#123;&apos;nginx.conf&apos;:</span><br><span class="line">            content     =&gt; template(&apos;模板文件&apos;),</span><br><span class="line">        &#125; </span><br><span class="line">    lib: 插件</span><br><span class="line">    tests: 模块使用说明文档</span><br><span class="line">    spec: lib目录下的插件使用说明文档</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用范例"><a href="#使用范例" class="headerlink" title="使用范例"></a>使用范例</h2><h3 id="使用maste-agent模式，安装nginx"><a href="#使用maste-agent模式，安装nginx" class="headerlink" title="使用maste/agent模式，安装nginx"></a>使用maste/agent模式，安装nginx</h3><h4 id="master端"><a href="#master端" class="headerlink" title="master端"></a>master端</h4><p>modules下文件路径和目录如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/etc/puppet/modules/nginx</span><br><span class="line">[root@master nginx]<span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">├── files</span><br><span class="line">│   └── nginx.conf</span><br><span class="line">└── manifests</span><br><span class="line">    └── init.pp</span><br><span class="line"></span><br><span class="line">2 directories, 2 files</span><br></pre></td></tr></table></figure></p>
+<p>文件内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat manifests/init.pp </span></span><br><span class="line">class nginx &#123;</span><br><span class="line">    package&#123;<span class="string">'nginx'</span>:</span><br><span class="line">        ensure  =&gt; installed,</span><br><span class="line">        allow_virtual =&gt; <span class="literal">false</span>,</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    file&#123;<span class="string">'nginx.conf'</span>:</span><br><span class="line">        ensure  =&gt; file,</span><br><span class="line">        <span class="built_in">source</span>  =&gt; <span class="string">'puppet:///modules/nginx/nginx.conf'</span>,</span><br><span class="line">        require =&gt; Package[<span class="string">'nginx'</span>],</span><br><span class="line">        path    =&gt; <span class="string">'/etc/nginx/nginx.conf'</span>,</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">   service&#123;<span class="string">'nginx'</span>:</span><br><span class="line">        ensure  =&gt; <span class="literal">true</span>,</span><br><span class="line">        <span class="built_in">enable</span>  =&gt; <span class="literal">true</span>,</span><br><span class="line">        require =&gt; Package[<span class="string">'nginx'</span>],</span><br><span class="line">        subscribe =&gt; File[<span class="string">'nginx.conf'</span>],</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>nginx.conf的内容为nginx的配置文件<br><strong>注意:puppet:///modules/nginx/nginx.conf  #不需要写files目录，指定模块文件后puppet默认回去files目录下找对应的文件。</strong><br>manifests下目录和内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pwd</span></span><br><span class="line">/etc/puppet/manifests</span><br><span class="line"><span class="comment"># cat site.pp </span></span><br><span class="line">import <span class="string">"server/*.pp"</span></span><br><span class="line"><span class="comment"># cat server/node01.pp </span></span><br><span class="line">node <span class="string">'node01'</span> &#123;</span><br><span class="line">    include nginx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="agent端"><a href="#agent端" class="headerlink" title="agent端"></a>agent端</h4><p>测试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># puppet agent -t --server=master</span></span><br><span class="line">Info: Retrieving pluginfacts</span><br><span class="line">Info: Retrieving plugin</span><br><span class="line">Info: Caching catalog <span class="keyword">for</span> node02</span><br><span class="line">Info: Applying configuration version <span class="string">'1551431554'</span></span><br><span class="line">Notice: Finished catalog run <span class="keyword">in</span> 0.18 seconds</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ps -ef|grep nginx</span></span><br><span class="line">root       863     1  0 17:12 ?        00:00:00 nginx: master process /usr/sbin/nginx</span><br><span class="line">nginx      865   863  0 17:12 ?        00:00:00 nginx: worker process</span><br><span class="line">root      1094 29974  0 17:14 pts/0    00:00:00 grep --color=auto nginx</span><br><span class="line"><span class="comment"># netstat -tnpl|grep 80</span></span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      3801/sshd           </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      863/nginx: master p </span><br><span class="line">tcp6       0      0 :::22</span><br></pre></td></tr></table></figure>
+<p>不需要重启agent端，master端每隔30秒会自动推送。<br>可以看到nginx已经安装成功并启动，端口监听正常。</p>
 
       
     </div>
@@ -535,9 +767,9 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/posts/d9660bea.html">Puppet部署</a></p>
+  <p><span>本文标题:</span><a href="/posts/d9660bea.html">Puppet部署与使用</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/posts/d9660bea.html" title="Puppet部署">http://www.cnops.com/posts/d9660bea.html</a>
+  <p><span>原始链接:</span><a href="/posts/d9660bea.html" title="Puppet部署与使用">http://www.cnops.com/posts/d9660bea.html</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/d9660bea.html" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -624,6 +856,10 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/posts/502a07f.html" rel="prev" title="Confluent安装部署">
+                Confluent安装部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -692,7 +928,7 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -751,7 +987,7 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -916,7 +1152,11 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
                     
                       
                     
-                    <span class="site-state-item-count">75</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1006,7 +1246,7 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#puppet简介"><span class="nav-text">puppet简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#puppet工作原理"><span class="nav-text">puppet工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装部署"><span class="nav-text">安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装NTP-Server"><span class="nav-text">安装NTP Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改hosts文件"><span class="nav-text">修改hosts文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装master端"><span class="nav-text">安装master端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装client端"><span class="nav-text">安装client端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#授权"><span class="nav-text">授权</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#puppet简介"><span class="nav-text">puppet简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#puppet工作机制"><span class="nav-text">puppet工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作模型"><span class="nav-text">工作模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作流程"><span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用模型"><span class="nav-text">使用模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单机使用模型"><span class="nav-text">单机使用模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#master-agent模型"><span class="nav-text">master/agent模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装部署"><span class="nav-text">安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装NTP-Server"><span class="nav-text">安装NTP Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改hosts文件"><span class="nav-text">修改hosts文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装master端"><span class="nav-text">安装master端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装client端"><span class="nav-text">安装client端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#授权"><span class="nav-text">授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#puppet使用方法"><span class="nav-text">puppet使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#puppet-名词解释"><span class="nav-text">puppet 名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义资源"><span class="nav-text">定义资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见资源介绍"><span class="nav-text">常见资源介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看资源"><span class="nav-text">查看资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#group：管理系统上的用户组。"><span class="nav-text">group：管理系统上的用户组。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user：管理系统上的用户。"><span class="nav-text">user：管理系统上的用户。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#package：puppet管理软件包"><span class="nav-text">package：puppet管理软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#service：定义服务的状态"><span class="nav-text">service：定义服务的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file：管理文件、目录、软链接"><span class="nav-text">file：管理文件、目录、软链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exec：执行命令"><span class="nav-text">exec：执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cron：定义周期性任务"><span class="nav-text">cron：定义周期性任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#notify：调试输出"><span class="nav-text">notify：调试输出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源的特殊属性"><span class="nav-text">资源的特殊属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#puppet-变量"><span class="nav-text">puppet 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#puppet的变量种类"><span class="nav-text">puppet的变量种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的作用域"><span class="nav-text">变量的作用域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#puppet-流程控制语句"><span class="nav-text">puppet 流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-语句"><span class="nav-text">if 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case-语句"><span class="nav-text">case 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#selector语句"><span class="nav-text">selector语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#puppet的类"><span class="nav-text">puppet的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板"><span class="nav-text">模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用范例"><span class="nav-text">使用范例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用maste-agent模式，安装nginx"><span class="nav-text">使用maste/agent模式，安装nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#master端"><span class="nav-text">master端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#agent端"><span class="nav-text">agent端</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1037,6 +1277,7 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
   
 </div>
 
+<!--
 
   <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
 
@@ -1048,6 +1289,7 @@ puppet依赖于C/S（客户端/服务器）的部署架构。它需要在puppet�
 
   <div class="theme-info">博客</div>
 
+-->
 
 <div class="BbeiAn-info">
     <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41042202000126" style="color:#000000;text-decoration:none;padding-left:30px;background:url(https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/batb.png) no-repeat left center" rel="nofollow">豫公网安备 41042202000126号</a>    <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->

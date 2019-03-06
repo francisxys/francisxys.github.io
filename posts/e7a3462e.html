@@ -115,15 +115,15 @@
   <meta name="description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
 <meta name="keywords" content="Confluent,Mysql,Debezium,Kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Confluent捕获Mysql事实数据变更事件">
+<meta property="og:title" content="Confluent捕获Mysql实时数据变更事件">
 <meta property="og:url" content="http://www.cnops.com/posts/e7a3462e.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306004.png">
-<meta property="og:updated_time" content="2019-03-06T06:39:57.177Z">
+<meta property="og:updated_time" content="2019-03-06T06:50:27.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Confluent捕获Mysql事实数据变更事件">
+<meta name="twitter:title" content="Confluent捕获Mysql实时数据变更事件">
 <meta name="twitter:description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
 <meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306004.png">
 
@@ -142,7 +142,7 @@
   };
 </script>
 
-  <title>Confluent捕获Mysql事实数据变更事件 | Francis'Blog</title>
+  <title>Confluent捕获Mysql实时数据变更事件 | Francis'Blog</title>
   
 
 
@@ -408,7 +408,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Confluent捕获Mysql事实数据变更事件
+          <h1 class="post-title" itemprop="name headline">Confluent捕获Mysql实时数据变更事件
               
             
           </h1>
@@ -433,7 +433,7 @@
                 
               
 
-              <time title="创建时间：2019-03-06 09:50:36 / 修改时间：14:39:57" itemprop="dateCreated datePublished" datetime="2019-03-06T09:50:36+08:00">2019-03-06</time>
+              <time title="创建时间：2019-03-06 09:50:36 / 修改时间：14:50:27" itemprop="dateCreated datePublished" datetime="2019-03-06T09:50:36+08:00">2019-03-06</time>
             
 
             
@@ -545,9 +545,9 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/posts/e7a3462e.html">Confluent捕获Mysql事实数据变更事件</a></p>
+  <p><span>本文标题:</span><a href="/posts/e7a3462e.html">Confluent捕获Mysql实时数据变更事件</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/posts/e7a3462e.html" title="Confluent捕获Mysql事实数据变更事件">http://www.cnops.com/posts/e7a3462e.html</a>
+  <p><span>原始链接:</span><a href="/posts/e7a3462e.html" title="Confluent捕获Mysql实时数据变更事件">http://www.cnops.com/posts/e7a3462e.html</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/e7a3462e.html" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  

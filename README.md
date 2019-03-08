@@ -13,6 +13,8 @@ npm install hexo-generator-searchdb --save
 npm install hexo-deployer-git --save
 #永久链接插件
 npm install hexo-abbrlink --save
+#字数统计插件
+npm install hexo-symbols-count-time --save
 ```
 ## 三、hexo命令
 ``` bash

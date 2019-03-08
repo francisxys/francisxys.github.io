@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306001.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306002.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306003.png">
-<meta property="og:updated_time" content="2019-03-06T05:31:27.186Z">
+<meta property="og:updated_time" content="2019-03-08T08:12:26.203Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Confluent安装部署">
 <meta name="twitter:description" content="confluent简介LinkedIn有个三人小组出来创业了—正是当时开发出Apache Kafka实时信息列队技术的团队成员，基于这项技术Jay Kreps带头创立了新公司Confluent。Confluent的产品围绕着Kafka做的。 Confluent PlatformConfluent Platform 是一个流数据平台，能够组织管理来自不同数据源的数据，拥有稳定高效的系统。Conflu">
@@ -435,12 +435,24 @@
                 
               
 
-              <time title="创建时间：2019-03-06 09:48:31 / 修改时间：13:31:27" itemprop="dateCreated datePublished" datetime="2019-03-06T09:48:31+08:00">2019-03-06</time>
+              <time title="创建时间：2019-03-06 09:48:31" itemprop="dateCreated datePublished" datetime="2019-03-06T09:48:31+08:00">2019-03-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-08 16:12:26" itemprop="dateModified" datetime="2019-03-08T16:12:26+08:00">2019-03-08</time>
               
             
           </span>
@@ -481,6 +493,34 @@
 
           
 
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
           
 
           
@@ -561,15 +601,16 @@ Confluent Schema Registry（开源）。帮助确定每一个应用使用正确�
 <p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zookeeper-server-start etc/kafka/zookeeper.properties</span><br></pre></td></tr></table></figure></p>
 <h3 id="kafka配置和启动"><a href="#kafka配置和启动" class="headerlink" title="kafka配置和启动"></a>kafka配置和启动</h3><p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/kafka/server.properties</span><br><span class="line">zookeeper.connect=node01:2181,node02:2181,node03:2181</span><br></pre></td></tr></table></figure></p>
 <p>设置broker.id=0<br>这里我们可以使用broker.id.generation.enable=true自动生成替代。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#broker.id=0</span><br><span class="line">broker.id.generation.enable=true</span><br><span class="line">advertised.listeners=PLAINTEXT://本机IP:9092</span><br></pre></td></tr></table></figure></p>
-<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start  etc/kafka/server.properties</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-server-start  etc/kafka/server.properties</span><br></pre></td></tr></table></figure></p>
 <h3 id="Schema-Registry配置和启动-可选"><a href="#Schema-Registry配置和启动-可选" class="headerlink" title="Schema Registry配置和启动(可选)"></a>Schema Registry配置和启动(可选)</h3><p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/schema-registry/schema-registry.properties</span><br><span class="line">kafkastore.connection.url=node01:2181,node02:2181,node03:2181</span><br></pre></td></tr></table></figure></p>
-<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/schema-registry-start etc/schema-registry/schema-registry.properties</span><br></pre></td></tr></table></figure></p>
-<h3 id="kafka-connect配置和启动"><a href="#kafka-connect配置和启动" class="headerlink" title="kafka connect配置和启动"></a>kafka connect配置和启动</h3><p>这里我们不使用官方模式的avro序列化方式，所有不启动组件schema-registry。<br>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp etc/schema-registry/connect-avro-distributed.properties  etc/schema-registry/connect-distributed.properties</span><br></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schema-registry-start etc/schema-registry/schema-registry.properties</span><br></pre></td></tr></table></figure></p>
+<p>这里我们不使用官方模式的avro序列化方式，所有不启动组件schema-registry。</p>
+<h3 id="kafka-connect配置和启动"><a href="#kafka-connect配置和启动" class="headerlink" title="kafka connect配置和启动"></a>kafka connect配置和启动</h3><p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp etc/schema-registry/connect-avro-distributed.properties  etc/schema-registry/connect-distributed.properties</span><br></pre></td></tr></table></figure></p>
 <p>修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/schema-registry/connect-distributed.properties</span><br><span class="line">bootstrap.servers=node01:9092,node02:9092,node03:9092</span><br><span class="line">key.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">#key.converter.schema.registry.url=http://node01:8081</span><br><span class="line">value.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">#value.converter.schema.registry.url=http://node01:8081</span><br></pre></td></tr></table></figure></p>
 <p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/connect-distributed etc/schema-registry/connect-distributed.properties</span><br></pre></td></tr></table></figure></p>
 <h3 id="Control-Center配置和启动"><a href="#Control-Center配置和启动" class="headerlink" title="Control Center配置和启动"></a>Control Center配置和启动</h3><p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vim etc/confluent-control-center/control-center-dev.properties</span><br><span class="line">bootstrap.servers=node01:9092,node02:9092,node03:9092</span><br><span class="line">zookeeper.connect=node01:2181,node02:2181:node03:2181</span><br><span class="line">#confluent.controlcenter.schema.registry.url=http://node01:8081,http://node02:8081,http://node03:8081</span><br><span class="line">confluent.controlcenter.connect.cluster=http://node01:8083</span><br></pre></td></tr></table></figure></p>
-<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/control-center-start etc/confluent-control-center/control-center-dev.properties</span><br></pre></td></tr></table></figure></p>
-<p>到此为止kafka connect集群搭建成功。</p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">control-center-start etc/confluent-control-center/control-center-dev.properties</span><br></pre></td></tr></table></figure></p>
+<p>到此为止kafka confluent集群搭建成功。</p>
 
       
     </div>
@@ -754,7 +795,7 @@ Confluent Schema Registry（开源）。帮助确定每一个应用使用正确�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -766,6 +807,8 @@ Confluent Schema Registry（开源）。帮助确定每一个应用使用正确�
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     
@@ -982,7 +1025,9 @@ Confluent Schema Registry（开源）。帮助确定每一个应用使用正确�
                     
                       
                     
-                    <span class="site-state-item-count">78</span>
+                      
+                    
+                    <span class="site-state-item-count">79</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1099,7 +1144,21 @@ Confluent Schema Registry（开源）。帮助确定每一个应用使用正确�
   <span class="author" itemprop="copyrightHolder">Francis</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">407k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">6:10</span>
   
 </div>
 

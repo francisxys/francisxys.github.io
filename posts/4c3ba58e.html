@@ -112,24 +112,25 @@
 
 
 
-  <meta name="description" content="云在青天水在瓶">
-<meta name="keywords" content="运维,监控,自动化,脚本,系统,数据库">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Francis&#39;Blog">
-<meta property="og:url" content="http://www.cnops.com/categories/VT/index.html">
+  <meta name="description" content="在实际生产环境中，我们可能遇到这种情况：1、topic中有大量的消息需要消费；2、消费服务由于负载问题不能在短时间内消费掉topic内的消息；3、由此造成了消费服务负载过高，甚至服务进程阻塞；在这种情况下，我们应该需要手动去调整某消费者组对应的topic的offset，使整个系统进入平稳。 前提条件相关所有消费服务必须停止只有相关所有的消费服务停止，才能修改对应topic的offset。 当前环境">
+<meta name="keywords" content="Kafka,offset">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka手动设置offset">
+<meta property="og:url" content="http://www.cnops.com/posts/4c3ba58e.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="云在青天水在瓶">
+<meta property="og:description" content="在实际生产环境中，我们可能遇到这种情况：1、topic中有大量的消息需要消费；2、消费服务由于负载问题不能在短时间内消费掉topic内的消息；3、由此造成了消费服务负载过高，甚至服务进程阻塞；在这种情况下，我们应该需要手动去调整某消费者组对应的topic的offset，使整个系统进入平稳。 前提条件相关所有消费服务必须停止只有相关所有的消费服务停止，才能修改对应topic的offset。 当前环境">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-15T02:39:34.429Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Francis&#39;Blog">
-<meta name="twitter:description" content="云在青天水在瓶">
+<meta name="twitter:title" content="Kafka手动设置offset">
+<meta name="twitter:description" content="在实际生产环境中，我们可能遇到这种情况：1、topic中有大量的消息需要消费；2、消费服务由于负载问题不能在短时间内消费掉topic内的消息；3、由此造成了消费服务负载过高，甚至服务进程阻塞；在这种情况下，我们应该需要手动去调整某消费者组对应的topic的offset，使整个系统进入平稳。 前提条件相关所有消费服务必须停止只有相关所有的消费服务停止，才能修改对应topic的offset。 当前环境">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/categories/VT/">
+  <link rel="canonical" href="http://www.cnops.com/posts/4c3ba58e.html">
 
 
 
@@ -139,7 +140,7 @@
   };
 </script>
 
-  <title>分类: VT | Francis'Blog</title>
+  <title>Kafka手动设置offset | Francis'Blog</title>
   
 
 
@@ -188,7 +189,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -246,7 +247,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -327,28 +328,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -394,135 +373,303 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>VT<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/posts/4c3ba58e.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/posts/ada60523.html" itemprop="url">
-              
-                <span itemprop="name">Docker容器进入的4种方式</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Kafka手动设置offset
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-25T14:15:18+08:00" content="2018-12-25">
-          12-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-15 10:12:08 / 修改时间：10:39:34" itemprop="dateCreated datePublished" datetime="2019-03-15T10:12:08+08:00">2019-03-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/Service/" itemprop="url" rel="index"><span itemprop="name">Service</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/OS/Service/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/8df055d9.html" itemprop="url">
-              
-                <span itemprop="name">Dockerfile命令详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-25T14:14:49+08:00" content="2018-12-25">
-          12-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/ca03914f.html" itemprop="url">
-              
-                <span itemprop="name">Docker入门教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-25T14:13:21+08:00" content="2018-12-25">
-          12-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/897dc603.html" itemprop="url">
-              
-                <span itemprop="name">Linux下解决docker端口映射到宿主机后外网无法访问的问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-24T16:08:48+08:00" content="2018-12-24">
-          12-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>在实际生产环境中，我们可能遇到这种情况：<br>1、topic中有大量的消息需要消费；<br>2、消费服务由于负载问题不能在短时间内消费掉topic内的消息；<br>3、由此造成了消费服务负载过高，甚至服务进程阻塞；<br>在这种情况下，我们应该需要手动去调整某消费者组对应的topic的offset，使整个系统进入平稳。</p>
+<h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><p><strong>相关所有消费服务必须停止</strong><br>只有相关所有的消费服务停止，才能修改对应topic的offset。</p>
+<h2 id="当前环境"><a href="#当前环境" class="headerlink" title="当前环境"></a>当前环境</h2><p>当前kafka的安装是使用confluent kafka安装，所以在实际命令中根据不同环境使用对应的工具。</p>
+<h2 id="修改过程"><a href="#修改过程" class="headerlink" title="修改过程"></a>修改过程</h2><p>执行如下命令即可：<br>查看消费者组<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kafka-consumer-groups --bootstrap-server localhost:9092 --list</span></span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">_confluent-controlcenter-5-1-2-1-command</span><br><span class="line">_confluent-controlcenter-5-1-2-1</span><br></pre></td></tr></table></figure></p>
+<p>此次我们要修改的消费者组就是<code>1</code>。<br>查看消费者组订阅的topic以及topic信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kafka-consumer-groups --bootstrap-server localhost:9092 --group 1 --describe</span></span><br><span class="line"></span><br><span class="line">TOPIC                                      PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                            HOST            CLIENT-ID</span><br><span class="line">discovery1.test.goods_info        0          1250            1250            0               1-9b463cba-e36d-4d4c-ae2b-660831449796 /172.19.138.54  1</span><br><span class="line">discovery1.test.risk_control_info 0          161             161             0               1-9b463cba-e36d-4d4c-ae2b-660831449796 /172.19.138.54  1</span><br><span class="line">discovery1.test.calculate_user    0          56              56              0               1-9b463cba-e36d-4d4c-ae2b-660831449796 /172.19.138.54  1</span><br><span class="line">discovery1.test.order_info        0          7322            7322            0               1-9b463cba-e36d-4d4c-ae2b-660831449796 /172.19.138.54  1</span><br></pre></td></tr></table></figure></p>
+<p>注意看current-offset和log-end-offset还有lag，分别为当前偏移量，结束的偏移量，落后的偏移量。<br>以topics：discovery1.test.order_info为例，当前已消费完成。此处修改current-offset，让消费服务再重新消费最后几条消息。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kafka-consumer-groups --bootstrap-server localhost:9092 --group 1 --topic discovery1.test.order_info --execute --reset-offsets --to-offset 7312</span></span><br><span class="line"></span><br><span class="line">TOPIC                          PARTITION  NEW-OFFSET     </span><br><span class="line">discovery1.test.order_info 0          7312</span><br></pre></td></tr></table></figure></p>
+<p>修改成功，再查看topic信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kafka-consumer-groups --bootstrap-server localhost:9092 --group 1 --describe</span></span><br><span class="line">Consumer group <span class="string">'1'</span> has no active members.</span><br><span class="line"></span><br><span class="line">TOPIC                                      PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID</span><br><span class="line">discovery1.test.goods_info        0          1250            1250            0               -               -               -</span><br><span class="line">discovery1.test.risk_control_info 0          161             161             0               -               -               -</span><br><span class="line">discovery1.test.calculate_user    0          56              56              0               -               -               -</span><br><span class="line">discovery1.test.order_info        0          7312            7322            10              -               -               -</span><br></pre></td></tr></table></figure></p>
+<p>现在明显是lag=10，current-offset=7312，log-end-offset=7322，告诉我们有10条未消费。<br>current-offset当前已经消费到偏移量为7312,可以理解为已经消费7312条。<br>log-end-offset可以理解为总共7322条记录。<br>lag可以理解为未消费记录条数。<br>现在可以重新启动消费服务，可以从日志中看到会重新消费最后10条消息。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/posts/4c3ba58e.html">Kafka手动设置offset</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/posts/4c3ba58e.html" title="Kafka手动设置offset">http://www.cnops.com/posts/4c3ba58e.html</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/4c3ba58e.html" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
+          
+            <a href="/tags/offset/" rel="tag"><i class="fa fa-tag"></i> offset</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/315f23f4.html" rel="next" title="Kafka彻底删除topics及数据">
+                <i class="fa fa-chevron-left"></i> Kafka彻底删除topics及数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -543,8 +690,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -878,6 +1034,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提条件"><span class="nav-text">前提条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当前环境"><span class="nav-text">当前环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改过程"><span class="nav-text">修改过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -1025,6 +1197,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 

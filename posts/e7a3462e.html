@@ -113,7 +113,7 @@
 
 
   <meta name="description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
-<meta name="keywords" content="Confluent,Mysql,Debezium,Kafka">
+<meta name="keywords" content="Kafka,Confluent,Mysql,Debezium">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Confluent捕获Mysql实时数据变更事件">
 <meta property="og:url" content="http://www.cnops.com/posts/e7a3462e.html">
@@ -121,7 +121,7 @@
 <meta property="og:description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190306004.png">
-<meta property="og:updated_time" content="2019-03-06T06:50:57.858Z">
+<meta property="og:updated_time" content="2019-03-12T09:00:43.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Confluent捕获Mysql实时数据变更事件">
 <meta name="twitter:description" content="简介如果后端应用数据存储使用的MySQL，项目中如果有这样的业务场景,我们会怎么做呢？  分库分表数据拆分和迁移 历史数据同步分析 异步处理 多个应用之间数据同步和共享 建立elasticsearch搜索  对于最简单最直接的做法就是修改原有应用的代码，在数据发生改变的同时通知下游系统，或者数据改变发送MQ，下游系统消费消息。这样的设计虽然看似简单，但是实现真的很麻烦，数据库表多、业务复杂，各种业">
@@ -433,12 +433,24 @@
                 
               
 
-              <time title="创建时间：2019-03-06 09:50:36 / 修改时间：14:50:57" itemprop="dateCreated datePublished" datetime="2019-03-06T09:50:36+08:00">2019-03-06</time>
+              <time title="创建时间：2019-03-06 09:50:36" itemprop="dateCreated datePublished" datetime="2019-03-06T09:50:36+08:00">2019-03-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-12 17:00:43" itemprop="dateModified" datetime="2019-03-12T17:00:43+08:00">2019-03-12</time>
               
             
           </span>
@@ -490,7 +502,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.8k</span>
+                <span title="本文字数">6.5k</span>
               
 
               
@@ -504,7 +516,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -540,7 +552,104 @@
 <p>再次启动confluent即可</p>
 <h4 id="debezium使用"><a href="#debezium使用" class="headerlink" title="debezium使用"></a>debezium使用</h4><p>使用debezium之前必须先开启mysql得binlog，这里不再叙述。接下来构建一个kafka connect来使用debezium插件，confluent提供了restful api可快速创建kafka connect。<br>创建kafka connect连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Accept:application/json&quot; -H  &quot;Content-Type:application/json&quot; http://localhost:8083/connectors/  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;mysql-connector&quot;,</span><br><span class="line">  &quot;config&quot;: &#123;</span><br><span class="line">    &quot;connector.class&quot;: &quot;io.debezium.connector.mysql.MySqlConnector&quot;,</span><br><span class="line">    &quot;database.hostname&quot;: &quot;ip/hostname&quot;,</span><br><span class="line">    &quot;database.port&quot;: &quot;port&quot;,</span><br><span class="line">    &quot;database.user&quot;: &quot;user&quot;,</span><br><span class="line">    &quot;database.password&quot;: &quot;******&quot;,</span><br><span class="line">    &quot;database.server.id&quot;: &quot;1&quot;,</span><br><span class="line">    &quot;database.server.name&quot;: &quot;dbname&quot;,</span><br><span class="line">    &quot;database.history.kafka.bootstrap.servers&quot;: &quot;localhost:9092&quot;,</span><br><span class="line">    &quot;database.history.kafka.topic&quot;: &quot;dbhistory.inventory&quot;,</span><br><span class="line">    &quot;include.schema.changes&quot;: &quot;true&quot;</span><br><span class="line">    &quot;decimal.handling.mode&quot;: &quot;string&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;</span><br></pre></td></tr></table></figure></p>
 <p>这里的脚本其实是一行，我为了方便查看展开了json。复制可用的脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Accept:application/json&quot; -H  &quot;Content-Type:application/json&quot; http://localhost:8083/connectors/  -d &apos;&#123;&quot;name&quot;:&quot;mysql-connector&quot;,&quot;config&quot;: &#123;          &quot;connector.class&quot;: &quot;io.debezium.connector.mysql.MySqlConnector&quot;,         &quot;database.hostname&quot;: &quot;ip/hostname&quot;,       &quot;database.port&quot;: &quot;port&quot;,          &quot;database.user&quot;: &quot;user&quot;,      &quot;database.password&quot;: &quot;******&quot;,         &quot;database.server.id&quot;: &quot;1&quot;,     &quot;database.server.name&quot;: &quot;dbname&quot;,     &quot;database.history.kafka.bootstrap.servers&quot;: &quot;localhost:9092&quot;,     &quot;database.history.kafka.topic&quot;: &quot;dbhistory.inventory&quot; ,     &quot;include.schema.changes&quot;: &quot;true&quot;,		&quot;decimal.handling.mode&quot;: &quot;string&quot; &#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<p>注意：</p>
+<p>Debezium mysql 连接器属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>默认值</th>
+<th>属性含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td></td>
+<td>连接器的名字，不能和其他连接器的名字重复，如果用已经存在的连接器名字去注册会失败。这个属性也是所有Kafka Connect连接器都需要的属性</td>
+</tr>
+<tr>
+<td>connector.class</td>
+<td></td>
+<td>连接器的java类，对于MySQL连接器来说，总是io.debezium.connector.mysql.MySqlConnector</td>
+</tr>
+<tr>
+<td>tasks.max</td>
+<td>1</td>
+<td>连接器创建的最大的任务数，<strong>MySQL连接器总是使用单任务</strong>，所以用不到这个值，默认的就可以了。</td>
+</tr>
+<tr>
+<td>database.hostname</td>
+<td></td>
+<td>MySQL数据库服务器的IP地址或者主机名</td>
+</tr>
+<tr>
+<td>database.port</td>
+<td>3306</td>
+<td>MySQL数据库服务器的端口号</td>
+</tr>
+<tr>
+<td>database.user</td>
+<td></td>
+<td>连接数据库的用户名</td>
+</tr>
+<tr>
+<td>database.password</td>
+<td></td>
+<td>连接数据库的密码</td>
+</tr>
+<tr>
+<td>database.server.name</td>
+<td>host:port</td>
+<td>debezium监控的MySQL服务器/集群的逻辑名。这个逻辑名应该在所有连接器中唯一，因为这个会用在Kafka topic的前缀，默认是’host:<em>port</em>’这样，host就是上面的database.hostname属性值，port就是上面的database.port属性值。但是我们推荐使用明确的、有意义的名字。</td>
+</tr>
+<tr>
+<td>database.server.id</td>
+<td>random</td>
+<td>数据库客户端(debezium连接器)数字id，在数据库集群中应该唯一。其实连接器用这个id，以一个数据库服务器的身份加入数据库集群，这样才能够读取binlog文件。默认情况下，随机数在5400到6400之间，推荐显示设置一个值。</td>
+</tr>
+<tr>
+<td>database.history.kafka.topic</td>
+<td></td>
+<td>kafka topic的全名，连接器将把数据库的schema历史信息存入这个topic中。</td>
+</tr>
+<tr>
+<td>database.history.kafka.topic.bootstrap.servers</td>
+<td></td>
+<td>用于连接Kafka集群的host/port对。这个连接将用于获取连接器此前存放的数据库schema历史，并且把从源数据库（被监控的数据库）中读取到的DDL语句写入到这个Kafka集群中。这个连接参数应该和Kafka Connect用的集群一致。</td>
+</tr>
+<tr>
+<td>database.whitelist</td>
+<td>空字符串</td>
+<td>用逗号隔开的正则表达式列表，可以匹配多个被监控的数据库名称，不在白名单中的数据库不会被debezium连接器监控。默认情况下，所有的数据库都会被监控。不能和database.blacklist同时使用。</td>
+</tr>
+<tr>
+<td>database.blacklist</td>
+<td>空字符串</td>
+<td>用逗号隔开的正则表达式列表，用来匹配不想监控的数据库。任何不在黑名单中的数据库都会被监控。不能和database.whitelist同时使用。</td>
+</tr>
+<tr>
+<td>table.whitelist</td>
+<td>空字符串</td>
+<td>逗号分割的正则表达式列表，用于匹配要监控的表的全名（数据库名.表名）。不同和table.blacklist同时使用经过实践，发现表白名单和数据库白名单也不能同时使用。</td>
+</tr>
+<tr>
+<td>table.blacklist</td>
+<td>空字符串</td>
+<td>逗号分割的正则表达式列表，用于匹配不要监控的表的全名（数据库名.表名）。不能和table.whitelist同时使用。经过实践，发现表黑名单和数据库黑名单也不能同时使用。</td>
+</tr>
+<tr>
+<td>column.blacklist</td>
+<td>空字符串</td>
+<td>逗号分割的正则表达式列表，用于匹配不想要监控的列，在事件消息中不会包含的列值。应该是databaseName.tableName.columnName或者databaseName.schemaName.tableName.columnName这样的全限定名。</td>
+</tr>
+<tr>
+<td>column.truncate.to.length.chars</td>
+<td>n/a</td>
+<td>逗号分割的正则表达式列表，用于匹配需要在事件消息中截短的列名。一个配置列表中可以配置多个不同的长度。列名应该是databaseName.tableName.columnName或者databaseName.schemaName.tableName.columnName这样的全限定名。</td>
+</tr>
+</tbody>
+</table>
+<p>更多连接器属性参考：<a href="http://debezium.io/docs/connectors/mysql/#connector-properties" target="_blank" rel="noopener">原文链接</a><br>注意：</p>
 <pre><code>如果对topics的消费者是java语言的连接方式一定要加上`&quot;decimal.handling.mode&quot;: &quot;string&quot;`
 示例中的关于地址、用户、密码等设置已经隐藏，需要根据实际情况自行替换
 </code></pre><p>可以通过命令查看已创建成功的connect，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># curl -H &quot;Accept:application/json&quot; localhost:8083/</span><br><span class="line">&#123;&quot;version&quot;:&quot;2.1.1-cp1&quot;,&quot;commit&quot;:&quot;f5b753880d5460f1&quot;,&quot;kafka_cluster_id&quot;:&quot;__SovfFYR5WfKrZ1xuBlaw&quot;&#125;</span><br></pre></td></tr></table></figure></p>
@@ -639,13 +748,13 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
+          
             <a href="/tags/Confluent/" rel="tag"><i class="fa fa-tag"></i> Confluent</a>
           
             <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
           
             <a href="/tags/Debezium/" rel="tag"><i class="fa fa-tag"></i> Debezium</a>
-          
-            <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
           
         </div>
       
@@ -740,7 +849,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -801,7 +910,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -972,7 +1085,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">79</span>
+                      
+                    
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1094,7 +1209,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">407k</span>
+    <span title="站点总字数">414k</span>
   
 
   
@@ -1103,7 +1218,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">6:10</span>
+    <span title="站点阅读时长">6:17</span>
   
 </div>
 

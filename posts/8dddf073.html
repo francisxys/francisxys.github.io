@@ -122,7 +122,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190226001.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190226002.png">
-<meta property="og:updated_time" content="2019-03-15T08:57:21.008Z">
+<meta property="og:updated_time" content="2019-03-26T02:37:29.293Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx文档">
 <meta name="twitter:description" content="前言Nginx作用Nginx 是一个高性能的 Web 和反向代理服务器, 它具有有很多非常优越的特性:作为 Web 服务器：相比 Apache，Nginx 使用更少的资源，支持更多的并发连接，体现更高的效率，这点使 Nginx 尤其受到虚拟主机提供商的欢迎。能够支持高达 50,000 个并发连接数的响应，感谢 Nginx 为我们选择了 epoll and kqueue 作为开发模型.作为负载均衡服">
@@ -451,7 +451,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-15 16:57:21" itemprop="dateModified" datetime="2019-03-15T16:57:21+08:00">2019-03-15</time>
+                <time title="修改时间：2019-03-26 10:37:29" itemprop="dateModified" datetime="2019-03-26T10:37:29+08:00">2019-03-26</time>
               
             
           </span>
@@ -555,7 +555,7 @@ Legacy versions：遗留的老版本的稳定版。
 <p>从<a href="http://zlib.net下载最新的" target="_blank" rel="noopener">http://zlib.net下载最新的</a> zlib 源码包，使用下面命令下载编译和安装 zlib包：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://zlib.net/zlib-1.2.11.tar.gz </span><br><span class="line">tar -zxvf zlib-1.2.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zlib-1.2.11</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
 <p>安装openssl<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget https://www.openssl.org/<span class="built_in">source</span>/openssl-1.1.0h.tar.gz</span><br><span class="line">tar -zxvf openssl-1.1.0h.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>安装Nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://nginx.org/download/nginx-1.14.0.tar.gz</span><br><span class="line">tar -zxvf nginx-1.14.0.tar.gz </span><br><span class="line"><span class="built_in">cd</span> nginx-1.14.0</span><br><span class="line">./configure --prefix=/data/nginx/ --with-http_v2_module --with-http_ssl_module --with-http_sub_module --with-http_stub_status_module --with-http_gzip_static_module --without-http-cache --with-http_realip_module --with-pcre=/data/backup/pcre-8.42 --with-zlib=/data/backup/zlib-1.2.11 --with-openssl=/data/backup/openssl-1.1.0h</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
-<p>创建Nginx软连接到环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /data/nginx/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br></pre></td></tr></table></figure></p>
+<p>创建Nginx软连接到环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /data/nginx/sbin/* /usr/sbin/</span><br></pre></td></tr></table></figure></p>
 <p>至此Nginx的安装已经结束。</p>
 <h3 id="Nginx升级、添加模块"><a href="#Nginx升级、添加模块" class="headerlink" title="Nginx升级、添加模块"></a>Nginx升级、添加模块</h3><p>如果要对当前的Nginx服务器进行版本升级，应用新模块，最简单的办法是停止当前Nginx服务，然后开启新的Nginx服务，但这样就会导致在一段时间内，用户无法访问服务器。为了解决这个问题，Nginx服务器提供平滑升级的功能。<br>平滑升级的过程是这样的，Nginx服务接收到USR2信号后首先将旧的nginx.pid文件(如果在配置文件中更改过这个文件的名字，也是相同的过程)添加.oldbin，变为nginx.pid.oldbin文件；然后执行新版本Nginx服务器的二进制文件启动服务。如果新的服务启动成功，系统中将由新旧两个Nginx服务公用提供Web服务。如果新的服务启动成功，系统中将有新旧两个Nginx服务共同提供Web服务。之后，需要向旧的Nginx服务进程发送WINCH信号，使旧的Nginx服务平滑停止，并删除nginx.pid.oldbin文件。在发送WINCH信号之前，可以随时停止新的Nginx服务。<br>注意：<br>为了实现Nginx服务器的平滑升级，新的服务器安装路径应该和旧的保持一致。因此建议用户在安装新服务器之前先备份旧服务器。<br>当前Nginx版本为1.12.2，官网提供最新版本为1.13.10（非稳定版本），本次升级到1.13.10。<br>和安装一样，首先下载解压，但是不要make install，编译参数中可以添加新的模块，以达到添加模块的目的，如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/backup</span><br><span class="line">wget http://nginx.org/download/nginx-1.13.10.tar.gz</span><br><span class="line">tar -zxvf nginx-1.13.10.tar.gz </span><br><span class="line"><span class="built_in">cd</span> nginx-1.13.10</span><br><span class="line">./configure --prefix=/data/nginx/ --with-http_v2_module --with-http_ssl_module --with-http_sub_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre=/data/backup/pcre-8.42 --with-zlib=/data/backup/zlib-1.2.11 --with-openssl=/data/backup/openssl-1.1.0h</span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
 <p>此时会在当前目录的objs文件夹内生成新版本的Nginx二进制文件。<br>平滑升级，先移走现有的Nginx二进制文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /data/nginx/sbin/nginx /data/nginx/sbin/nginx.old</span><br></pre></td></tr></table></figure></p>
@@ -1293,7 +1293,7 @@ location 匹配的优先级(与location在配置文件中的顺序无关)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">47</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1368,9 +1368,7 @@ location 匹配的优先级(与location在配置文件中的顺序无关)
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1545,7 +1543,35 @@ location 匹配的优先级(与location在配置文件中的顺序无关)
                     
                       
                     
-                    <span class="site-state-item-count">81</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">95</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1667,7 +1693,7 @@ location 匹配的优先级(与location在配置文件中的顺序无关)
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">417k</span>
+    <span title="站点总字数">434k</span>
   
 
   
@@ -1676,7 +1702,7 @@ location 匹配的优先级(与location在配置文件中的顺序无关)
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">6:19</span>
+    <span title="站点阅读时长">6:35</span>
   
 </div>
 

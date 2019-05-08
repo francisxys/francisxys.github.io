@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="_1iFxvEkIImQlyvWe4Y4gLh85rLCe9HPYV56NcoolIE">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="RZoFTJvjGp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概念介绍CDH 概览CDH是Apache Hadoop和相关项目的最完整、最受测试和最流行的发行版。CDH提供Hadoop的核心元素-可伸缩存储和分布式计算-以及基于web的用户界面和重要的企业功能。CDH是Apache许可的开放源码，是唯一提供统一批处理、交互式SQL和交互式搜索以及基于角色的访问控制的Hadoop解决方案。CDH 提供以下特性： 灵活性：存储任何类型的数据并使用各种不同的计算框">
+<meta name="keywords" content="CDH,cloudera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CDH集群安装">
+<meta property="og:url" content="http://www.cnops.com/posts/ffd68ac0.html">
+<meta property="og:site_name" content="Francis&#39;Blog">
+<meta property="og:description" content="概念介绍CDH 概览CDH是Apache Hadoop和相关项目的最完整、最受测试和最流行的发行版。CDH提供Hadoop的核心元素-可伸缩存储和分布式计算-以及基于web的用户界面和重要的企业功能。CDH是Apache许可的开放源码，是唯一提供统一批处理、交互式SQL和交互式搜索以及基于角色的访问控制的Hadoop解决方案。CDH 提供以下特性： 灵活性：存储任何类型的数据并使用各种不同的计算框">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508001.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508002.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508003.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508004.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508005.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508006.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508007.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508008.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508009.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508010.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508011.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508012.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508013.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508014.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508015.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508016.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508017.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508018.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508019.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508020.png">
+<meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508021.png">
+<meta property="og:updated_time" content="2019-05-08T08:52:44.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CDH集群安装">
+<meta name="twitter:description" content="概念介绍CDH 概览CDH是Apache Hadoop和相关项目的最完整、最受测试和最流行的发行版。CDH提供Hadoop的核心元素-可伸缩存储和分布式计算-以及基于web的用户界面和重要的企业功能。CDH是Apache许可的开放源码，是唯一提供统一批处理、交互式SQL和交互式搜索以及基于角色的访问控制的Hadoop解决方案。CDH 提供以下特性： 灵活性：存储任何类型的数据并使用各种不同的计算框">
+<meta name="twitter:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508001.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.cnops.com/posts/ffd68ac0.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CDH集群安装 | Francis'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Francis'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Francis'Blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/posts/ffd68ac0.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="云在青天水在瓶">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Francis'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CDH集群安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-08 11:03:17 / 修改时间：16:52:44" itemprop="dateCreated datePublished" datetime="2019-05-08T11:03:17+08:00">2019-05-08</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/BigData/CDH/" itemprop="url" rel="index"><span itemprop="name">CDH</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">8.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h2><h3 id="CDH-概览"><a href="#CDH-概览" class="headerlink" title="CDH 概览"></a>CDH 概览</h3><p>CDH是Apache Hadoop和相关项目的最完整、最受测试和最流行的发行版。CDH提供Hadoop的核心元素-可伸缩存储和分布式计算-以及基于web的用户界面和重要的企业功能。CDH是Apache许可的开放源码，是唯一提供统一批处理、交互式SQL和交互式搜索以及基于角色的访问控制的Hadoop解决方案。<br>CDH 提供以下特性：</p>
+<pre><code>灵活性：存储任何类型的数据并使用各种不同的计算框架进行操作，包括批处理、交互式SQL、免费文本搜索、机器学习和统计计算。
+集成：在一个完整的Hadoop平台上快速启动和运行，该平台与广泛的硬件和软件解决方案一起工作。
+安全：处理和控制敏感数据。
+可伸缩性：启用广泛的应用程序和规模，并扩展它们以满足您的需求。
+高可用性：满怀信心地执行任务关键的业务任务。
+兼容性：利用您现有的IT基础设施和投资。
+</code></pre><p>CDH 组件如下图：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508001.png" alt="Alt text" title="Francis&#39;Blog"></p>
+<h3 id="Cloudera-Manager-概览"><a href="#Cloudera-Manager-概览" class="headerlink" title="Cloudera Manager 概览"></a>Cloudera Manager 概览</h3><p>Cloudera Manager 是用于管理cdh集群的端到端应用程序。Cloudera Manager通过向CDH集群的每个部分提供细粒度的可见性并对其进行控制来设置企业部署标准-授权运营商提高性能、提高服务质量、提高遵从性和降低管理成本。使用Cloudera Manager，您可以轻松地部署和集中操作完整的CDH堆栈和其他托管服务。应用程序自动化安装过程，将部署时间从数周减少到分钟；为您提供在集群范围内运行主机和服务的实时视图；提供一个单一的中央控制台来执行整个集群的配置更改；并集成各种报告和诊断工具，以帮助您进行操作。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508002.png" alt="Alt text" title="Francis&#39;Blog"><br>Cloudera Manager 的架构如上图所示（cs结构），主要由如下几部分组成：</p>
+<pre><code>服务端/Server：Cloudera Manager 的核心。主要用于管理 web server 和应用逻辑。它用于安装软件，配置，开始和停止服务，以及管理服务运行的集群。
+代理/agent：安装在每台主机上。它负责启动和停止的进程，部署配置，触发安装和监控主机。
+数据库/Database：存储配置和监控信息。通常可以在一个或多个数据库服务器上运行的多个逻辑数据库。例如，所述的 Cloudera 管理器服务和监视，后台程序使用不同的逻辑数据库。
+Cloudera Repository：由cloudera manager 提供的软件分发库。
+客户端/Clients：提供了一个与 Server 交互的接口。
+</code></pre><p>Cloudera Manager包括server端和agent；server端主要作用是监控集群分发配置集群等，agent端主管集群各节点。<br>CDH是CM的安装包，本地或者云端，其中包括hadoop的生态系统需要的所有组件，通过Cloudera Manager统一管理和安装。<br>CDH除了可以通过cm安装也可以通过yum,tar,rpm安装。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="软件版本选择"><a href="#软件版本选择" class="headerlink" title="软件版本选择"></a>软件版本选择</h3><table>
+<thead>
+<tr>
+<th>类目</th>
+<th>版本</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>CentOS 7.6</td>
+<td><a href="https://mirrors.aliyun.com/centos/" target="_blank" rel="noopener">使用阿里云镜像下载</a></td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>5.7.25-Mysql</td>
+<td>二进制安装</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td>jdk-8u211-linux-x64.rpm</td>
+<td><a href="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html" target="_blank" rel="noopener">Oracle 官网下载</a></td>
+</tr>
+<tr>
+<td>Cloudera Manager</td>
+<td>Cloudera Manager 6.2.0</td>
+<td><a href="https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo" target="_blank" rel="noopener">官方仓库</a></td>
+</tr>
+<tr>
+<td>CDH</td>
+<td>CDH 6.2.0</td>
+<td><a href="https://archive.cloudera.com/cdh6/6.2.0/parcels/" target="_blank" rel="noopener">使用parcels安装</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="节点准备"><a href="#节点准备" class="headerlink" title="节点准备"></a>节点准备</h3><p>必须准备4个以上节点</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>IP</th>
+<th>CM管理软件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>10.186.63.57</td>
+<td>Cloudera Manager Server&amp;Agent ，Mysql</td>
+</tr>
+<tr>
+<td>node01</td>
+<td>10.186.63.112</td>
+<td>Cloudera Manager Agent</td>
+</tr>
+<tr>
+<td>node02</td>
+<td>10.186.63.135</td>
+<td>Cloudera Manager Agent</td>
+</tr>
+<tr>
+<td>node03</td>
+<td>10.186.63.136</td>
+<td>Cloudera Manager Agent</td>
+</tr>
+</tbody>
+</table>
+<p>内存要求大于8GB，master的磁盘要求多余50G。</p>
+<h3 id="系统初始化-所有节点"><a href="#系统初始化-所有节点" class="headerlink" title="系统初始化(所有节点)"></a>系统初始化(所有节点)</h3><p>初始化系统安装更新及常用软件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum upadte -y</span><br><span class="line">yum install wget ntpdate lrzsz vim -y</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置主机名和hosts解析-所有节点"><a href="#配置主机名和hosts解析-所有节点" class="headerlink" title="配置主机名和hosts解析(所有节点)"></a>配置主机名和hosts解析(所有节点)</h3><p>配置主机名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl <span class="built_in">set</span>-hostname master</span><br></pre></td></tr></table></figure></p>
+<p>其他节点命令相同<br>修改hosts解析，编辑文件/etc/hosts，增加如下内容。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.186.63.57	master</span><br><span class="line">10.186.63.112	node01</span><br><span class="line">10.186.63.135	node02</span><br><span class="line">10.186.63.136	node03</span><br></pre></td></tr></table></figure></p>
+<h3 id="关闭防火墙-所有节点"><a href="#关闭防火墙-所有节点" class="headerlink" title="关闭防火墙(所有节点)"></a>关闭防火墙(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld.service</span><br></pre></td></tr></table></figure>
+<h3 id="关闭SELinux-所有节点"><a href="#关闭SELinux-所有节点" class="headerlink" title="关闭SELinux(所有节点)"></a>关闭SELinux(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">'s#SELINUX=enforcing#SELINUX=disabled#g'</span> /etc/selinux/config</span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure>
+<h3 id="添加定时任务-所有节点"><a href="#添加定时任务-所有节点" class="headerlink" title="添加定时任务(所有节点)"></a>添加定时任务(所有节点)</h3><p>添加定时任务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"0 */1 * * * /usr/sbin/ntpdate 10.186.61.39"</span> &gt;&gt; /var/spool/cron/root</span><br></pre></td></tr></table></figure></p>
+<p>10.186.61.39为内网中一台时间服务器，也可以使用其他地址。<br>修改时区<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/localtime /etc/localtime.bak</span><br><span class="line">ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure></p>
+<h3 id="禁用透明大页面压缩-所有节点"><a href="#禁用透明大页面压缩-所有节点" class="headerlink" title="禁用透明大页面压缩(所有节点)"></a>禁用透明大页面压缩(所有节点)</h3><p>CDH配置需要<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line"><span class="built_in">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br></pre></td></tr></table></figure></p>
+<p>并将上面的两条命令写入开机自启动/etc/rc.local。</p>
+<h3 id="优化交换分区-所有节点"><a href="#优化交换分区-所有节点" class="headerlink" title="优化交换分区(所有节点)"></a>优化交换分区(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"vm.swappiness = 10"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+<h3 id="配置-JDK-所有节点"><a href="#配置-JDK-所有节点" class="headerlink" title="配置 JDK (所有节点)"></a>配置 JDK (所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh jdk-8u211-linux-x64.rpm</span><br></pre></td></tr></table></figure>
+<h2 id="安装-CM-和-CDH"><a href="#安装-CM-和-CDH" class="headerlink" title="安装 CM 和 CDH"></a>安装 CM 和 CDH</h2><h3 id="配置-Cloudera-Manager-仓库-所有节点"><a href="#配置-Cloudera-Manager-仓库-所有节点" class="headerlink" title="配置 Cloudera Manager 仓库(所有节点)"></a>配置 Cloudera Manager 仓库(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/</span><br><span class="line">或者</span><br><span class="line">rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-cloudera</span><br></pre></td></tr></table></figure>
+<p>使用仓库安装会比较慢，建议先把需要的rpm下载下来，进行离线安装或者建私有仓库，主要下面的三个软件包：<br>cloudera-manager-agent-6.2.0-968826.el7.x86_64.rpm<br>cloudera-manager-daemons-6.2.0-968826.el7.x86_64.rpm<br>cloudera-manager-server-6.2.0-968826.el7.x86_64.rpm<br>cloudera-manager-daemons 是 server 和 agent 必须安装的。</p>
+<h3 id="安装-CM-Server-和-Agent"><a href="#安装-CM-Server-和-Agent" class="headerlink" title="安装 CM Server 和 Agent"></a>安装 CM Server 和 Agent</h3><p>建议离线安装，把rpm包下载到服务器上面，传到其他节点一份，再本地安装，速度会快很多。<br>master：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server</span><br></pre></td></tr></table></figure></p>
+<p>node0[1-3]：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install cloudera-manager-daemons cloudera-manager-agent</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装数据库-master"><a href="#安装数据库-master" class="headerlink" title="安装数据库(master)"></a>安装数据库(master)</h3><p>数据库使用mysql数据库，具体安装步骤参考：<br><a href="https://www.cnops.top/posts/5229cf63.html" target="_blank" rel="noopener">Mysql自动安装脚本</a><br><a href="https://www.cnops.top/posts/41952.html" target="_blank" rel="noopener">Mysql安装</a><br><em>注意：Mysql需要关闭GTID，否则在后面进行初始化步骤会出错！</em><br>以下为：官网推荐示例配置文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">transaction-isolation = READ-COMMITTED</span><br><span class="line"><span class="comment"># Disabling symbolic-links is recommended to prevent assorted security risks;</span></span><br><span class="line"><span class="comment"># to do so, uncomment this line:</span></span><br><span class="line">symbolic-links = 0</span><br><span class="line"></span><br><span class="line">key_buffer_size = 32M</span><br><span class="line">max_allowed_packet = 32M</span><br><span class="line">thread_stack = 256K</span><br><span class="line">thread_cache_size = 64</span><br><span class="line">query_cache_limit = 8M</span><br><span class="line">query_cache_size = 64M</span><br><span class="line">query_cache_type = 1</span><br><span class="line"></span><br><span class="line">max_connections = 550</span><br><span class="line"><span class="comment">#expire_logs_days = 10</span></span><br><span class="line"><span class="comment">#max_binlog_size = 100M</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#log_bin should be on a disk with enough free space.</span></span><br><span class="line"><span class="comment">#Replace '/var/lib/mysql/mysql_binary_log' with an appropriate path for your</span></span><br><span class="line"><span class="comment">#system and chown the specified folder to the mysql user.</span></span><br><span class="line">log_bin=/var/lib/mysql/mysql_binary_log</span><br><span class="line"></span><br><span class="line"><span class="comment">#In later versions of MySQL, if you enable the binary log and do not set</span></span><br><span class="line"><span class="comment">#a server_id, MySQL will not start. The server_id must be unique within</span></span><br><span class="line"><span class="comment">#the replicating group.</span></span><br><span class="line">server_id=1</span><br><span class="line"></span><br><span class="line">binlog_format = mixed</span><br><span class="line"></span><br><span class="line">read_buffer_size = 2M</span><br><span class="line">read_rnd_buffer_size = 16M</span><br><span class="line">sort_buffer_size = 8M</span><br><span class="line">join_buffer_size = 8M</span><br><span class="line"></span><br><span class="line"><span class="comment"># InnoDB settings</span></span><br><span class="line">innodb_file_per_table = 1</span><br><span class="line">innodb_flush_log_at_trx_commit  = 2</span><br><span class="line">innodb_log_buffer_size = 64M</span><br><span class="line">innodb_buffer_pool_size = 4G</span><br><span class="line">innodb_thread_concurrency = 8</span><br><span class="line">innodb_flush_method = O_DIRECT</span><br><span class="line">innodb_log_file_size = 512M</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line"><span class="built_in">log</span>-error=/var/<span class="built_in">log</span>/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br><span class="line"></span><br><span class="line">sql_mode=STRICT_ALL_TABLES</span><br></pre></td></tr></table></figure></p>
+<h3 id="为-Cloudera-各软件创建数据库"><a href="#为-Cloudera-各软件创建数据库" class="headerlink" title="为 Cloudera 各软件创建数据库"></a>为 Cloudera 各软件创建数据库</h3><p>使用root登陆数据库，创建以下数据库和账号。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Service</th>
+<th style="text-align:left">Database</th>
+<th style="text-align:left">User</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Cloudera Manager Server</td>
+<td style="text-align:left">scm</td>
+<td style="text-align:left">scm</td>
+</tr>
+<tr>
+<td style="text-align:left">Activity Monitor</td>
+<td style="text-align:left">amon</td>
+<td style="text-align:left">amon</td>
+</tr>
+<tr>
+<td style="text-align:left">Reports Manager</td>
+<td style="text-align:left">rman</td>
+<td style="text-align:left">rman</td>
+</tr>
+<tr>
+<td style="text-align:left">Hue</td>
+<td style="text-align:left">hue</td>
+<td style="text-align:left">hue</td>
+</tr>
+<tr>
+<td style="text-align:left">Hive Metastore Server</td>
+<td style="text-align:left">metastore</td>
+<td style="text-align:left">hive</td>
+</tr>
+<tr>
+<td style="text-align:left">Sentry Server</td>
+<td style="text-align:left">sentry</td>
+<td style="text-align:left">sentry</td>
+</tr>
+<tr>
+<td style="text-align:left">Cloudera Navigator Audit Server</td>
+<td style="text-align:left">nav</td>
+<td style="text-align:left">nav</td>
+</tr>
+<tr>
+<td style="text-align:left">Cloudera Navigator Metadata Server</td>
+<td style="text-align:left">navms</td>
+<td style="text-align:left">navms</td>
+</tr>
+<tr>
+<td style="text-align:left">Oozie</td>
+<td style="text-align:left">oozie</td>
+<td style="text-align:left">oozie</td>
+</tr>
+</tbody>
+</table>
+<p>sql语句如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create database scm DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database rman DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database metastore DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database sentry DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database nav DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database navms DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line"></span><br><span class="line">GRANT ALL ON scm.* TO <span class="string">'scm'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON amon.* TO <span class="string">'amon'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON rman.* TO <span class="string">'rman'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON hue.* TO <span class="string">'hue'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON metastore.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON sentry.* TO <span class="string">'sentry'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON nav.* TO <span class="string">'nav'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON navms.* TO <span class="string">'navms'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON oozie.* TO <span class="string">'oozie'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-MySQL-JDBC-驱动-所有节点"><a href="#安装-MySQL-JDBC-驱动-所有节点" class="headerlink" title="安装 MySQL JDBC 驱动(所有节点)"></a>安装 MySQL JDBC 驱动(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">tar -zxvf mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">mkdir -p /usr/share/java/</span><br><span class="line"><span class="built_in">cd</span> mysql-connector-java-5.1.46</span><br><span class="line">cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
+<p><em>注意：最后的jar包名称<code>mysql-connector-java.jar</code>中，不能包含版本号。</em></p>
+<h3 id="设置-Cloudera-Manager-数据库"><a href="#设置-Cloudera-Manager-数据库" class="headerlink" title="设置 Cloudera Manager 数据库"></a>设置 Cloudera Manager 数据库</h3><p>初始化数据库(master节点操作)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># /opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm</span></span><br><span class="line"></span><br><span class="line">Enter SCM password: </span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_211</span><br><span class="line">Verifying that we can write to /etc/cloudera-scm-server</span><br><span class="line">Creating SCM configuration file <span class="keyword">in</span> /etc/cloudera-scm-server</span><br><span class="line">Executing:  /usr/java/jdk1.8.0_162/bin/java -cp /usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:/opt/cloudera/cm/schema/../lib/* com.cloudera.enterprise.dbutil.DbCommandExecutor /etc/cloudera-scm-server/db.properties com.cloudera.cmf.db.</span><br><span class="line">[                          main] DbCommandExecutor              INFO  Successfully connected to database.</span><br><span class="line">All <span class="keyword">done</span>, your SCM database is configured correctly!</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-CDH"><a href="#安装-CDH" class="headerlink" title="安装 CDH"></a>安装 CDH</h3><p>配置CDH的软件包 parcels(master)<br>CM安装成功之后，接下来我们就可以通过CM安装CDH的方式构建企业大数据平台。所以首先需要把CDH的parcels包下载到CM主服务器上。<br>同样的，我们为了加速我们的安装，我们可以把需要下载的软件包提前下载下来，也可以创建CDH私有仓库。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@namenode01 ~]<span class="comment"># cd /opt/cloudera/parcel-repo</span></span><br><span class="line">wget https://archive.cloudera.com/cdh6/6.2.0/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373-el7.parcel</span><br><span class="line">wget https://archive.cloudera.com/cdh6/6.2.0/parcels/manifest.json</span><br></pre></td></tr></table></figure></p>
+<p>在manifest.json文件中，找到对应版本的秘钥，复制到.sha文件中。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"2e650f1f1ea020a3efc98a231b85c2df1a50b030"</span> &gt; CDH-6.0.1-1.cdh6.0.1.p0.590678-el7.parcel.sha</span><br></pre></td></tr></table></figure></p>
+<p>修改属主属组。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown cloudera-scm.cloudera-scm /opt/cloudera/parcel-repo/*</span><br></pre></td></tr></table></figure></p>
+<p>启动 Cloudera Manager Server<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@namenode01 ~]<span class="comment"># systemctl start cloudera-scm-server</span></span><br></pre></td></tr></table></figure></p>
+<p>如果启动中有什么问题，可以查看日志。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/cloudera-scm-server/cloudera-scm-server.log</span><br></pre></td></tr></table></figure></p>
+<p>在最后显示的日志中，有显示启动监听的端口。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Started ServerConnector@da518cb&#123;SSL,[ssl, http/1.1]&#125;&#123;0.0.0.0:7183&#125;</span><br><span class="line">Started ServerConnector@a77165b&#123;HTTP/1.1,[http/1.1]&#125;&#123;0.0.0.0:7180&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="初始化-Cloudera-Manager"><a href="#初始化-Cloudera-Manager" class="headerlink" title="初始化 Cloudera Manager"></a>初始化 Cloudera Manager</h2><p>启动 server 和 agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start cloudera-scm-server</span><br><span class="line">systemctl start cloudera-scm-agent</span><br></pre></td></tr></table></figure></p>
+<p>CDH中各个服务的端口，如下图：<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508003.png" alt="Alt text" title="Francis&#39;Blog"><br>浏览器打开 <a href="http://10.186.63.57:7180" target="_blank" rel="noopener">http://10.186.63.57:7180</a> 用户名和密码默认都是admin。<br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508004.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508005.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508006.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508007.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508008.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508009.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508010.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508011.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508012.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508013.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508014.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508015.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508016.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508017.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508018.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508019.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508020.png" alt="Alt text" title="Francis&#39;Blog"><br><img src="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508021.png" alt="Alt text" title="Francis&#39;Blog"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/posts/ffd68ac0.html">CDH集群安装</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
+  <p><span>原始链接:</span><a href="/posts/ffd68ac0.html" title="CDH集群安装">http://www.cnops.com/posts/ffd68ac0.html</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/ffd68ac0.html" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+       
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Francis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Francis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CDH/" rel="tag"><i class="fa fa-tag"></i> CDH</a>
+          
+            <a href="/tags/cloudera/" rel="tag"><i class="fa fa-tag"></i> cloudera</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/4a48582.html" rel="next" title="Nginx编译安装及JDK环境安装脚本">
+                <i class="fa fa-chevron-left"></i> Nginx编译安装及JDK环境安装脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Francis</p>
+              <p class="site-description motion-element" itemprop="description">云在青天水在瓶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">52</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">99</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/francisxys" title="GitHub &rarr; https://github.com/francisxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:824014778@qq.com" title="E-Mail &rarr; mailto:824014778@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/Teotihuacanxys" title="Weibo &rarr; https://weibo.com/Teotihuacanxys" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tiejiang.org" title="http://www.tiejiang.org" rel="noopener" target="_blank">铁匠运维网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="http://www.ityouknow.com/" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念介绍"><span class="nav-text">概念介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CDH-概览"><span class="nav-text">CDH 概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloudera-Manager-概览"><span class="nav-text">Cloudera Manager 概览</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件版本选择"><span class="nav-text">软件版本选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点准备"><span class="nav-text">节点准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统初始化-所有节点"><span class="nav-text">系统初始化(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主机名和hosts解析-所有节点"><span class="nav-text">配置主机名和hosts解析(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭防火墙-所有节点"><span class="nav-text">关闭防火墙(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭SELinux-所有节点"><span class="nav-text">关闭SELinux(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加定时任务-所有节点"><span class="nav-text">添加定时任务(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#禁用透明大页面压缩-所有节点"><span class="nav-text">禁用透明大页面压缩(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化交换分区-所有节点"><span class="nav-text">优化交换分区(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-JDK-所有节点"><span class="nav-text">配置 JDK (所有节点)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-CM-和-CDH"><span class="nav-text">安装 CM 和 CDH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Cloudera-Manager-仓库-所有节点"><span class="nav-text">配置 Cloudera Manager 仓库(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-CM-Server-和-Agent"><span class="nav-text">安装 CM Server 和 Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装数据库-master"><span class="nav-text">安装数据库(master)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为-Cloudera-各软件创建数据库"><span class="nav-text">为 Cloudera 各软件创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-MySQL-JDBC-驱动-所有节点"><span class="nav-text">安装 MySQL JDBC 驱动(所有节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置-Cloudera-Manager-数据库"><span class="nav-text">设置 Cloudera Manager 数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-CDH"><span class="nav-text">安装 CDH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化-Cloudera-Manager"><span class="nav-text">初始化 Cloudera Manager</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">477k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:14</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by"><a href="https://www.cnops.top" class="theme-link" rel="noopener" target="_blank">Francis</a> 个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客</div>
+
+-->
+
+<div class="BbeiAn-info">
+    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41042202000126" style="color:#000000;text-decoration:none;padding-left:30px;background:url(https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/batb.png) no-repeat left center" rel="nofollow">豫公网安备 41042202000126号</a>    <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

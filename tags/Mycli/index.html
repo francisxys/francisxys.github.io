@@ -112,25 +112,24 @@
 
 
 
-  <meta name="description" content="前言删除kafka topic及其数据，严格来说并不是很难的操作。但是，往往给kafka 使用者带来诸多问题。本文总结多个删除kafka topic的应用场景，总结一套删除kafka topic的标准操作方法。 方法step1如果需要被删除topic此时正在被程序produce和consume使用，则这些生产和消费程序需要停止。因为如果有程序正在生产或者消费该topic，则该topic的offse">
-<meta name="keywords" content="Kafka,Confluent,topic">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Kafka彻底删除topics及数据">
-<meta property="og:url" content="http://www.cnops.com/posts/315f23f4.html">
+  <meta name="description" content="云在青天水在瓶">
+<meta name="keywords" content="运维,监控,自动化,脚本,系统,数据库">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Francis&#39;Blog">
+<meta property="og:url" content="http://www.cnops.com/tags/Mycli/index.html">
 <meta property="og:site_name" content="Francis&#39;Blog">
-<meta property="og:description" content="前言删除kafka topic及其数据，严格来说并不是很难的操作。但是，往往给kafka 使用者带来诸多问题。本文总结多个删除kafka topic的应用场景，总结一套删除kafka topic的标准操作方法。 方法step1如果需要被删除topic此时正在被程序produce和consume使用，则这些生产和消费程序需要停止。因为如果有程序正在生产或者消费该topic，则该topic的offse">
+<meta property="og:description" content="云在青天水在瓶">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-15T08:56:16.958Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kafka彻底删除topics及数据">
-<meta name="twitter:description" content="前言删除kafka topic及其数据，严格来说并不是很难的操作。但是，往往给kafka 使用者带来诸多问题。本文总结多个删除kafka topic的应用场景，总结一套删除kafka topic的标准操作方法。 方法step1如果需要被删除topic此时正在被程序produce和consume使用，则这些生产和消费程序需要停止。因为如果有程序正在生产或者消费该topic，则该topic的offse">
+<meta name="twitter:title" content="Francis&#39;Blog">
+<meta name="twitter:description" content="云在青天水在瓶">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.cnops.com/posts/315f23f4.html">
+  <link rel="canonical" href="http://www.cnops.com/tags/Mycli/">
 
 
 
@@ -140,7 +139,7 @@
   };
 </script>
 
-  <title>Kafka彻底删除topics及数据 | Francis'Blog</title>
+  <title>标签: Mycli | Francis'Blog</title>
   
 
 
@@ -189,7 +188,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
     
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -264,7 +263,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
 
     
     
@@ -328,6 +327,28 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -373,319 +394,56 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Mycli<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
-
-  
+      
+        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.cnops.com/posts/315f23f4.html">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Francis">
-      <meta itemprop="description" content="云在青天水在瓶">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Francis'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/posts/73ee1a5a.html" itemprop="url">
+              
+                <span itemprop="name">Mysql命令行工具mycli使用</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">Kafka彻底删除topics及数据
-              
-            
-          </h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-07 14:35:53" itemprop="dateCreated datePublished" datetime="2019-03-07T14:35:53+08:00">2019-03-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-15 16:56:16" itemprop="dateModified" datetime="2019-03-15T16:56:16+08:00">2019-03-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Service/" itemprop="url" rel="index"><span itemprop="name">Service</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Service/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">1.8k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">2 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>删除kafka topic及其数据，严格来说并不是很难的操作。但是，往往给kafka 使用者带来诸多问题。本文总结多个删除kafka topic的应用场景，总结一套删除kafka topic的标准操作方法。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><p>如果需要被删除topic此时正在被程序produce和consume使用，则这些生产和消费程序需要停止。<br>因为如果有程序正在生产或者消费该topic，则该topic的offset信息一致会在broker更新。调用kafka delete命令则无法删除该topic。<br>同时，需要设置<code>auto.create.topics.enable = false</code>，默认设置为true。如果设置为true，则produce或者fetch 不存在的topic也会自动创建这个topic。这样会给删除topic带来很多意向不到的问题。<br>所以，这一步很重要，必须设置<code>auto.create.topics.enable = false</code>，并认真把生产和消费程序彻底全部停止。</p>
-<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><p>kafka配置文件server.properties设置<code>delete.topic.enable=true</code>，如果没有设置<code>delete.topic.enable=true</code>，则调用kafka 的delete命令无法真正将topic删除，而是显示（marked for deletion）。</p>
-<h3 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h3><p>当前使用的kafka版本为confluent5.1.2，以下命令请根据实际情况调整。<br>调用命令删除topic<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --delete --zookeeper [zookeeper server:port] --topic [topic name]</span><br></pre></td></tr></table></figure></p>
-<p>此处命令中topic name支持通配符<code>*</code>。</p>
-<h3 id="step4"><a href="#step4" class="headerlink" title="step4"></a>step4</h3><p>删除kafka存储目录（server.properties文件log.dirs配置，默认为”/data/kafka-logs”）相关topic的数据目录。<br>confluent的目录为<code>/tmp/confluent.*/kafka/data</code>。<br>注意：如果kafka 有多个 broker，且每个broker 配置了多个数据盘（比如 /data/kafka-logs,/data1/kafka-logs …），且topic也有多个分区和replica，则需要对所有broker的所有数据盘进行扫描，删除该topic的所有分区数据。<br>一般而言，经过上面4步就可以正常删除掉topic和topic的数据。但是，如果经过上面四步，还是无法正常删除topic，则需要对kafka在zookeeer的存储信息进行删除。具体操作如下：<br>（注意：以下步骤里面，kafka在zk里面的节点信息是采用默认值，如果你的系统修改过kafka在zk里面的节点信息，则需要根据系统的实际情况找到准确位置进行操作）</p>
-<h3 id="step5"><a href="#step5" class="headerlink" title="step5"></a>step5</h3><p>找一台部署了zk的服务器，使用命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zookeeper-shell [zookeeper server:port]</span><br></pre></td></tr></table></figure></p>
-<p>登录到zk shell，然后找到topic所在的目录：ls /brokers/topics，找到要删除的topic，然后执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmr /brokers/topics/[topic name]</span><br></pre></td></tr></table></figure></p>
-<p>即可，此时topic被彻底删除。<br>如果topic 是被标记为 marked for deletion，则通过命令<code>ls /admin/delete_topics</code>，找到要删除的topic，然后执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmr /admin/delete_topics/[topic name]</span><br></pre></td></tr></table></figure></p>
-<p>备注：<br>其他方法说需要删除topic在zk上面的消费节点记录、配置节点记录，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rmr /consumers/[consumer-group]</span><br><span class="line">rmr /config/topics/[topic name]</span><br></pre></td></tr></table></figure></p>
-<p>其实正常情况是不需要进行这两个操作的，如果需要，那都是由于操作不当导致的。比如step1停止生产和消费程序没有做，step2没有正确配置。也就是说，正常情况下严格按照step1 – step5 的步骤，是一定能够正常删除topic的。</p>
-<h3 id="step6"><a href="#step6" class="headerlink" title="step6"></a>step6</h3><p>完成之后，调用命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --list --zookeeper [zookeeper server:port]</span><br></pre></td></tr></table></figure></p>
-<p>查看现在kafka的topic信息。<br>正常情况下删除的topic就不会再显示，如果还能够查询到删除的topic，则重启zk和kafka即可。</p>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-        
-<div class="my_post_copyright">
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-  
-  <!-- JS库 sweetalert 可修改路径 -->
-  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/posts/315f23f4.html">Kafka彻底删除topics及数据</a></p>
-  <p><span>文章作者:</span><a href="/" title="访问 Francis 的个人博客">Francis</a></p>
-  <p><span>原始链接:</span><a href="/posts/315f23f4.html" title="Kafka彻底删除topics及数据">http://www.cnops.com/posts/315f23f4.html</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.cnops.com/posts/315f23f4.html" aria-label="复制成功！"></i></span>
-  </p>
-  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
-</div>
-<script> 
-    var clipboard = new Clipboard('.fa-clipboard');
-      $(".fa-clipboard").click(function(){
-      clipboard.on('success', function(){
-        swal({   
-          title: "",   
-          text: '复制成功',
-          icon: "success", 
-          showConfirmButton: true
-          });
-        });
-    });  
-</script>
-
-      
-    </div>
-
-    
-
-    
-       
-    
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="Francis 微信支付">
-        <p>微信支付</p>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-09T10:04:36+08:00" content="2019-05-09">
+          05-09
+        </time>
       </div>
-    
 
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.png" alt="Francis 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
-          
-            <a href="/tags/Confluent/" rel="tag"><i class="fa fa-tag"></i> Confluent</a>
-          
-            <a href="/tags/topic/" rel="tag"><i class="fa fa-tag"></i> topic</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/posts/e7a3462e.html" rel="next" title="Confluent捕获Mysql实时数据变更事件">
-                <i class="fa fa-chevron-left"></i> Confluent捕获Mysql实时数据变更事件
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/4c3ba58e.html" rel="prev" title="Kafka手动设置offset">
-                Kafka手动设置offset <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
+      
+    </div>
+
   </div>
-
-
-          </div>
-          
+  
+  
+  
 
   
 
 
+          </div>
+          
 
         </div>
         
@@ -706,17 +464,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1104,22 +853,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1"><span class="nav-text">step1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2"><span class="nav-text">step2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step3"><span class="nav-text">step3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step4"><span class="nav-text">step4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step5"><span class="nav-text">step5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step6"><span class="nav-text">step6</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -1267,10 +1000,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
-
-
 
   
 

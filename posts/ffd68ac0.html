@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508019.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508020.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190508021.png">
-<meta property="og:updated_time" content="2019-05-08T10:07:51.661Z">
+<meta property="og:updated_time" content="2019-05-09T08:02:05.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDH集群安装">
 <meta name="twitter:description" content="概念介绍CDH 概览CDH是Apache Hadoop和相关项目的最完整、最受测试和最流行的发行版。CDH提供Hadoop的核心元素-可伸缩存储和分布式计算-以及基于web的用户界面和重要的企业功能。CDH是Apache许可的开放源码，是唯一提供统一批处理、交互式SQL和交互式搜索以及基于角色的访问控制的Hadoop解决方案。CDH 提供以下特性： 灵活性：存储任何类型的数据并使用各种不同的计算框">
@@ -452,12 +452,24 @@
                 
               
 
-              <time title="创建时间：2019-05-08 11:03:17 / 修改时间：18:07:51" itemprop="dateCreated datePublished" datetime="2019-05-08T11:03:17+08:00">2019-05-08</time>
+              <time title="创建时间：2019-05-08 11:03:17" itemprop="dateCreated datePublished" datetime="2019-05-08T11:03:17+08:00">2019-05-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 16:02:05" itemprop="dateModified" datetime="2019-05-09T16:02:05+08:00">2019-05-09</time>
               
             
           </span>
@@ -701,7 +713,7 @@ Cloudera Repository：由cloudera manager 提供的软件分发库。
 </tbody>
 </table>
 <p>sql语句如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create database scm DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database rman DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database metastore DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database sentry DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database nav DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database navms DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line"></span><br><span class="line">GRANT ALL ON scm.* TO <span class="string">'scm'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON amon.* TO <span class="string">'amon'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON rman.* TO <span class="string">'rman'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON hue.* TO <span class="string">'hue'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON metastore.* TO <span class="string">'hive'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON sentry.* TO <span class="string">'sentry'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON nav.* TO <span class="string">'nav'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON navms.* TO <span class="string">'navms'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line">GRANT ALL ON oozie.* TO <span class="string">'oozie'</span>@<span class="string">'%'</span> identified by <span class="string">'francis'</span>;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure></p>
-<h3 id="安装-MySQL-JDBC-驱动-所有节点"><a href="#安装-MySQL-JDBC-驱动-所有节点" class="headerlink" title="安装 MySQL JDBC 驱动(所有节点)"></a>安装 MySQL JDBC 驱动(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">tar -zxvf mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">mkdir -p /usr/share/java/</span><br><span class="line"><span class="built_in">cd</span> mysql-connector-java-5.1.46</span><br><span class="line">cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
+<h3 id="安装-MySQL-JDBC-驱动-所有节点"><a href="#安装-MySQL-JDBC-驱动-所有节点" class="headerlink" title="安装 MySQL JDBC 驱动(所有节点)"></a>安装 MySQL JDBC 驱动(所有节点)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">tar -zxvf mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">mkdir -p /usr/share/java/</span><br><span class="line">cp mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
 <p><em>注意：最后的jar包名称<code>mysql-connector-java.jar</code>中，不能包含版本号。</em></p>
 <h3 id="设置-Cloudera-Manager-数据库"><a href="#设置-Cloudera-Manager-数据库" class="headerlink" title="设置 Cloudera Manager 数据库"></a>设置 Cloudera Manager 数据库</h3><p>初始化数据库(master节点操作)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># /opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm</span></span><br><span class="line"></span><br><span class="line">Enter SCM password: </span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_211</span><br><span class="line">Verifying that we can write to /etc/cloudera-scm-server</span><br><span class="line">Creating SCM configuration file <span class="keyword">in</span> /etc/cloudera-scm-server</span><br><span class="line">Executing:  /usr/java/jdk1.8.0_162/bin/java -cp /usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:/opt/cloudera/cm/schema/../lib/* com.cloudera.enterprise.dbutil.DbCommandExecutor /etc/cloudera-scm-server/db.properties com.cloudera.cmf.db.</span><br><span class="line">[                          main] DbCommandExecutor              INFO  Successfully connected to database.</span><br><span class="line">All <span class="keyword">done</span>, your SCM database is configured correctly!</span><br></pre></td></tr></table></figure></p>
 <h3 id="安装-CDH"><a href="#安装-CDH" class="headerlink" title="安装 CDH"></a>安装 CDH</h3><p>配置CDH的软件包 parcels(master)<br>CM安装成功之后，接下来我们就可以通过CM安装CDH的方式构建企业大数据平台。所以首先需要把CDH的parcels包下载到CM主服务器上。<br>同样的，我们为了加速我们的安装，我们可以把需要下载的软件包提前下载下来，也可以创建CDH私有仓库。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@namenode01 ~]<span class="comment"># cd /opt/cloudera/parcel-repo</span></span><br><span class="line">wget https://archive.cloudera.com/cdh6/6.2.0/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373-el7.parcel</span><br><span class="line">wget https://archive.cloudera.com/cdh6/6.2.0/parcels/manifest.json</span><br></pre></td></tr></table></figure></p>
@@ -894,7 +906,7 @@ Cloudera Repository：由cloudera manager 提供的软件分发库。
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1186,7 +1198,7 @@ Cloudera Repository：由cloudera manager 提供的软件分发库。
                     
                       
                     
-                    <span class="site-state-item-count">100</span>
+                    <span class="site-state-item-count">101</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1308,7 +1320,7 @@ Cloudera Repository：由cloudera manager 提供的软件分发库。
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">481k</span>
+    <span title="站点总字数">486k</span>
   
 
   
@@ -1317,7 +1329,7 @@ Cloudera Repository：由cloudera manager 提供的软件分发库。
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:18</span>
+    <span title="站点阅读时长">7:21</span>
   
 </div>
 

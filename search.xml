@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Nginx配置日志按天保存]]></title>
+    <url>%2Fposts%2Fa8c97263.html</url>
+    <content type="text"><![CDATA[Nginx日志按天保存，网上有很多教程，都是通过脚本辅助，重命名文件实现。其实Nginx自身有原生方法，可以通过配置实现。首先配置access日志的格式：123log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '$status $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"'; 更改为123log_format main '$remote_addr - $remote_user [$time_iso8601] "$request" ' '$status $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"'; 此处主要更改access日志文件中日期格式，与日志按天保存没有关系，也可以不修改，只是为了更方便。配置日志按天保存，在server字段内配置，如下：1234567891011server &#123; ··· if ($time_iso8601 ~ '(\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;)') &#123; set $ymd $1; &#125; access_log logs/80.access_$ymd.log main; ···&#125; 需要注意的是：保证日志目录可被nginx用户组有读写权限。没有授权可以通过chown授权。然后重启nginx即可。更详细的日期变量设置：123456789if ($time_iso8601 ~ "^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)T(\d&#123;2&#125;):(\d&#123;2&#125;):(\d&#123;2&#125;)")&#123; set $year $1; set $month $2; set $day $3; set $hour $4; set $minutes $5; set $seconds $6;&#125; 可以根据自身需求调整。]]></content>
+      <categories>
+        <category>service</category>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>日志</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[上传文件到Seafile]]></title>
     <url>%2Fposts%2Ffe431f56.html</url>
     <content type="text"><![CDATA[需求场景业务系统需要每天巡检，之前的方案是巡检系统生成word格式的巡检报告，并发送到邮箱。但是随着各地业务节点服务器增多，邮件也增多，每天接收很多邮件很困扰，而且邮件收到后，也需要将附件(即生成的巡检报告)上传至Seafile，所以简化化成，将巡检报告直接上传至Seafile。 具体实现生成巡检报告参考：Python系统巡检脚本 如何将文件上传至Seafile，参考Seafiel api文档首先确定Seafile上目标目录的最上层目录的repo-id，可以通过网页端在地址栏查看。本次需要上传到运维巡检目录下，repo-id为8599d561-f818-4e86-93b3-1da91d920145。查看目录的所有者，使用目录所有者账号获取Token，也可以使用自己账户新建目录，并上传。 获取Token12# curl --data-urlencode username=****** -d password=****** https://seafile.******.com/api2/auth-token/&#123;"token":"e2acc3630c05c88a9546073ae5bac6ed8aa7e980"&#125; 验证12# curl -H 'Authorization: Token e2acc3630c05c88a9546073ae5bac6ed8aa7e980' https://seafile.******.com/api2/auth/ping/"pong" 出现pong，表示使用curl方式登录验证通过。每个账户的token是不变的。示例中账号密码及seafile地址隐藏了，在使用中根据实际情况填写。 获取上传链接12# curl -H 'Authorization: Token e2acc3630c05c88a9546073ae5bac6ed8aa7e980' https://seafile.******.com/api2/repos/8599d561-f818-4e86-93b3-1da91d920145/upload-link/"https://seafile.******.com/seafhttp/upload-api/d6d70117-2124-484e-8fde-316cb6a7c30a" 此处8599d561-f818-4e86-93b3-1da91d920145即为上面提到的目标目录的repo-id。需要主要的是： 返回的url并非是不变的，在不同的服务器上返回的url不同； 并且具有时效性，即过了一段时间之后，这个url就不能用了，但是具体多少时间没有测试出来。 上传脚本12345678910111213141516171819202122232425#!/usr/bin/python# coding:utf-8#Author:Francisimport osimport subprocessimport timeimport reimport requestsdef main(): filename = "gbj_ls_checkos_" + session000 + ".docx" cmd = " curl -s -H 'Authorization: Token e2acc3630c05c88a9546073ae5bac6ed8aa7e980' https://seafile.******.com/api2/repos/8599d561-f818-4e86-93b3-1da91d920145/upload-link/ " getuploadlink = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT) uploadlinktmp = getuploadlink.stdout.read() uploadlink = eval(uploadlinktmp) output = os.popen(" curl -s -H 'Authorization: Token e2acc3630c05c88a9546073ae5bac6ed8aa7e980' -F file=@%s -F parent_dir=/test01/ls/ -F replace=1 %s " % (filename,uploadlink)) print(output.read()) print(datetime.datetime.now()) if __name__ == '__main__': main() 脚本中获取系统指标的代码已经省略，其中变量filename代表生成的具有日期标识的巡检报告，uploadlink是脚本执行时获取的上传链接，- s表示curl以静默方式运行，不显示进度条。]]></content>
@@ -116,8 +129,8 @@
         <category>Shell</category>
       </categories>
       <tags>
-        <tag>Mysql</tag>
         <tag>Shell</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -627,8 +640,8 @@
         <category>Env</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>CentOS</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

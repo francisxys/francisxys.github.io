@@ -5,7 +5,7 @@
     <url>%2Fposts%2Fa8c97263.html</url>
     <content type="text"><![CDATA[Nginx日志按天保存，网上有很多教程，都是通过脚本辅助，重命名文件实现。其实Nginx自身有原生方法，可以通过配置实现。首先配置access日志的格式：123log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '$status $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"'; 更改为123log_format main '$remote_addr - $remote_user [$time_iso8601] "$request" ' '$status $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"'; 此处主要更改access日志文件中日期格式，与日志按天保存没有关系，也可以不修改，只是为了更方便。配置日志按天保存，在server字段内配置，如下：1234567891011server &#123; ··· if ($time_iso8601 ~ '(\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;)') &#123; set $ymd $1; &#125; access_log logs/80.access_$ymd.log main; ···&#125; 需要注意的是：保证日志目录可被nginx用户组有读写权限。没有授权可以通过chown授权。然后重启nginx即可。更详细的日期变量设置：123456789if ($time_iso8601 ~ "^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)T(\d&#123;2&#125;):(\d&#123;2&#125;):(\d&#123;2&#125;)")&#123; set $year $1; set $month $2; set $day $3; set $hour $4; set $minutes $5; set $seconds $6;&#125; 可以根据自身需求调整。]]></content>
       <categories>
-        <category>service</category>
+        <category>Service</category>
         <category>Nginx</category>
       </categories>
       <tags>

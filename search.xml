@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ZabbixAPI获取CPU信息]]></title>
+    <url>%2Fposts%2F85977b55.html</url>
+    <content type="text"><![CDATA[需求根据工作需求，需要每天将前一天的服务器CPU的使用率的最大值通过脚本发送邮件给客户方。但是脚本是实时行为，并不能查找历史数据，所以计划从zabbix获取。有两种方式：一是通过zabbixAPI获取数据，二是从zabbix的数据库直接获取。推荐使用zabbixAPI方式获取数据，zabbix提供API使用的官方文档。暂时安装zabbix服务版本为3.0，API文档地址。 具体实现脚本打印内容很多，因为我验证脚本是否按照我的想法在处理！脚本思路：获取昨日上午9点和昨日下午17点30分的时间戳：12345678910111213141516now = datetime.datetime.now()print(now)# 昨天上午9点yesterday_start = now - datetime.timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,microseconds=now.microsecond) - datetime.timedelta(hours=15, minutes=0, seconds=0)print(yesterday_start)print(type(yesterday_start))start_timeArray = time.strptime(str(yesterday_start), "%Y-%m-%d %H:%M:%S")start_timeStamp = int(time.mktime(start_timeArray))print(start_timeStamp)# 昨天下午7点30分yesterday_end = yesterday_start + datetime.timedelta(hours=8, minutes=30, seconds=0)print(yesterday_end)print(type(yesterday_end))end_timeArray = time.strptime(str(yesterday_end), "%Y-%m-%d %H:%M:%S")end_timeStamp = int(time.mktime(end_timeArray))print(end_timeStamp) start_timeStamp即为昨日9点时间戳，end_timeStamp即为下午17点30分的时间戳，后面要用。获取zabbixAPI登录的token：123456789101112131415161718192021222324252627282930url = "http://x.x.x.x/api_jsonrpc.php"header = &#123;"Content-Type":"application/json"&#125;data = json.dumps(&#123; "jsonrpc": "2.0", "method": "user.login", "params": &#123; "user": "xxxxxx", "password": "xxxxxx"&#125;,"id": 0&#125;)def get_token():# create request object request = urllib2.Request(url,data) for key in header: request.add_header(key,header[key]) # auth and get authid try: result = urllib2.urlopen(request) except URLError as e: print "Auth Failed, Please Check Your Name AndPassword:",e.code else: response = json.loads(result.read()) result.close() print"Auth Successful. The Auth ID Is:",response['result'] token = response['result'] print token return token 其中url地址和用户密码已隐藏！剩下的就是根据token登录API，根据时间、host、key、获取信息。完整脚本如下：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103#!/usr/bin/python# coding:utf-8#Author:Francisimport requestsimport jsonimport urllib2import timeimport reimport requestsimport datetimeimport os,sys# 获取当前时间now = datetime.datetime.now()print(now)# 昨天上午9点yesterday_start = now - datetime.timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,microseconds=now.microsecond) - datetime.timedelta(hours=15, minutes=0, seconds=0)print(yesterday_start)print(type(yesterday_start))start_timeArray = time.strptime(str(yesterday_start), "%Y-%m-%d %H:%M:%S")start_timeStamp = int(time.mktime(start_timeArray))print(start_timeStamp)# 昨天下午7点30分yesterday_end = yesterday_start + datetime.timedelta(hours=8, minutes=30, seconds=0)print(yesterday_end)print(type(yesterday_end))end_timeArray = time.strptime(str(yesterday_end), "%Y-%m-%d %H:%M:%S")end_timeStamp = int(time.mktime(end_timeArray))print(end_timeStamp)url = "http://x.x.x.x/api_jsonrpc.php"header = &#123;"Content-Type":"application/json"&#125;data = json.dumps(&#123; "jsonrpc": "2.0", "method": "user.login", "params": &#123; "user": "Admin", "password": "xxxxxx"&#125;,"id": 0&#125;)def get_token():# create request object request = urllib2.Request(url,data) for key in header: request.add_header(key,header[key]) # auth and get authid try: result = urllib2.urlopen(request) except URLError as e: print "Auth Failed, Please Check Your Name AndPassword:",e.code else: response = json.loads(result.read()) result.close() print"Auth Successful. The Auth ID Is:",response['result'] token = response['result'] print token return token def get_cpu_value_max(hostname,key): print(hostname) auth = get_token() print(auth) output1 = os.popen(''' curl -s -X POST -H 'Content-Type: application/json' -d '&#123;"jsonrpc": "2.0","method":"host.get","params":&#123;"output":["hostid"],"filter": &#123;"host":"%s"&#125;&#125;,"auth": "%s","id": 0&#125;' %s ''' % (hostname,auth,url)) response1 = json.loads(output1.read()) print(response1) hostid = response1['result'][0]['hostid'] print(hostid) output2 = os.popen(''' curl -s -X POST -H 'Content-Type: application/json' -d '&#123;"jsonrpc": "2.0","method":"item.get","params":&#123;"output":"itemids","hostids":"%s","search":&#123;"key_":"%s"&#125;&#125;,"auth": "%s","id": 0&#125;' %s ''' % (hostid,key,auth,url)) response2 = json.loads(output2.read()) itemid = response2['result'][0]['itemid'] print(itemid) output3 = os.popen(''' curl -s -X POST -H 'Content-Type: application/json' -d '&#123;"jsonrpc": "2.0","method":"history.get","params":&#123;"history":0,"itemids":["%s"],"time_from":"%d","time_till":"%d","output":"extend"&#125;,"auth": "%s","id": 0&#125;' %s ''' % (itemid,start_timeStamp,end_timeStamp,auth,url)) response3 = json.loads(output3.read()) value = [] for i in response3['result']: value_tmp = i['value'] value.append(value_tmp) print(value) value_float = [] for num in value: value_float.append(float(num)) print(value_float) print(max(value_float)) def main(): print '-'*100 get_token() print '-'*100 get_cpu_value_max('gbj_cs01','system.cpu.load[percpu,avg1]') print '-'*100 get_cpu_value_max('gbj_cs02','system.cpu.load[percpu,avg1]')if __name__ == '__main__': main() 脚本最后的结果max(value_float)服务器在昨日上午9点到下午17点30分之间CPU使用率的最大值，也就是昨日系统CPU使用率的峰值！]]></content>
+      <categories>
+        <category>Monitor</category>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+        <tag>API</tag>
+        <tag>CPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JVM常用参数]]></title>
+    <url>%2Fposts%2F2e9e2da2.html</url>
+    <content type="text"><![CDATA[简述JVM在启动的时候，会执行默认的一些参数。一般情况下，这些设置的默认参数应对一些平常的项目也够用了。但是如果项目特别大了，需要增加一下堆内存的大小、或者是系统老是莫明的挂掉，想查看下gc日志来排查一下错误的原因，都需要咱们手动设置这些参数。 各个参数介绍verbose:gc表示，启动jvm的时候，输出jvm里面的gc信息。格式如下：1[Full GC 178K-&gt;99K(1984K)， 0.0253877 secs] 解读 ：Full GC 就表示执行了一次Full GC的操作，178K 和99K 就表示执行GC前内存容量和执行GC后的内存容量。1984K就表示内存总容量。后面那个是执行本次GC所消耗的时间，单位是秒。 -XX:+printGC这个打印的GC信息跟上个一样，就不做介绍了。 -XX:+PrintGCDetails打印GC的详细信息。格式如下：1234567891011–Heap– def new generation total 13824K, used 11223K [0x27e80000, 0x28d80000, 0x28d80000)– eden space 12288K, 91% used [0x27e80000, 0x28975f20, 0x28a80000)– from space 1536K, 0% used [0x28a80000, 0x28a80000, 0x28c00000)– to space 1536K, 0% used [0x28c00000, 0x28c00000, 0x28d80000)– tenured generation total 5120K, used 0K [0x28d80000, 0x29280000, 0x34680000)– the space 5120K, 0% used [0x28d80000, 0x28d80000, 0x28d80200, 0x29280000)– compacting perm gen total 12288K, used 142K [0x34680000, 0x35280000, 0x38680000)– the space 12288K, 1% used [0x34680000, 0x346a3a90, 0x346a3c00, 0x35280000)– ro space 10240K, 44% used [0x38680000, 0x38af73f0, 0x38af7400, 0x39080000)– rw space 12288K, 52% used [0x39080000, 0x396cdd28, 0x396cde00, 0x39c80000) 解读：new generation 就是堆内存里面的新生代。total的意思就是一共的，所以后面跟的就是新生代一共的内存大小。used也就是使用了多少内存大小。0x开头的那三个分别代表的是 底边界，当前边界，高边界。也就是新生代这片内存的起始点，当前使用到的地方和最大的内存地点。eden space 这个通常被翻译成伊甸园区，是在新生代里面的，一些创建的对象都会先被放进这里。后面那个12288K就表示伊甸园区一共的内存大小，91% used，很明显，表示已经使用了百分之多少。后面的那个0x跟上一行的解释一样。from space 和to space 是幸存者的两个区。也是属于新生代的。他两个区的大小必须是一样的。因为新生代的GC采用的是复制算法，每次只会用到一个幸存区，当一个幸存区满了的时候，把还是活的对象复制到另个幸存区，上个直接清空。这样做就不会产生内存碎片了。tenured generation 就表示老年代。compacting perm 表示永久代。由于这两个的格式跟前面我介绍的那个几乎一样，我就不必介绍了。 -XX:+PrintGCTimeStamps打印GC发生的时间戳。格式如下：123289.556: [GC [PSYoungGen: 314113K-&gt;15937K(300928K)] 405513K-&gt;107901K(407680K), 0.0178568 secs] [Times: user=0.06 sys=0.00, real=0.01 secs] 293.271: [GC [PSYoungGen: 300865K-&gt;6577K(310720K)] 392829K-&gt;108873K(417472K), 0.0176464 secs] [Times: user=0.06 sys=0.00, real=0.01 secs] 解读：289.556表示从jvm启动到发生垃圾回收所经历的的时间。GC表示这是新生代GC（Minor GC）。PSYoungGen表示新生代使用的是多线程垃圾回收器Parallel Scavenge。314113K-&gt;15937K(300928K)]这个跟上面那个GC格式一样，只不过，这个是表示的是新生代，幸存者区。后面那个是整个堆的大小，GC前和GC后的情况。Times这个显而易见，代表GC的所消耗的时间，用户垃圾回收的时间和系统消耗的时间和最终真实的消耗时间。 -X:loggc:log/gc.log这个就表示，指定输出gc.log的文件位置。（我这里写的log/gc.log就表示在当前log的目录里，把GC日志写到叫gc.log的文件里。） -XX:+PrintHeapAtGC表示每次GC后，都打印堆的信息。（这个打印的基本格式跟上面第二条的基本类似，我也就不比多说了。） -XX:+TraceClassLoading监控类的加载。格式如下：1234567•[Loaded java.lang.Object from shared objects file]•[Loaded java.io.Serializable from shared objects file]•[Loaded java.lang.Comparable from shared objects file]•[Loaded java.lang.CharSequence from shared objects file]•[Loaded java.lang.String from shared objects file]•[Loaded java.lang.reflect.GenericDeclaration from shared objects file]•[Loaded java.lang.reflect.Type from shared objects file] 使用这个参数就能很清楚的看到那些类被加载的情况了。 -XX:+PrintClassHistogram跟踪参数。这个按下Ctrl+Break后，就会打印一下信息：123456789101112131415num #instances #bytes class name ---------------------------------------------- 1: 890617 470266000 [B 2: 890643 21375432 java.util.HashMap$Node 3: 890608 14249728 java.lang.Long 4: 13 8389712 [Ljava.util.HashMap$Node; 5: 2062 371680 [C 6: 463 41904 java.lang.Class –分别显示：序号、实例数量、总大小、类型。这里面那个类型，B和C的其实就是byte和char类型。 -Xmx -Xms这个就表示设置堆内存的最大值和最小值。这个设置了最大值和最小值后，jvm启动后，并不会直接让堆内存就扩大到指定的最大数值。而是会先开辟指定的最小堆内存，如果经过数次GC后，还不能，满足程序的运行，才会逐渐的扩容堆的大小，但也不是直接扩大到最大内存。 -Xmn设置新生代的内存大小。 -XX:NewRatio新生代和老年代的比例。比如：1：4，就是新生代占五分之一。 -XX:SurvivorRatio设置两个Survivor区和eden区的比例。比如：2：8 ，就是一个Survivor区占十分之一。 -XX:+HeapDumpOnOutMemoryError发生OOM时，导出堆的信息到文件。 -XX:+HeapDumpPath表示，导出堆信息的文件路径。 -XX:OnOutOfMemoryError当系统产生OOM时，执行一个指定的脚本，这个脚本可以是任意功能的。比如生成当前线程的dump文件，或者是发送邮件和重启系统。 -XX:PermSize -XX:MaxPermSize设置永久区的内存大小和最大值。永久区内存用光也会导致OOM的发生。 -Xss设置栈的大小。栈都是每个线程独有一个，所有一般都是几百k的大小。]]></content>
+      <categories>
+        <category>OS</category>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[阿里云ECS漏洞RHSA-2018:3092修复]]></title>
     <url>%2Fposts%2F51fa89fd.html</url>
     <content type="text"><![CDATA[一、关于glibc的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为glibc的版本太低，具有以下上图所示两个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到我们需要升级的软件一共有5个，分别是glibc、glibc-common、glibc-headers、glibc-devel、nscd。rpm包可从此处下载，选择稳定版本即可。 3、升级脚本将下载、安装过程脚本话12345678910111213141516171819#!/bin/sh#Francis#切换到下载目录cd /data/backup# update glibc to 2.22 for CentOS 7wget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-common-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-headers-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/glibc-devel-2.22.90-21.el7.x86_64.rpmwget http://cbs.centos.org/kojifiles/packages/glibc/2.22.90/21.el7/x86_64/nscd-2.22.90-21.el7.x86_64.rpmrpm -Uvh glibc-2.22.90-21.el7.x86_64.rpm \ glibc-common-2.22.90-21.el7.x86_64.rpm \ glibc-devel-2.22.90-21.el7.x86_64.rpm \ glibc-headers-2.22.90-21.el7.x86_64.rpm \ nscd-2.22.90-21.el7.x86_64.rpm \ --force --nodeps 二、关于curl的报警1、问题确认关于glibc的报警，具体如下所示：此处报警我们可以根据漏洞编号进行查询，可以看到是因为curl的版本太低，具有以下上图所示四个漏洞。阿里云进行的报警的依据是根据探测ECS相关软件的版本，如下图所示： 2、解决方案上图可以看到curl版本7.12到7.58都有漏洞，所以我们选择安装7.60以后的版本 1、编译安装123456wget https://curl.haxx.se/download/curl-7.62.0.tar.gztar -zxvf curl-7.62.0.tar.gz cd curl-7.62.0./configure --prefix=/usrmakemake install 查看curl版本1234567# curl --versioncurl 7.62.0 (x86_64-pc-linux-gnu) libcurl/7.47.1 NSS/3.21.3 Basic ECC zlib/1.2.7 libidn/1.28 libssh2/1.4.3Release-Date: 2018-10-31Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz UnixSockets # curl-config --versionlibcurl 7.62.0 2、yum安装查看已安装版本1234# curl --versioncurl 7.29.0 (x86_64-redhat-linux-gnu) libcurl/7.29.0 NSS/3.34 zlib/1.2.7 libidn/1.28 libssh2/1.4.3Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smtp smtps telnet tftp Features: AsynchDNS GSS-Negotiate IDN IPv6 Largefile NTLM NTLM_WB SSL libz unix-sockets 安装repo1rpm -Uvh http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/city-fan.org-release-2-1.rhel6.noarch.rpm 查看该 repo 包含的 curl 版本12345678910# yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"Loaded plugins: fastestmirrorLoading mirror speeds from cached hostfile * city-fan.org: cityfan.mirror.digitalpacific.com.au * city-fan.org-debuginfo: cityfan.mirror.digitalpacific.com.au * city-fan.org-source: cityfan.mirror.digitalpacific.com.auInstalled Packagescurl.x86_64 7.29.0-51.el7 @base Available Packagescurl.x86_64 7.62.0-1.7.cf.rhel7 city-fan.org 修改该repo的enable为1123456789101112131415vi /etc/yum.repos.d/city-fan.org.repo[city-fan.org]name=city-fan.org repository for Red Hat Enterprise Linux (and clones) $releasever ($basearch)#baseurl=http://mirror.city-fan.org/ftp/contrib/yum-repo/rhel$releasever/$basearchmirrorlist=http://mirror.city-fan.org/ftp/contrib/yum-repo/mirrorlist-rhel$releaseverenabled=1gpgcheck=1gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-city-fan.org 升级最新的curl1yum upgrade curl -y 查看版本12345# curl -Vcurl 7.62.0 (x86_64-redhat-linux-gnu) libcurl/7.62.0 NSS/3.36 zlib/1.2.7 libpsl/0.7.0 (+libicu/50.1.2) libssh2/1.8.0 nghttp2/1.31.1Release-Date: 2018-10-31Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp Features: AsynchDNS IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy PSL Metalink 升级完成。]]></content>
@@ -91,8 +118,8 @@
         <category>Ambari</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>集群</tag>
+        <tag>大数据</tag>
         <tag>Ambari</tag>
       </tags>
   </entry>
@@ -142,10 +169,10 @@
         <category>CDH</category>
       </categories>
       <tags>
+        <tag>集群</tag>
         <tag>CDH</tag>
         <tag>cloudera</tag>
         <tag>大数据</tag>
-        <tag>集群</tag>
       </tags>
   </entry>
   <entry>
@@ -184,8 +211,8 @@
         <category>Zabbix</category>
       </categories>
       <tags>
-        <tag>Zabbix</tag>
         <tag>JVM</tag>
+        <tag>Zabbix</tag>
         <tag>微服务</tag>
       </tags>
   </entry>
@@ -225,8 +252,8 @@
       </categories>
       <tags>
         <tag>Kubernetes</tag>
-        <tag>集群</tag>
         <tag>CentOS7</tag>
+        <tag>集群</tag>
         <tag>etcd</tag>
         <tag>flannel</tag>
         <tag>kube-apiserver</tag>
@@ -682,8 +709,8 @@
         <category>Env</category>
       </categories>
       <tags>
-        <tag>CentOS</tag>
         <tag>Java</tag>
+        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>

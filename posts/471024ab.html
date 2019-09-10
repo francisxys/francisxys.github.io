@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="Francis&#39;Blog">
 <meta property="og:description" content="首先说明：本当的操作环境是按照文档Neo4j安装及集群搭建搭建的环境下进行操作的。 Neo4j服务的启动和停止首选确保在部署neo4j时候已经添加的环境变量，即文件/etc/profile中添加以下内容1234#set neo4j environmentNEO4J_HOME=/data/neo4jPATH=$PATH:$NEO4J_HOME/binexport NEO4J_HOME PATH 并使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-28T01:35:35.939Z">
+<meta property="og:updated_time" content="2019-09-09T07:29:27.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neo4j使用手册">
 <meta name="twitter:description" content="首先说明：本当的操作环境是按照文档Neo4j安装及集群搭建搭建的环境下进行操作的。 Neo4j服务的启动和停止首选确保在部署neo4j时候已经添加的环境变量，即文件/etc/profile中添加以下内容1234#set neo4j environmentNEO4J_HOME=/data/neo4jPATH=$PATH:$NEO4J_HOME/binexport NEO4J_HOME PATH 并使">
@@ -448,7 +448,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-28 09:35:35" itemprop="dateModified" datetime="2019-08-28T09:35:35+08:00">2019-08-28</time>
+                <time title="修改时间：2019-09-09 15:29:27" itemprop="dateModified" datetime="2019-09-09T15:29:27+08:00">2019-09-09</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.9k</span>
+                <span title="本文字数">4.8k</span>
               
 
               
@@ -550,7 +550,7 @@
 <h3 id="在线备份与恢复"><a href="#在线备份与恢复" class="headerlink" title="在线备份与恢复"></a>在线备份与恢复</h3><p>此备份方式需要停止neo4j数据库服务。<br>需要在配置文件中增加以下内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbms.backup.enabled=<span class="literal">true</span></span><br><span class="line">dbms.backup.address=10.186.63.112:6362</span><br></pre></td></tr></table></figure></p>
 <p>绑定ip可以<code>0.0.0.0</code>，建议绑定内网ip或者<code>127.0.0.1</code>。<br>然后重启neo4j服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">neo4j-admin backup --backup-dir=&lt;backup-path&gt; --name=&lt;graph.db-backup&gt;</span><br><span class="line">                    [--from=&lt;address&gt;] [--protocol=&lt;any|catchup|common&gt;]</span><br><span class="line">					[--fallback-to-full[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--pagecache=&lt;pagecache&gt;]</span><br><span class="line">					[--timeout=&lt;timeout&gt;]</span><br><span class="line">					[--check-consistency[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--additional-config=&lt;config-file-path&gt;]</span><br><span class="line">					[--cc-graph[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--cc-indexes[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--cc-label-scan-store[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--cc-property-owners[=&lt;<span class="literal">true</span>|<span class="literal">false</span>&gt;]]</span><br><span class="line">					[--cc-report-dir=&lt;directory&gt;]</span><br></pre></td></tr></table></figure></p>
 <h4 id="全量备份"><a href="#全量备份" class="headerlink" title="全量备份"></a>全量备份</h4><p>设置环境变量控制内存使用情况<br><code>--pagecache</code>用以控制页面缓存<br><code>HEAP_SIZE</code>用以指定分配给备份的最大堆大小<br>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># export HEAP_SIZE=2G</span></span><br><span class="line"><span class="comment"># neo4j-admin backup --from=10.186.63.112 --backup-dir=/data/backups/graph.db/ --name=graph.dbbackup --pagecache=4G</span></span><br><span class="line">2019-08-22 08:47:25.183+0000 INFO [o.n.b.i.BackupOutputMonitor] Start receiving store files</span><br><span class="line">`</span><br><span class="line">`</span><br><span class="line">`</span><br><span class="line">2019-08-22 08:47:25.504+0000 INFO [o.n.b.i.BackupOutputMonitor] Start recovering store</span><br><span class="line">2019-08-22 08:47:26.901+0000 INFO [o.n.b.i.BackupOutputMonitor] Finish recovering store</span><br><span class="line">....................  10%</span><br><span class="line">....................  20%</span><br><span class="line">....................  30%</span><br><span class="line">....................  40%</span><br><span class="line">....................  50%</span><br><span class="line">....................  60%</span><br><span class="line">....................  70%</span><br><span class="line">....................  80%</span><br><span class="line">....................  90%</span><br><span class="line">Checking node and relationship counts</span><br><span class="line">Backup complete.</span><br></pre></td></tr></table></figure></p>
-<p>中间输出内容很长有省略，最后可见备份完成。</p>
+<p>中间输出内容很长有省略，最后可见备份完成。<br>备份脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat neo4j_full_backup.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">time=`date <span class="string">'+%y-%m-%d %H:%M:%S'</span>`</span><br><span class="line">T=$(date +%Y%m%d%H%M%S)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$time</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'start backup...'</span></span><br><span class="line"><span class="built_in">export</span> HEAP_SIZE=2G</span><br><span class="line">neo4j-admin backup --from=10.186.63.112 --backup-dir=/data/neo4j/backup/ --name=graph.db_full_backup_<span class="variable">$T</span> --pagecache=4G</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'finish'</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h4><p>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># export HEAP_SIZE=2G</span></span><br><span class="line"><span class="comment"># neo4j-admin backup --from=10.186.63.112 --backup-dir=/data/backups/graph.db --name=graph.dbbackup.in --fallback-to-full=true --check-consistency=true --pagecache=4G</span></span><br><span class="line">2019-08-22 08:56:35.251+0000 INFO [o.n.b.i.BackupOutputMonitor] Start receiving store files</span><br><span class="line">`</span><br><span class="line">`</span><br><span class="line">`</span><br><span class="line">2019-08-22 08:56:36.992+0000 INFO [o.n.b.i.BackupOutputMonitor] Finish recovering store</span><br><span class="line">....................  10%</span><br><span class="line">....................  20%</span><br><span class="line">....................  30%</span><br><span class="line">....................  40%</span><br><span class="line">....................  50%</span><br><span class="line">....................  60%</span><br><span class="line">....................  70%</span><br><span class="line">....................  80%</span><br><span class="line">....................  90%</span><br><span class="line">Checking node and relationship counts</span><br><span class="line">Backup complete.</span><br></pre></td></tr></table></figure></p>
 <p>中间过程省略，备份完成。<br>备份过程中可能出现的错误及描述：</p>
 <table>
@@ -579,6 +579,8 @@
 </tr>
 </tbody>
 </table>
+<p>备份脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat neo4j_incr_backup.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">time=`date <span class="string">'+%y-%m-%d %H:%M:%S'</span>`</span><br><span class="line">T=$(date +%Y%m%d%H%M%S)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$time</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'start backup...'</span></span><br><span class="line"><span class="built_in">export</span> HEAP_SIZE=2G</span><br><span class="line">neo4j-admin backup --from=10.186.63.112 --backup-dir=/data/neo4j/backup/ --name=graph.db_incr_backup_<span class="variable">$T</span> --fallback-to-full=<span class="literal">true</span> --check-consistency=<span class="literal">true</span> --pagecache=4G</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'finish'</span></span><br></pre></td></tr></table></figure></p>
+<p>以上两个脚本加入定时任务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># crontab -l</span></span><br><span class="line">0 0 * * 0 /data/neo4j/scripts/neo4j_full_backup.sh &gt;&gt; /data/neo4j/logs/backup.log</span><br><span class="line">0 0 * * 1-6 /data/neo4j/scripts/neo4j_incr_backup.sh &gt;&gt; /data/neo4j/logs/backup.log</span><br></pre></td></tr></table></figure></p>
 <h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4><p>恢复使用的参数</p>
 <table>
 <thead>
@@ -716,6 +718,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/posts/e37103fb.html" rel="prev" title="在Haproxy的httpchk使用basic认证">
+                在Haproxy的httpchk使用basic认证 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -784,7 +790,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">66</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -871,7 +877,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1108,7 +1116,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">112</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">114</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1230,7 +1242,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">563k</span>
+    <span title="站点总字数">580k</span>
   
 
   
@@ -1239,7 +1251,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">8:31</span>
+    <span title="站点阅读时长">8:48</span>
   
 </div>
 

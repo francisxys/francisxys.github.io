@@ -113,7 +113,7 @@
 
 
   <meta name="description" content="Neo4j简介先空着 Neo4j安装服务器准备本次准备3个节点    名称 IP 系统 CPU 内存 磁盘     node01 10.186.63.108 centos7.6 4 8G 60G   node02 10.186.63.112 centos7.6 4 8G 60G   node03 10.186.63.114 centos7.6 4 8G 60G    系统环境准备修改允许打开最大文">
-<meta name="keywords" content="Neo4j,集群,Haproxy,Keepalive">
+<meta name="keywords" content="集群,Neo4j,Haproxy,Keepalive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Neo4j安装及集群搭建">
 <meta property="og:url" content="http://www.cnops.com/posts/4198f92c.html">
@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190807002.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190807003.png">
 <meta property="og:image" content="https://francisblogstatic.oss-cn-shanghai.aliyuncs.com/images/20190807003.png">
-<meta property="og:updated_time" content="2019-09-11T02:39:55.527Z">
+<meta property="og:updated_time" content="2019-09-19T09:40:03.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neo4j安装及集群搭建">
 <meta name="twitter:description" content="Neo4j简介先空着 Neo4j安装服务器准备本次准备3个节点    名称 IP 系统 CPU 内存 磁盘     node01 10.186.63.108 centos7.6 4 8G 60G   node02 10.186.63.112 centos7.6 4 8G 60G   node03 10.186.63.114 centos7.6 4 8G 60G    系统环境准备修改允许打开最大文">
@@ -453,7 +453,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-11 10:39:55" itemprop="dateModified" datetime="2019-09-11T10:39:55+08:00">2019-09-11</time>
+                <time title="修改时间：2019-09-19 17:40:03" itemprop="dateModified" datetime="2019-09-19T17:40:03+08:00">2019-09-19</time>
               
             
           </span>
@@ -505,7 +505,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">53k</span>
+                <span title="本文字数">50k</span>
               
 
               
@@ -519,7 +519,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">48 分钟</span>
+                <span title="阅读时长">46 分钟</span>
               
             </div>
           
@@ -730,7 +730,7 @@
 <p>切记不能直接修改/etc/openldap/slapd.d/目录下的配置。<br>我们需要向 LDAP 中导入一些基本的 Schema。这些 Schema 文件位于 /etc/openldap/schema/ 目录中，schema控制着条目拥有哪些对象类和属性，可以自行选择需要的进行导入，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /etc/openldap/schema/*.ldif | <span class="keyword">while</span> <span class="built_in">read</span> f; <span class="keyword">do</span> ldapadd -Y EXTERNAL -H ldapi:/// -f <span class="variable">$f</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
 <p>这里选择全部导入。<br>修改域名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改域名，新增changedomain.ldif, 这里我自定义的域名为 yaobili.com，管理员用户账号为admin。</span></span><br><span class="line"><span class="comment"># 如果要修改，则修改文件中相应的dc=yaobili,dc=com为自己的域名</span></span><br><span class="line">vim changedomain.ldif</span><br><span class="line">-------------------------------------------------------------------------</span><br><span class="line">dn: olcDatabase=&#123;1&#125;monitor,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcAccess</span><br><span class="line">olcAccess: &#123;0&#125;to * by dn.base=<span class="string">"gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth"</span> <span class="built_in">read</span> by dn.base=<span class="string">"cn=manager,dc=actionsky,dc=com"</span> <span class="built_in">read</span> by * none</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcSuffix</span><br><span class="line">olcSuffix: dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcRootDN</span><br><span class="line">olcRootDN: cn=manager,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcRootPW</span><br><span class="line">olcRootPW: &#123;SSHA&#125;xlpeqLofS/M7zXLReCrgn+mC9FSel8eL</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: &#123;0&#125;to attrs=userPassword,shadowLastChange by dn=<span class="string">"cn=manager,dc=actionsky,dc=com"</span> write by anonymous auth by self write by * none</span><br><span class="line">olcAccess: &#123;1&#125;to dn.base=<span class="string">""</span> by * <span class="built_in">read</span></span><br><span class="line">olcAccess: &#123;2&#125;to * by dn=<span class="string">"cn=manager,dc=actionsky,dc=com"</span> write by * <span class="built_in">read</span></span><br><span class="line">-------------------------------------------------------------------------</span><br><span class="line"><span class="comment"># 执行命令，修改配置</span></span><br><span class="line">ldapmodify -Y EXTERNAL -H ldapi:/// -f changedomain.ldif</span><br></pre></td></tr></table></figure></p>
 <p>启用memberof功能<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增add-memberof.ldif, #开启memberof支持并新增用户支持memberof配置</span></span><br><span class="line">vim add-memberof.ldif</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">dn: cn=module&#123;0&#125;,cn=config</span><br><span class="line">cn: modulle&#123;0&#125;</span><br><span class="line">objectClass: olcModuleList</span><br><span class="line">objectclass: top</span><br><span class="line">olcModuleload: memberof.la</span><br><span class="line">olcModulePath: /usr/lib64/openldap</span><br><span class="line"></span><br><span class="line">dn: olcOverlay=&#123;0&#125;memberof,olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">objectClass: olcConfig</span><br><span class="line">objectClass: olcMemberOf</span><br><span class="line">objectClass: olcOverlayConfig</span><br><span class="line">objectClass: top</span><br><span class="line">olcOverlay: memberof</span><br><span class="line">olcMemberOfDangling: ignore</span><br><span class="line">olcMemberOfRefInt: TRUE</span><br><span class="line">olcMemberOfGroupOC: groupOfUniqueNames</span><br><span class="line">olcMemberOfMemberAD: uniqueMember</span><br><span class="line">olcMemberOfMemberOfAD: memberOf</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增refint1.ldif文件</span></span><br><span class="line">vim refint1.ldif</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">dn: cn=module&#123;0&#125;,cn=config</span><br><span class="line">add: olcmoduleload</span><br><span class="line">olcmoduleload: refint</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增refint2.ldif文件</span></span><br><span class="line">vim refint2.ldif</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">dn: olcOverlay=refint,olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">objectClass: olcConfig</span><br><span class="line">objectClass: olcOverlayConfig</span><br><span class="line">objectClass: olcRefintConfig</span><br><span class="line">objectClass: top</span><br><span class="line">olcOverlay: refint</span><br><span class="line">olcRefintAttribute: memberof uniqueMember  manager owner</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 依次执行下面命令，加载配置，顺序不能错</span></span><br><span class="line">ldapadd -Q -Y EXTERNAL -H ldapi:/// -f add-memberof.ldif</span><br><span class="line">ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f refint1.ldif</span><br><span class="line">ldapadd -Q -Y EXTERNAL -H ldapi:/// -f refint2.ldif</span><br></pre></td></tr></table></figure></p>
-<p>到此，配置修改完了，在上述基础上，我们来创建一个叫做actionsky company的组织，并在其下创建一个manager的组织角色（该组织角色内的用户具有管理整个 LDAP 的权限）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增配置文件</span></span><br><span class="line">vim base.ldif</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">dn: dc=actionsky,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: dcObject</span><br><span class="line">objectClass: organization</span><br><span class="line">o: actionsky Company</span><br><span class="line">dc: actionsky</span><br><span class="line"></span><br><span class="line">dn: cn=manager,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">cn: manager</span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 执行命令，添加配置, 这里要注意修改域名为自己配置的域名，然后需要输入上面我们生成的密码</span></span><br><span class="line">ldapadd -x -D cn=admin,dc=yaobili,dc=com -W -f base.ldif</span><br></pre></td></tr></table></figure></p>
+<p>到此，配置修改完了，在上述基础上，我们来创建一个叫做actionsky company的组织，并在其下创建一个manager的组织角色（该组织角色内的用户具有管理整个 LDAP 的权限）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增配置文件</span></span><br><span class="line">vim base.ldif</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">dn: dc=actionsky,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: dcObject</span><br><span class="line">objectClass: organization</span><br><span class="line">o: actionsky Company</span><br><span class="line">dc: actionsky</span><br><span class="line"></span><br><span class="line">dn: cn=manager,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">cn: manager</span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 执行命令，添加配置, 这里要注意修改域名为自己配置的域名，然后需要输入上面我们生成的密码</span></span><br><span class="line">ldapadd -x -D cn=manager,dc=actionsky,dc=com -W -f base.ldif</span><br></pre></td></tr></table></figure></p>
 <h3 id="Neo4j权限控制"><a href="#Neo4j权限控制" class="headerlink" title="Neo4j权限控制"></a>Neo4j权限控制</h3><p>集群模式的neo4j权限控制是基于角色的访问控制管理方式。neo4j提供以下内置角色：</p>
 <p><font color="red" size="4">reader</font></p>
 <ul>
@@ -982,7 +982,7 @@
 </tr>
 </tbody>
 </table>
-<p>接下来继续配置ldap，创建用户对应neo4j的角色：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新增增加用户的配置文件</span></span><br><span class="line">vim user.ldif</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">dn: ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">objectClass: top</span><br><span class="line">ou: users</span><br><span class="line"></span><br><span class="line">dn: ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">objectClass: top</span><br><span class="line">ou: groups</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dn: cn=reader,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: reader</span><br><span class="line">member:uid=reader,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=editor,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: editor</span><br><span class="line">member:uid=editor,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=publisher,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: publisher</span><br><span class="line">member:uid=publisher,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=architect,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: architect</span><br><span class="line">member:uid=architect,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=admin,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: admin</span><br><span class="line">member:uid=admin,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=reader,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Reader User</span><br><span class="line">givenName: Reader</span><br><span class="line">sn: reader</span><br><span class="line">uid: reader</span><br><span class="line">mail: reader@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=reader,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=editor,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Editor User</span><br><span class="line">givenName: Editor</span><br><span class="line">sn: editor</span><br><span class="line">uid: editor</span><br><span class="line">mail: editor@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=editor,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=publisher,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Publisher User</span><br><span class="line">givenName: Publisher</span><br><span class="line">sn: publisher</span><br><span class="line">uid: publisher</span><br><span class="line">mail: publisher@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=publisher,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=architect,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Architect User</span><br><span class="line">givenName: Architect</span><br><span class="line">sn: architect</span><br><span class="line">uid: architect</span><br><span class="line">mail: architect@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=architect,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=admin,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Admin User</span><br><span class="line">givenName: Architect</span><br><span class="line">sn: admin</span><br><span class="line">uid: admin</span><br><span class="line">mail: admin@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=admin,ou=groups,dc=actionsky,dc=com</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line"><span class="comment">#导入ldap</span></span><br><span class="line">ldapmoadd -x -D cn=manager,dc=actionsky,dc=com -W -f user.ldif</span><br><span class="line"><span class="comment">#如果修改时候，再次导入增加 -a 参数如下：</span></span><br><span class="line">ldapmodify -a -x -D cn=manager,dc=actionsky,dc=com -W -f user.ldif</span><br></pre></td></tr></table></figure></p>
+<p>接下来继续配置ldap，创建用户对应neo4j的角色：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新增增加用户的配置文件</span></span><br><span class="line">vim user.ldif</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">dn: ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">objectClass: top</span><br><span class="line">ou: users</span><br><span class="line"></span><br><span class="line">dn: ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">objectClass: top</span><br><span class="line">ou: groups</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dn: cn=reader,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: reader</span><br><span class="line">member:uid=reader,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=editor,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: editor</span><br><span class="line">member:uid=editor,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=publisher,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: publisher</span><br><span class="line">member:uid=publisher,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=architect,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: architect</span><br><span class="line">member:uid=architect,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: cn=admin,ou=groups,dc=actionsky,dc=com</span><br><span class="line">objectClass: groupOfNames</span><br><span class="line">objectClass: top</span><br><span class="line">cn: admin</span><br><span class="line">member:uid=admin,ou=users,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=reader,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Reader User</span><br><span class="line">givenName: Reader</span><br><span class="line">sn: reader</span><br><span class="line">uid: reader</span><br><span class="line">mail: reader@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=reader,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=editor,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Editor User</span><br><span class="line">givenName: Editor</span><br><span class="line">sn: editor</span><br><span class="line">uid: editor</span><br><span class="line">mail: editor@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=editor,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=publisher,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Publisher User</span><br><span class="line">givenName: Publisher</span><br><span class="line">sn: publisher</span><br><span class="line">uid: publisher</span><br><span class="line">mail: publisher@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=publisher,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=architect,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Architect User</span><br><span class="line">givenName: Architect</span><br><span class="line">sn: architect</span><br><span class="line">uid: architect</span><br><span class="line">mail: architect@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=architect,ou=groups,dc=actionsky,dc=com</span><br><span class="line"></span><br><span class="line">dn: uid=admin,ou=users,dc=actionsky,dc=com</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">objectClass: extensibleObject</span><br><span class="line">objectClass: uidObject</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: top</span><br><span class="line">cn: Admin User</span><br><span class="line">givenName: Architect</span><br><span class="line">sn: admin</span><br><span class="line">uid: admin</span><br><span class="line">mail: admin@actionsky.com</span><br><span class="line">ou: users</span><br><span class="line">userpassword: <span class="built_in">test</span></span><br><span class="line">memberOf: cn=admin,ou=groups,dc=actionsky,dc=com</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line"><span class="comment">#导入ldap</span></span><br><span class="line">ldapadd -x -D cn=manager,dc=actionsky,dc=com -W -f user.ldif</span><br><span class="line"><span class="comment">#如果修改时候，再次导入增加 -a 参数如下：</span></span><br><span class="line">ldapmodify -a -x -D cn=manager,dc=actionsky,dc=com -W -f user.ldif</span><br></pre></td></tr></table></figure></p>
 <p>接下里继续配置neo4j，在集群内每个节点添加以下配置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">dbms.security.auth_enabled=<span class="literal">true</span></span><br><span class="line">dbms.security.auth_provider=ldap</span><br><span class="line"><span class="comment">#配置ldap服务器的地址和端口</span></span><br><span class="line">dbms.security.ldap.host=ldap://10.186.61.39:389</span><br><span class="line">dbms.security.ldap.authentication.mechanism=simple</span><br><span class="line">dbms.security.ldap.authentication.user_dn_template=uid=&#123;0&#125;,ou=users,dc=actionsky,dc=com</span><br><span class="line">dbms.security.ldap.authentication.cache_enabled=<span class="literal">false</span></span><br><span class="line">dbms.security.ldap.authorization.use_system_account=<span class="literal">true</span></span><br><span class="line"><span class="comment">#连接ldap服务器的账户和密码</span></span><br><span class="line">dbms.security.ldap.authorization.system_username=cn=manager,dc=actionsky,dc=com</span><br><span class="line">dbms.security.ldap.authorization.system_password=123456</span><br><span class="line">dbms.security.ldap.authorization.user_search_base=ou=users,dc=actionsky,dc=com</span><br><span class="line">dbms.security.ldap.authorization.user_search_filter=(&amp;(objectClass=*)(uid=&#123;0&#125;))</span><br><span class="line">dbms.security.ldap.authorization.group_membership_attributes=memberOf</span><br><span class="line">dbms.security.ldap.authorization.group_to_role_mapping=\</span><br><span class="line">          <span class="string">"cn=reader,ou=groups,dc=actionsky,dc=com"</span>  = reader; \</span><br><span class="line">          <span class="string">"cn=editor,ou=groups,dc=actionsky,dc=com"</span>  = editor; \</span><br><span class="line">          <span class="string">"cn=publisher,ou=groups,dc=actionsky,dc=com"</span>  = publisher; \</span><br><span class="line">          <span class="string">"cn=architect,ou=groups,dc=actionsky,dc=com"</span>  = architect; \</span><br><span class="line">          <span class="string">"cn=admin,ou=groups,dc=actionsky,dc=com"</span>  = admin</span><br></pre></td></tr></table></figure></p>
 <p>重启neo4j集群。<br>登陆browser界面输入 :server connect 连接neo4j数据库，可以在 Database Information 界面看到连接的 Username 和 Roles，然后验证角色权限。</p>
 <h2 id="Haproxy安装和配置"><a href="#Haproxy安装和配置" class="headerlink" title="Haproxy安装和配置"></a>Haproxy安装和配置</h2><p>在node01、node02上安装<br>安装工具等<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl  openssl-devel systemd-devel net-tools vim iotop bc  zip unzip zlib-devel lrzsz tree screen lsof tcpdump wget ntpdate</span><br></pre></td></tr></table></figure></p>
@@ -1001,8 +1001,393 @@
 <p>可以在文件<code>/data/haproxy/logs/haproxy.log</code>中看到日志内容。</p>
 <h4 id="自定义日志格式"><a href="#自定义日志格式" class="headerlink" title="自定义日志格式"></a>自定义日志格式</h4><p>haproxy默认的日志可读性很差，我们需要显示更多的信息，但默认的都捕获不到，需要自定义需要显示的内容。<br>编辑配置文件<code>vim /data/haproxy/conf/haproxy.cfg</code>，在<code>frontend http-in</code>配置中添加以下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">capture request header Host len 64</span><br><span class="line">capture request header User-Agent len 128</span><br><span class="line">capture request header X-Forwarded-For len 100</span><br><span class="line">capture request header Referer len 200</span><br><span class="line">capture response header Server len 40</span><br><span class="line">capture response header Server-ID len 40</span><br><span class="line"><span class="comment">#capture捕获信息</span></span><br><span class="line"><span class="built_in">log</span>-format %ci:%cp\ %si:%sp\ %B\ %U\ %ST\ %r\ %f\ %b\ %bi\ %hrl\ %hsl\</span><br><span class="line"><span class="comment">#log-forcat定义日志需显示内容(变量)</span></span><br><span class="line"><span class="comment">#利用capture捕获信息，log-format定义变量</span></span><br></pre></td></tr></table></figure></p>
 <p>对于tcp模式请求，日志配置如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">capture request header Host len 64</span><br><span class="line">capture request header User-Agent len 128</span><br><span class="line">capture request header X-Forwarded-For len 100</span><br><span class="line">capture request header Referer len 200</span><br><span class="line">capture response header Server len 40</span><br><span class="line">capture response header Server-ID len 40</span><br><span class="line"><span class="comment">#capture捕获信息</span></span><br><span class="line"><span class="built_in">log</span>-format %ci:%cp\ %si:%sp\ %B\ %U\ %ST\ %f\ %b\ %bi\ %hrl\ %hsl\</span><br><span class="line"><span class="comment">#log-forcat定义日志需显示内容(变量)</span></span><br><span class="line"><span class="comment">#利用capture捕获信息，log-format定义变量</span></span><br></pre></td></tr></table></figure></p>
-<p>自定义日志格式官网参考<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">+---+------+-----------------------------------------------+-------------+</span><br><span class="line">| R | var  | field name (8.2.2 and 8.2.3 <span class="keyword">for</span> description)  | <span class="built_in">type</span>        |</span><br><span class="line">+---+------+-----------------------------------------------+-------------+</span><br><span class="line">|   | %o   | special variable, apply flags on all next var |             |</span><br><span class="line">+---+------+-----------------------------------------------+-------------+</span><br><span class="line">|   | %B   | bytes_read           (from server to client)  | numeric     |</span><br><span class="line">| H | %CC  | captured_request_cookie                       | string      |</span><br><span class="line">| H | %CS  | captured_response_cookie                      | string      |</span><br><span class="line">|   | %H   | hostname                                      | string      |</span><br><span class="line">| H | %HM  | HTTP method (ex: POST)                        | string      |</span><br><span class="line">| H | %HP  | HTTP request URI without query string (path)  | string      |</span><br><span class="line">| H | %HQ  | HTTP request URI query string (ex: ?bar=baz)  | string      |</span><br><span class="line">| H | %HU  | HTTP request URI (ex: /foo?bar=baz)           | string      |</span><br><span class="line">| H | %HV  | HTTP version (ex: HTTP/1.0)                   | string      |</span><br><span class="line">|   | %ID  | unique-id                                     | string      |</span><br><span class="line">|   | %ST  | status_code                                   | numeric     |</span><br><span class="line">|   | %T   | gmt_date_time                                 | date        |</span><br><span class="line">|   | %Ta  | Active time of the request (from TR to end)   | numeric     |</span><br><span class="line">|   | %Tc  | Tc                                            | numeric     |</span><br><span class="line">|   | %Td  | Td = Tt - (Tq + Tw + Tc + Tr)                 | numeric     |</span><br><span class="line">|   | %Tl  | local_date_time                               | date        |</span><br><span class="line">|   | %Th  | connection handshake time (SSL, PROXY proto)  | numeric     |</span><br><span class="line">| H | %Ti  | idle time before the HTTP request             | numeric     |</span><br><span class="line">| H | %Tq  | Th + Ti + TR                                  | numeric     |</span><br><span class="line">| H | %TR  | time to receive the full request from 1st byte| numeric     |</span><br><span class="line">| H | %Tr  | Tr (response time)                            | numeric     |</span><br><span class="line">|   | %Ts  | timestamp                                     | numeric     |</span><br><span class="line">|   | %Tt  | Tt                                            | numeric     |</span><br><span class="line">|   | %Tw  | Tw                                            | numeric     |</span><br><span class="line">|   | %U   | bytes_uploaded       (from client to server)  | numeric     |</span><br><span class="line">|   | %ac  | actconn                                       | numeric     |</span><br><span class="line">|   | %b   | backend_name                                  | string      |</span><br><span class="line">|   | %bc  | beconn      (backend concurrent connections)  | numeric     |</span><br><span class="line">|   | %bi  | backend_source_ip       (connecting address)  | IP          |</span><br><span class="line">|   | %bp  | backend_source_port     (connecting address)  | numeric     |</span><br><span class="line">|   | %bq  | backend_queue                                 | numeric     |</span><br><span class="line">|   | %ci  | client_ip                 (accepted address)  | IP          |</span><br><span class="line">|   | %cp  | client_port               (accepted address)  | numeric     |</span><br><span class="line">|   | %f   | frontend_name                                 | string      |</span><br><span class="line">|   | %<span class="built_in">fc</span>  | feconn     (frontend concurrent connections)  | numeric     |</span><br><span class="line">|   | %<span class="keyword">fi</span>  | frontend_ip              (accepting address)  | IP          |</span><br><span class="line">|   | %fp  | frontend_port            (accepting address)  | numeric     |</span><br><span class="line">|   | %ft  | frontend_name_transport (<span class="string">'~'</span> suffix <span class="keyword">for</span> SSL)  | string      |</span><br><span class="line">|   | %lc  | frontend_log_counter                          | numeric     |</span><br><span class="line">|   | %hr  | captured_request_headers default style        | string      |</span><br><span class="line">|   | %hrl | captured_request_headers CLF style            | string list |</span><br><span class="line">|   | %hs  | captured_response_headers default style       | string      |</span><br><span class="line">|   | %hsl | captured_response_headers CLF style           | string list |</span><br><span class="line">|   | %ms  | accept date milliseconds (left-padded with 0) | numeric     |</span><br><span class="line">|   | %pid | PID                                           | numeric     |</span><br><span class="line">| H | %r   | http_request                                  | string      |</span><br><span class="line">|   | %rc  | retries                                       | numeric     |</span><br><span class="line">|   | %rt  | request_counter (HTTP req or TCP session)     | numeric     |</span><br><span class="line">|   | %s   | server_name                                   | string      |</span><br><span class="line">|   | %sc  | srv_conn     (server concurrent connections)  | numeric     |</span><br><span class="line">|   | %si  | server_IP                   (target address)  | IP          |</span><br><span class="line">|   | %sp  | server_port                 (target address)  | numeric     |</span><br><span class="line">|   | %sq  | srv_queue                                     | numeric     |</span><br><span class="line">| S | %sslc| ssl_ciphers (ex: AES-SHA)                     | string      |</span><br><span class="line">| S | %sslv| ssl_version (ex: TLSv1)                       | string      |</span><br><span class="line">|   | %t   | date_time      (with millisecond resolution)  | date        |</span><br><span class="line">| H | %tr  | date_time of HTTP request                     | date        |</span><br><span class="line">| H | %trg | gmt_date_time of start of HTTP request        | date        |</span><br><span class="line">| H | %trl | locla_date_time of start of HTTP request      | date        |</span><br><span class="line">|   | %ts  | termination_state                             | string      |</span><br><span class="line">| H | %tsc | termination_state with cookie status          | string      |</span><br><span class="line">+---+------+-----------------------------------------------+-------------+</span><br></pre></td></tr></table></figure></p>
-<p>R = Restrictions : H = mode http only ; S = SSL only<br>重启haproxy后进行访问测试，截取一条日志内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sep 11 10:30:49 localhost haproxy[8142]: 192.168.3.9:9406 10.186.63.114:7474 7435 398 200 GET /browser/assets/neo4j-world-16a20d139c28611513ec675e56d16d41.png HTTP/1.1 http-in neo4j-slave 10.186.63.108 10.186.63.249:17474 Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0 - http://10.186.63.249:17474/browser/ - -\</span><br></pre></td></tr></table></figure></p>
+<p>自定义日志格式官网参考</p>
+<table>
+<thead>
+<tr>
+<th>R</th>
+<th>var</th>
+<th>field name (8.2.2 and 8.2.3 for description)</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>%o</td>
+<td>special variable, apply flags on all next var</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>%B</td>
+<td>bytes_read           (from server to client)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%CC</td>
+<td>captured_request_cookie</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%CS</td>
+<td>captured_response_cookie</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%H</td>
+<td>hostname</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%HM</td>
+<td>HTTP method (ex: POST)</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%HP</td>
+<td>HTTP request URI without query string (path)</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%HQ</td>
+<td>HTTP request URI query string (ex: ?bar=baz)</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%HU</td>
+<td>HTTP request URI (ex: /foo?bar=baz)</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%HV</td>
+<td>HTTP version (ex: HTTP/1.0)</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%ID</td>
+<td>unique-id</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%ST</td>
+<td>status_code</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%T</td>
+<td>gmt_date_time</td>
+<td>date</td>
+</tr>
+<tr>
+<td></td>
+<td>%Ta</td>
+<td>Active time of the request (from TR to end)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Tc</td>
+<td>Tc</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Td</td>
+<td>Td = Tt - (Tq + Tw + Tc + Tr)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Tl</td>
+<td>local_date_time</td>
+<td>date</td>
+</tr>
+<tr>
+<td></td>
+<td>%Th</td>
+<td>connection handshake time (SSL, PROXY proto)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%Ti</td>
+<td>idle time before the HTTP request</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%Tq</td>
+<td>Th + Ti + TR</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%TR</td>
+<td>time to receive the full request from 1st byte</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%Tr</td>
+<td>Tr (response time)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Ts</td>
+<td>timestamp</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Tt</td>
+<td>Tt</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%Tw</td>
+<td>Tw</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%U</td>
+<td>bytes_uploaded       (from client to server)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%ac</td>
+<td>actconn</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%b</td>
+<td>backend_name</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%bc</td>
+<td>beconn      (backend concurrent connections)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%bi</td>
+<td>backend_source_ip       (connecting address)</td>
+<td>IP</td>
+</tr>
+<tr>
+<td></td>
+<td>%bp</td>
+<td>backend_source_port     (connecting address)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%bq</td>
+<td>backend_queue</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%ci</td>
+<td>client_ip                 (accepted address)</td>
+<td>IP</td>
+</tr>
+<tr>
+<td></td>
+<td>%cp</td>
+<td>client_port               (accepted address)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%f</td>
+<td>frontend_name</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%fc</td>
+<td>feconn     (frontend concurrent connections)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%fi</td>
+<td>frontend_ip              (accepting address)</td>
+<td>IP</td>
+</tr>
+<tr>
+<td></td>
+<td>%fp</td>
+<td>frontend_port            (accepting address)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%ft</td>
+<td>frontend_name_transport (‘~’ suffix for SSL)</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%lc</td>
+<td>frontend_log_counter</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%hr</td>
+<td>captured_request_headers default style</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%hrl</td>
+<td>captured_request_headers CLF style</td>
+<td>string list</td>
+</tr>
+<tr>
+<td></td>
+<td>%hs</td>
+<td>captured_response_headers default style</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%hsl</td>
+<td>captured_response_headers CLF style</td>
+<td>string list</td>
+</tr>
+<tr>
+<td></td>
+<td>%ms</td>
+<td>accept date milliseconds (left-padded with 0)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%pid</td>
+<td>PID</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%r</td>
+<td>http_request</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%rc</td>
+<td>retries</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%rt</td>
+<td>request_counter (HTTP req or TCP session)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%s</td>
+<td>server_name</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%sc</td>
+<td>srv_conn     (server concurrent connections)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%si</td>
+<td>server_IP                   (target address)</td>
+<td>IP</td>
+</tr>
+<tr>
+<td></td>
+<td>%sp</td>
+<td>server_port                 (target address)</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td></td>
+<td>%sq</td>
+<td>srv_queue</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>S</td>
+<td>%sslc</td>
+<td>ssl_ciphers (ex: AES-SHA)</td>
+<td>string</td>
+</tr>
+<tr>
+<td>S</td>
+<td>%sslv</td>
+<td>ssl_version (ex: TLSv1)</td>
+<td>string</td>
+</tr>
+<tr>
+<td></td>
+<td>%t</td>
+<td>date_time      (with millisecond resolution)</td>
+<td>date</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%tr</td>
+<td>date_time of HTTP request</td>
+<td>date</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%trg</td>
+<td>gmt_date_time of start of HTTP request</td>
+<td>date</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%trl</td>
+<td>local_date_time of start of HTTP request</td>
+<td>date</td>
+</tr>
+<tr>
+<td></td>
+<td>%ts</td>
+<td>termination_state</td>
+<td>string</td>
+</tr>
+<tr>
+<td>H</td>
+<td>%tsc</td>
+<td>termination_state with cookie status</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p>R = Restrictions ; H = mode http only ; S = SSL only<br>重启haproxy后进行访问测试，截取一条日志内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sep 11 10:30:49 localhost haproxy[8142]: 192.168.3.9:9406 10.186.63.114:7474 7435 398 200 GET /browser/assets/neo4j-world-16a20d139c28611513ec675e56d16d41.png HTTP/1.1 http-in neo4j-slave 10.186.63.108 10.186.63.249:17474 Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0 - http://10.186.63.249:17474/browser/ - -\</span><br></pre></td></tr></table></figure></p>
+<p>可以看到日志内容已经更丰富，需要的信息已记录。</p>
 <h2 id="Keepalive安装和配置"><a href="#Keepalive安装和配置" class="headerlink" title="Keepalive安装和配置"></a>Keepalive安装和配置</h2><p>申请VIP为10.186.63.249<br>在node01、node02上安装<br>安装编辑工具等<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc openssl-devel popt-devel libnl libnl-devel libnfnetlink-devel libmnl-devel ipset-devel net-snmp-devel -y</span><br></pre></td></tr></table></figure></p>
 <h3 id="编译安装-1"><a href="#编译安装-1" class="headerlink" title="编译安装"></a>编译安装</h3><p>下载<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.keepalived.org/software/keepalived-2.0.18.tar.gz</span><br><span class="line">tar -zxvf keepalived-2.0.18.tar.gz</span><br><span class="line"><span class="built_in">cd</span> keepalived-2.0.18</span><br></pre></td></tr></table></figure></p>
 <p>开始编译安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/data/keepalived</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
@@ -1120,9 +1505,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Neo4j/" rel="tag"><i class="fa fa-tag"></i> Neo4j</a>
-          
             <a href="/tags/集群/" rel="tag"><i class="fa fa-tag"></i> 集群</a>
+          
+            <a href="/tags/Neo4j/" rel="tag"><i class="fa fa-tag"></i> Neo4j</a>
           
             <a href="/tags/Haproxy/" rel="tag"><i class="fa fa-tag"></i> Haproxy</a>
           
@@ -1673,7 +2058,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">585k</span>
   
 
   
@@ -1682,7 +2067,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">8:51</span>
   
 </div>
 
